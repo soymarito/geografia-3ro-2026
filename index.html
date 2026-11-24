@@ -1,0 +1,1793 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Geografía 3° · Entrenador Mesa Diciembre 2026</title>
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --surface: #ffffff;
+      --surface-soft: #eef3f9;
+      --navy: #0f2942;
+      --navy-mid: #1a3f63;
+      --emerald: #0d9488;
+      --emerald-soft: #e6f7f5;
+      --amber: #d97706;
+      --amber-soft: #fef3c7;
+      --red: #dc2626;
+      --red-soft: #fee2e2;
+      --green: #16a34a;
+      --green-soft: #dcfce7;
+      --text: #1e293b;
+      --muted: #52637a;
+      --border: #d8e2ee;
+      --shadow: 0 8px 24px rgba(15, 41, 66, 0.08);
+      --radius: 14px;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    header.app-header {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 68%, #0f5f68 100%);
+      color: #fff;
+      padding: 20px 16px 18px;
+      box-shadow: 0 4px 18px rgba(15, 41, 66, 0.18);
+    }
+    .container {
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+    .header-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+    .brand h1 {
+      margin: 0;
+      font-size: 1.45rem;
+      letter-spacing: -0.01em;
+    }
+    .brand p {
+      margin: 4px 0 0;
+      font-size: 0.92rem;
+      color: #cfe3f5;
+    }
+    .stats-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .stat-pill {
+      background: rgba(255, 255, 255, 0.13);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .controls-bar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      box-shadow: 0 2px 10px rgba(15, 41, 66, 0.05);
+    }
+    .controls-inner {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 10px 16px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .term-switch, .nav-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .pill-btn, .tab-btn {
+      border: 1px solid var(--border);
+      background: var(--surface-soft);
+      color: var(--navy);
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      min-height: 40px;
+      transition: all 0.16s ease;
+    }
+    .pill-btn:hover, .tab-btn:hover {
+      border-color: var(--emerald);
+      background: #e9f3fc;
+    }
+    .pill-btn.active {
+      background: var(--navy);
+      color: #fff;
+      border-color: var(--navy);
+    }
+    .tab-btn.active {
+      background: var(--emerald);
+      color: #fff;
+      border-color: var(--emerald);
+      box-shadow: 0 3px 10px rgba(13, 148, 136, 0.25);
+    }
+
+    main.main-wrap {
+      max-width: 1080px;
+      margin: 20px auto 48px;
+      padding: 0 16px;
+    }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+      margin-bottom: 16px;
+    }
+
+    .alert-box {
+      background: var(--amber-soft);
+      border: 1px solid #f59e0b;
+      border-left: 6px solid var(--amber);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      margin-bottom: 18px;
+    }
+    .alert-box h3 {
+      margin: 0 0 8px;
+      color: #92400e;
+      font-size: 1.02rem;
+    }
+    .alert-box ul {
+      margin: 0;
+      padding-left: 20px;
+      font-size: 0.92rem;
+    }
+    .alert-box li { margin-bottom: 5px; }
+
+    .section-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .section-head h2 {
+      margin: 0;
+      font-size: 1.25rem;
+      color: var(--navy);
+    }
+    .btn {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--navy);
+      border-radius: 10px;
+      padding: 9px 14px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      min-height: 40px;
+      transition: all 0.15s ease;
+    }
+    .btn:hover { background: var(--surface-soft); }
+    .btn-primary {
+      background: var(--emerald);
+      border-color: var(--emerald);
+      color: #fff;
+    }
+    .btn-primary:hover { background: #0b7d72; }
+    .btn-navy {
+      background: var(--navy);
+      border-color: var(--navy);
+      color: #fff;
+    }
+    .btn-navy:hover { background: var(--navy-mid); }
+    .btn-amber {
+      background: var(--amber);
+      border-color: var(--amber);
+      color: #fff;
+    }
+    .btn-amber:hover { background: #b45309; }
+    .btn-sm { padding: 6px 11px; min-height: 34px; font-size: 0.82rem; }
+
+    details.guide-unit {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 12px;
+      box-shadow: 0 3px 12px rgba(15, 41, 66, 0.04);
+      overflow: hidden;
+    }
+    details.guide-unit summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 14px 18px;
+      font-weight: 700;
+      color: var(--navy);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: #fbfdff;
+    }
+    details.guide-unit summary::-webkit-details-marker { display: none; }
+    details.guide-unit[open] summary {
+      border-bottom: 1px solid var(--border);
+      background: var(--surface-soft);
+    }
+    .badge {
+      display: inline-block;
+      font-size: 0.74rem;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+    .badge-c1 { background: #dbeafe; color: #1e40af; }
+    .badge-c2 { background: var(--emerald-soft); color: #0f766e; }
+    .badge-tp { background: var(--amber-soft); color: #92400e; }
+
+    .guide-body {
+      padding: 16px 18px;
+      font-size: 0.94rem;
+    }
+    .guide-body h4 {
+      margin: 14px 0 6px;
+      color: var(--navy-mid);
+      font-size: 0.98rem;
+    }
+    .guide-body h4:first-child { margin-top: 0; }
+    .guide-body ul { margin: 4px 0 10px; padding-left: 20px; }
+    .guide-body li { margin-bottom: 4px; }
+
+    .table-wrap { overflow-x: auto; margin: 10px 0; }
+    table.geo-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.87rem;
+      min-width: 480px;
+    }
+    table.geo-table th, table.geo-table td {
+      border: 1px solid var(--border);
+      padding: 8px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+    table.geo-table th {
+      background: var(--navy);
+      color: #fff;
+      font-weight: 600;
+    }
+    table.geo-table tr:nth-child(even) td { background: #f8fbff; }
+
+    /* Flashcards */
+    .fc-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .fc-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    select.input-select {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 8px 12px;
+      font-size: 0.88rem;
+      background: #fff;
+      color: var(--text);
+      min-height: 40px;
+    }
+    .progress-track {
+      height: 10px;
+      background: var(--surface-soft);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 16px;
+      border: 1px solid var(--border);
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--emerald), #14b8a6);
+      width: 0%;
+      transition: width 0.25s ease;
+    }
+    .flashcard-stage {
+      perspective: 1100px;
+      margin: 0 auto 16px;
+      max-width: 720px;
+    }
+    .flashcard {
+      min-height: 250px;
+      border-radius: 18px;
+      border: 2px solid var(--border);
+      background: linear-gradient(160deg, #ffffff 0%, #f7fbff 100%);
+      box-shadow: var(--shadow);
+      padding: 24px 22px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.18s ease, border-color 0.2s ease;
+    }
+    .flashcard:hover { border-color: var(--emerald); transform: translateY(-2px); }
+    .flashcard.flipped {
+      background: linear-gradient(160deg, #effcf9 0%, #ffffff 100%);
+      border-color: var(--emerald);
+    }
+    .fc-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    .fc-main {
+      margin: 18px 0;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--navy);
+      text-align: center;
+    }
+    .flashcard.flipped .fc-main {
+      font-size: 1.02rem;
+      font-weight: 500;
+      color: var(--text);
+      text-align: left;
+    }
+    .fc-hint {
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+    .fc-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    /* Practica TP */
+    .subgame-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .cat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .cat-btn {
+      border: 2px solid var(--navy-mid);
+      background: #f8fbff;
+      color: var(--navy);
+      border-radius: 12px;
+      padding: 12px 10px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      cursor: pointer;
+      min-height: 48px;
+      transition: all 0.14s ease;
+    }
+    .cat-btn:hover { background: var(--navy); color: #fff; }
+    .prompt-card {
+      background: var(--surface-soft);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--navy);
+      text-align: center;
+    }
+    .feedback-banner {
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      font-size: 0.92rem;
+      font-weight: 500;
+    }
+    .fb-ok { background: var(--green-soft); border: 1px solid #86efac; color: #14532d; }
+    .fb-err { background: var(--red-soft); border: 1px solid #fca5a5; color: #7f1d1d; }
+
+    /* Crucigrama MESETA */
+    .crossword-wrap { overflow-x: auto; padding-bottom: 8px; }
+    .cw-row {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 5px;
+      min-width: 460px;
+    }
+    .cw-num {
+      width: 24px;
+      font-weight: 700;
+      color: var(--navy);
+      font-size: 0.9rem;
+      text-align: right;
+      margin-right: 4px;
+      flex-shrink: 0;
+    }
+    .cw-cell {
+      width: 34px;
+      height: 36px;
+      border-radius: 6px;
+      text-align: center;
+      font-size: 1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      border: 1.5px solid #94a3b8;
+      background: #fff;
+      color: var(--navy);
+      flex-shrink: 0;
+    }
+    .cw-cell.spacer {
+      border-color: transparent;
+      background: transparent;
+      pointer-events: none;
+    }
+    .cw-cell.axis {
+      background: #fef3c7;
+      border-color: #d97706;
+      color: #92400e;
+    }
+    .cw-cell.ok { background: var(--green-soft); border-color: var(--green); color: #14532d; }
+    .cw-cell.err { background: var(--red-soft); border-color: var(--red); color: #7f1d1d; }
+
+    /* Simulacro */
+    .exam-modes {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .mode-card {
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      background: #fbfdff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .mode-card h3 { margin: 0 0 4px; color: var(--navy); font-size: 1.05rem; }
+    .mode-card p { margin: 0; font-size: 0.87rem; color: var(--muted); }
+    .option-list { display: grid; gap: 10px; margin-top: 14px; }
+    .opt-btn {
+      text-align: left;
+      border: 1.5px solid var(--border);
+      background: #fff;
+      border-radius: 12px;
+      padding: 12px 14px;
+      font-size: 0.94rem;
+      cursor: pointer;
+      min-height: 46px;
+      transition: all 0.14s ease;
+    }
+    .opt-btn:hover:not(:disabled) { border-color: var(--navy); background: #f3f8ff; }
+    .opt-btn.correct { background: var(--green-soft); border-color: var(--green); color: #14532d; font-weight: 700; }
+    .opt-btn.wrong { background: var(--red-soft); border-color: var(--red); color: #7f1d1d; }
+    .score-hero {
+      text-align: center;
+      padding: 20px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--navy) 0%, #0f5f68 100%);
+      color: #fff;
+      margin-bottom: 16px;
+    }
+    .score-num { font-size: 2.6rem; font-weight: 800; line-height: 1.1; }
+
+    @media (max-width: 640px) {
+      .brand h1 { font-size: 1.2rem; }
+      .flashcard { min-height: 220px; padding: 18px 16px; }
+      .cw-cell { width: 29px; height: 32px; font-size: 0.9rem; }
+    }
+  </style>
+</head>
+<body>
+  <header class="app-header">
+    <div class="container header-top">
+      <div class="brand">
+        <h1>Geografía 3° · Entrenador Mesa Diciembre 2026</h1>
+        <p>Programa real completo: 1° y 2° Cuatrimestre + 3 Trabajos Prácticos Oficiales</p>
+      </div>
+      <div class="stats-row" id="header-stats">
+        <span class="stat-pill" id="stat-fc">Flashcards: 0/52</span>
+        <span class="stat-pill" id="stat-c1">Mejor 1° Cuat.: —</span>
+        <span class="stat-pill" id="stat-c2">Mejor 2° Cuat.: —</span>
+        <span class="stat-pill" id="stat-int">Mejor Integrador: —</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="controls-bar">
+    <div class="controls-inner">
+      <div class="term-switch" role="group" aria-label="Filtro de cuatrimestre">
+        <button class="pill-btn active" data-term="all">Todo el Año</button>
+        <button class="pill-btn" data-term="1">1° Cuatrimestre</button>
+        <button class="pill-btn" data-term="2">2° Cuatrimestre</button>
+      </div>
+      <nav class="nav-tabs" role="tablist">
+        <button class="tab-btn active" data-tab="guias">1. Guías Express</button>
+        <button class="tab-btn" data-tab="flashcards">2. Flashcards Orales</button>
+        <button class="tab-btn" data-tab="practica">3. Práctica Tipo TP</button>
+        <button class="tab-btn" data-tab="simulacro">4. Simulacro (1 al 10)</button>
+      </nav>
+    </div>
+  </div>
+
+  <main class="main-wrap">
+    <!-- TAB 1: GUIAS EXPRESS -->
+    <section id="tab-guias" class="tab-panel active">
+      <div class="alert-box">
+        <h3>📌 Puntos clave de precisión para la mesa de diciembre</h3>
+        <ul>
+          <li><strong>Punto Extremo Norte de Argentina:</strong> Confluencia de los ríos Grande de San Juan y Mojinete (Jujuy), a <strong>21° 46' lat. Sur</strong> y 66° 13' long. Oeste.</li>
+          <li><strong>Punto Extremo Oeste:</strong> nombrarlo completo: <strong>Parque Nacional Los Glaciares</strong> (Santa Cruz).</li>
+          <li><strong>Capitales a no fallar:</strong> Catamarca → <strong>San Fernando del Valle de Catamarca</strong>; Río Negro → <strong>Viedma</strong>.</li>
+          <li><strong>NOA (5 provincias):</strong> Jujuy, <strong>Salta</strong>, Tucumán, Santiago del Estero y Catamarca.</li>
+          <li><strong>Río de la Plata:</strong> aguas de <strong>uso común</strong> (navegación, pesca y aprovechamiento compartido) + franjas costeras exclusivas + <strong>línea media de 23 puntos</strong>.</li>
+          <li><strong>Cuestiones con Chile:</strong> recordar los 4 hitos: <strong>1881</strong> (Tratado / Altas cumbres y Tierra del Fuego), <strong>1984</strong> (Canal de Beagle: Picton, Lennox y Nueva / Juan Pablo II / plebiscito), <strong>1994</strong> (Laguna del Desierto) y <strong>1998</strong> (Hielos Continentales: <strong>Monte Fitz Roy</strong> – Cerro Daudet).</li>
+          <li><strong>Llanuras (TP 1):</strong> Las vastas planicies se destacan por su gran capacidad de <strong>poblamiento</strong> y aprovechamiento para la producción agropecuaria.</li>
+          <li><strong>Macizos y Sierras (TP 2):</strong> las <strong>Mahuidas</strong> se localizan en el centro-sur de <strong>La Pampa</strong>; las Sierras Pampeanas tienen cumbres chatas (pampas) y laderas asimétricas.</li>
+          <li><strong>Mapas de Climas y Regiones:</strong> En el mapa de climas conviene delimitar con líneas las <strong>12 subvariedades</strong> dentro de los 4 grandes grupos, y en <strong>Cuyo</strong> recordar que la población se concentra en los <strong>oasis fértiles</strong> irrigados.</li>
+        </ul>
+      </div>
+
+      <div class="section-head">
+        <h2>Guías Express por Unidad</h2>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <button class="btn btn-sm" id="btn-expand-all">Abrir todas</button>
+          <button class="btn btn-sm" id="btn-collapse-all">Cerrar todas</button>
+        </div>
+      </div>
+      <div id="guides-container"></div>
+    </section>
+
+    <!-- TAB 2: FLASHCARDS -->
+    <section id="tab-flashcards" class="tab-panel">
+      <div class="card">
+        <div class="fc-toolbar">
+          <div class="fc-controls">
+            <select id="fc-unit-filter" class="input-select" aria-label="Filtrar por unidad"></select>
+            <label style="display:flex; align-items:center; gap:6px; font-size:0.88rem; font-weight:600; cursor:pointer;">
+              <input type="checkbox" id="fc-only-review" /> Solo para repasar
+            </label>
+          </div>
+          <div class="fc-controls">
+            <button class="btn btn-sm" id="fc-shuffle">Mezclar mazo</button>
+            <button class="btn btn-sm" id="fc-reset-progress">Reiniciar avance</button>
+          </div>
+        </div>
+        <div class="progress-track"><div class="progress-fill" id="fc-progress-bar"></div></div>
+        <div id="fc-area"></div>
+      </div>
+    </section>
+
+    <!-- TAB 3: PRACTICA TIPO TP OFICIAL -->
+    <section id="tab-practica" class="tab-panel">
+      <div class="subgame-tabs">
+        <button class="pill-btn active" data-subgame="classifier">Clasificador Rápido (TPs y Vientos/Biomas)</button>
+        <button class="pill-btn" data-subgame="vf">Verdadero o Falso con Explicación</button>
+        <button class="pill-btn" data-subgame="crossword">Crucigrama Clave M-E-S-E-T-A (TP 3)</button>
+      </div>
+
+      <!-- Subjuego A: Clasificador -->
+      <div id="sg-classifier" class="card">
+        <div class="section-head">
+          <h2>Clasificador Rápido</h2>
+          <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center;">
+            <select id="clf-mode" class="input-select" aria-label="Tema del clasificador">
+              <option value="llanuras">TP 1: 4 Cuencas de Llanuras</option>
+              <option value="montanas">TP 2: Macizos Antiguos vs. Plegamiento Joven</option>
+              <option value="mesetas">TP 3: Las 3 Mesetas de Argentina</option>
+              <option value="vientos">Clima: Vientos de Argentina</option>
+              <option value="biomas">Biomas de Argentina</option>
+            </select>
+            <button class="btn btn-sm" id="clf-restart">Reiniciar ronda</button>
+          </div>
+        </div>
+        <div id="clf-stage"></div>
+      </div>
+
+      <!-- Subjuego B: Verdadero o Falso -->
+      <div id="sg-vf" class="card" style="display:none;">
+        <div class="section-head">
+          <h2>Verdadero o Falso (16 Claves de Carpeta y TPs)</h2>
+          <button class="btn btn-sm" id="vf-restart">Volver a empezar</button>
+        </div>
+        <div id="vf-stage"></div>
+      </div>
+
+      <!-- Subjuego C: Crucigrama MESETA -->
+      <div id="sg-crossword" class="card" style="display:none;">
+        <div class="section-head">
+          <h2>Crucigrama del TP 3: Eje vertical M - E - S - E - T - A</h2>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="btn btn-primary btn-sm" id="cw-check">Comprobar respuestas</button>
+            <button class="btn btn-amber btn-sm" id="cw-hint">Pista (1 letra)</button>
+            <button class="btn btn-sm" id="cw-clear">Limpiar</button>
+          </div>
+        </div>
+        <p style="margin-top:0; font-size:0.9rem; color:var(--muted);">Completá cada fila usando las referencias del TP 3. La columna resaltada en ámbar forma verticalmente la palabra <strong>MESETA</strong>.</p>
+        <div class="crossword-wrap" id="cw-grid"></div>
+        <div id="cw-feedback"></div>
+        <div style="margin-top:16px;">
+          <h4 style="margin:0 0 8px; color:var(--navy);">Referencias oficiales del TP 3:</h4>
+          <ol style="margin:0; padding-left:20px; font-size:0.9rem;" id="cw-clues"></ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: SIMULACRO -->
+    <section id="tab-simulacro" class="tab-panel">
+      <div id="exam-lobby" class="card">
+        <div class="section-head">
+          <h2>Simulacro de Examen — Nota del 1 al 10</h2>
+          <span class="badge badge-c1">Banco real de 60 preguntas (30 + 30)</span>
+        </div>
+        <p style="margin-top:0; color:var(--muted); font-size:0.93rem;">
+          Elegí qué mesa vas a simular. El feedback aparece recién <strong>después</strong> de elegir tu respuesta, y al terminar te calcula la nota sobre 10 y qué unidades conviene repasar.
+        </p>
+        <div class="exam-modes">
+          <div class="mode-card">
+            <div>
+              <span class="badge badge-c1">Mesa 1° Cuatrimestre</span>
+              <h3 style="margin-top:8px;">América, Límites y Regiones</h3>
+              <p>Hojas 1 a 20: localización, macizos, puntos extremos, provincias, cuestiones limítrofes y 6 regiones.</p>
+            </div>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <button class="btn btn-primary btn-sm start-exam-btn" data-mode="1" data-count="10">Rápido (10 preg.)</button>
+              <button class="btn btn-navy btn-sm start-exam-btn" data-mode="1" data-count="20">Completo (20 preg.)</button>
+            </div>
+          </div>
+          <div class="mode-card">
+            <div>
+              <span class="badge badge-c2">Mesa 2° Cuatrimestre</span>
+              <h3 style="margin-top:8px;">Relieve, Agua, Clima, Biomas y Población</h3>
+              <p>Hojas 21 a 40 + TPs 1, 2 y 3: llanuras, montañas, mesetas, cuencas, 12 climas, 8 biomas y censos.</p>
+            </div>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <button class="btn btn-primary btn-sm start-exam-btn" data-mode="2" data-count="10">Rápido (10 preg.)</button>
+              <button class="btn btn-navy btn-sm start-exam-btn" data-mode="2" data-count="20">Completo (20 preg.)</button>
+            </div>
+          </div>
+          <div class="mode-card">
+            <div>
+              <span class="badge badge-tp">Integrador Final</span>
+              <h3 style="margin-top:8px;">Ambos Cuatrimestres Mezclados</h3>
+              <p>Simulacro total para probar si estás listo para rendir el 1° y 2° cuatrimestre juntos.</p>
+            </div>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <button class="btn btn-amber btn-sm start-exam-btn" data-mode="all" data-count="20">Integrador (20 preg.)</button>
+              <button class="btn btn-navy btn-sm start-exam-btn" data-mode="all" data-count="30">Desafío (30 preg.)</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="exam-runner" class="card" style="display:none;"></div>
+      <div id="exam-results" class="card" style="display:none;"></div>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      "use strict";
+
+      const STORAGE_KEY = "geo3_marito_2026_v1";
+      let state = {
+        term: "all",
+        tab: "guias",
+        knownFc: {},
+        reviewFc: {},
+        bestScores: { "1": null, "2": null, "all": null }
+      };
+
+      function loadState() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            if (parsed && typeof parsed === "object") {
+              state.knownFc = parsed.knownFc || {};
+              state.reviewFc = parsed.reviewFc || {};
+              state.bestScores = Object.assign({ "1": null, "2": null, "all": null }, parsed.bestScores || {});
+            }
+          }
+        } catch (e) { /* sin storage */ }
+      }
+
+      function saveState() {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify({
+            knownFc: state.knownFc,
+            reviewFc: state.reviewFc,
+            bestScores: state.bestScores
+          }));
+        } catch (e) { /* ignorar */ }
+      }
+
+      function escapeHtml(str) {
+        return String(str)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+
+      function normalizeText(str) {
+        return String(str || "")
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .toUpperCase()
+          .trim();
+      }
+
+      /* ===================== DATOS: GUIAS EXPRESS ===================== */
+      const GUIDES = [
+        {
+          id: "u1-america",
+          term: 1,
+          badge: "1° Cuat. · Hojas T.C. y 2–3",
+          title: "1. América: Localización, Límites y Criterios de División",
+          html: `
+            <h4>Localización</h4>
+            <ul>
+              <li><strong>Según el Ecuador (0°):</strong> Hemisferio Norte y Hemisferio Sur.</li>
+              <li><strong>Según el Meridiano de Greenwich (0°):</strong> mayor parte en el Hemisferio Occidental, salvo las <strong>Islas Aleutianas</strong> (extremo de Alaska), ubicadas en el Hemisferio Oriental.</li>
+            </ul>
+            <h4>Límites de América</h4>
+            <ul>
+              <li><strong>Norte:</strong> Océano Glacial Ártico y sus mares dependientes: Mar de Beaufort y Mar de Lincoln.</li>
+              <li><strong>Este:</strong> Océano Atlántico y mares dependientes: Golfo de México, Mar de las Antillas (Caribe) y Mar Argentino.</li>
+              <li><strong>Oeste:</strong> Océano Pacífico. | <strong>Sur:</strong> Pasaje de Drake.</li>
+            </ul>
+            <h4>4 Criterios de División de América</h4>
+            <div class="table-wrap"><table class="geo-table">
+              <thead><tr><th>Criterio</th><th>Divisiones</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Geológico-estructural</strong></td><td>América del Norte, América Central y América del Sur.</td></tr>
+                <tr><td><strong>Político</strong></td><td>Países (23 referencias trabajadas en el mapa + Islas del Caribe).</td></tr>
+                <tr><td><strong>Cultural</strong></td><td>América Anglosajona y América Latina.</td></tr>
+                <tr><td><strong>Económico</strong></td><td>América Desarrollada y América Subdesarrollada.</td></tr>
+              </tbody>
+            </table></div>
+          `
+        },
+        {
+          id: "u2-relieve-am",
+          term: 1,
+          badge: "1° Cuat. · Hojas 4–5",
+          title: "2. Relieve de América (Montañas, Llanuras y 5 Macizos Antiguos)",
+          html: `
+            <p><strong>Relieve:</strong> conjunto de formas, irregularidades y desniveles de la corteza terrestre, en los continentes y fondos oceánicos.</p>
+            <h4>Montañas y Llanuras por Subregión</h4>
+            <ul>
+              <li><strong>América del Norte:</strong> Montañas: Montes Apalaches y Macizo Plegado del Oeste (Rocosas). Llanuras: Pradera Canadiense, Grandes Llanos, Grandes Lagos y Llanura del Mississippi.</li>
+              <li><strong>América Central:</strong> Cordillera de Talamanca.</li>
+              <li><strong>América del Sur:</strong> Cordillera de los Andes. Llanuras: Llanos del Orinoco, Llanura del Amazonas y Llanura Chaco-Pampeana.</li>
+            </ul>
+            <h4>Los 5 Macizos Antiguos</h4>
+            <div class="table-wrap"><table class="geo-table">
+              <thead><tr><th>Macizo</th><th>Ubicación y rasgos clave</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Escudo Canádico</strong></td><td>Arco al NE de Canadá, Bahía de Hudson y parte de Groenlandia. Rocas precámbricas duras erosionadas hasta casi llanura; glaciación cenozoica dejó lagos interiores y costas recortadas.</td></tr>
+                <tr><td><strong>Montes Apalaches</strong></td><td>Barrera NE–SO de Canadá al interior de EE. UU.; centro dispersor de aguas (energía hidroeléctrica).</td></tr>
+                <tr><td><strong>Macizo de Guayania</strong></td><td>Guayanas, SE de Venezuela y N de Brasil. Montañas tabulares (forma de mesa) fracturadas y ascendidas por el plegamiento Andino.</td></tr>
+                <tr><td><strong>Macizo de Brasilia</strong></td><td>Meseta más extensa de América del Sur y mayor afloramiento; al este predominan altiplanicies y mesetas bajas.</td></tr>
+                <tr><td><strong>Macizo Patagónico</strong></td><td>Patagonia extraandina al sur del río Colorado; meseta escalonada que baja de los Andes al Atlántico terminando en costa acantilada.</td></tr>
+              </tbody>
+            </table></div>
+          `
+        },
+        {
+          id: "u3-espacio-arg",
+          term: 1,
+          badge: "1° Cuat. · Hojas 6–9",
+          title: "3. Espacio Geográfico, Puntos Extremos, Límites y 23 Provincias",
+          html: `
+            <ul>
+              <li><strong>Forma y extensión:</strong> alargada en sentido de meridianos. Largo N–S: <strong>3.799 km</strong>. Ancho máximo E–O sobre 27° 31' S: <strong>1.453 km</strong>. Escasamente poblada en relación con su superficie.</li>
+              <li><strong>Límites generales:</strong> Norte (Bolivia, Paraguay, parte de Brasil), Sur (Pasaje de Drake), Oeste (Chile), Este (parte de Brasil, Uruguay y Mar Argentino).</li>
+            </ul>
+            <h4>Los 4 Puntos Extremos</h4>
+            <div class="table-wrap"><table class="geo-table">
+              <thead><tr><th>Punto</th><th>Lugar</th><th>Coordenadas</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Norte</strong></td><td>Confluencia ríos Grande de San Juan y Mojinete (Jujuy)</td><td><strong>21° 46' S</strong> · 66° 13' O</td></tr>
+                <tr><td><strong>Sur</strong></td><td>Cabo San Pío (Tierra del Fuego)</td><td><strong>55° 03' S</strong> · 66° 31' O</td></tr>
+                <tr><td><strong>Oeste</strong></td><td>Punto en el Parque Nacional Los Glaciares (Santa Cruz)</td><td><strong>50° 01' S</strong> · 73° 34' O</td></tr>
+                <tr><td><strong>Este</strong></td><td>Localidad de Bernardo de Irigoyen (Misiones)</td><td><strong>26° 15' S</strong> · 53° 38' O</td></tr>
+              </tbody>
+            </table></div>
+            <h4>Capitales que más se confunden (23 Provincias + CABA)</h4>
+            <p><strong>Catamarca:</strong> San Fernando del Valle de Catamarca · <strong>Río Negro:</strong> Viedma · <strong>Chubut:</strong> Rawson · <strong>Entre Ríos:</strong> Paraná · <strong>Misiones:</strong> Posadas · <strong>Chaco:</strong> Resistencia · <strong>La Pampa:</strong> Santa Rosa · <strong>Santa Cruz:</strong> Río Gallegos · <strong>Tierra del Fuego:</strong> Ushuaia · <strong>Jujuy:</strong> San Salvador de Jujuy · <strong>Tucumán:</strong> San Miguel de Tucumán · <strong>Bs. As.:</strong> La Plata.</p>
+          `
+        },
+        {
+          id: "u4-limites-arg",
+          term: 1,
+          badge: "1° Cuat. · Hojas 10–14",
+          title: "4. Límites, Fronteras y Cuestiones Limítrofes (Bolivia, Paraguay, Brasil, Uruguay, Chile)",
+          html: `
+            <p><strong>Límite:</strong> línea imaginaria convencional que separa la soberanía de dos Estados. <strong>Frontera:</strong> franja a ambos lados del límite donde interactúan e intercambian culturas y economías sus habitantes.</p>
+            <div class="table-wrap"><table class="geo-table">
+              <thead><tr><th>País</th><th>Hitos y Resoluciones</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Bolivia</strong></td><td>Tratado de <strong>1925</strong>: <strong>742 km</strong> desde Cerro Zapaleri (O) a Punto Esmeralda (E), usando elementos naturales y el <strong>paralelo 22° S</strong>. Disputas: <strong>Tarija y Juntas de San Antonio</strong> → Bolivia; <strong>Puna de Atacama</strong> → Argentina; <strong>Yacuiba</strong> (quedaba en Argentina por el paralelo 22° S, pero por pedido de pobladores pasó a Bolivia).</td></tr>
+                <tr><td><strong>Paraguay</strong></td><td>Acuerdo de <strong>1876</strong> (tras Triple Alianza): <strong>Talweg o vaguada</strong> de ríos Paraguay y Paraná. <strong>Chaco Boreal</strong> (entre ríos Verde y Pilcomayo): por arbitraje norteamericano quedó para Paraguay; Argentina afianzó Formosa. Curso medio del Pilcomayo (cauce fluctuante): <strong>línea geométrica</strong>.</td></tr>
+                <tr><td><strong>Brasil</strong></td><td>Rivalidad colonial por misiones jesuíticas. Arbitraje norteamericano de <strong>1895</strong> otorgó ~<strong>30.000 km²</strong> a Brasil. Límite en Misiones: ríos San Antonio y Pepirí Guazú + <strong>30 km de frontera seca</strong> (Bernardo de Irigoyen). Ríos Uruguay e Iguazú: Talweg, salvo Cataratas (<strong>Salto Unión</strong>).</td></tr>
+                <tr><td><strong>Uruguay</strong></td><td>Río Uruguay: Talweg, salvo embalse de <strong>Salto Grande</strong> (línea geométrica). Río de la Plata: <strong>línea media de 23 puntos</strong> (entre Punta del Este y Punta Rasa); aguas de <strong>uso común</strong> con franjas costeras exclusivas. Límite lateral marítimo: <strong>200 millas marinas</strong>.</td></tr>
+                <tr><td><strong>Chile</strong></td><td>Tratado de <strong>1881</strong>. <strong>Canal de Beagle</strong> (1970–1984): islas Picton, Lennox y Nueva; rechazo fallo inglés; mediación <strong>Papa Juan Pablo II</strong> + plebiscito 1984. <strong>Laguna del Desierto</strong> (1994): tribunal latinoamericano → Argentina. <strong>Hielos Continentales</strong> (dic. 1998): línea geométrica entre <strong>Monte Fitz Roy</strong> y Cerro Daudet.</td></tr>
+              </tbody>
+            </table></div>
+          `
+        },
+        {
+          id: "u5-regiones-arg",
+          term: 1,
+          badge: "1° Cuat. · Hojas 14v–20",
+          title: "5. Regiones Geográficas de Argentina (Las 6 Regiones)",
+          html: `
+            <p><strong>Región geográfica:</strong> porción del territorio con elementos naturales y rasgos culturales particulares que le confieren identidad espacial y organización territorial propia.</p>
+            <div class="table-wrap"><table class="geo-table">
+              <thead><tr><th>Región</th><th>Provincias</th><th>Relieve, Bioma y Población</th></tr></thead>
+              <tbody>
+                <tr><td><strong>NEA</strong></td><td>Misiones, Corrientes, Formosa, Chaco</td><td>Chaco (planicie), NE correntino (esteros/hondonadas), NE misionero (meseta). Biomas variados (selva, bosque, parque, monte, sabana, espinal). Población ligada al Paraná/Uruguay y ciudades coloniales.</td></tr>
+                <tr><td><strong>NOA</strong></td><td>Jujuy, <strong>Salta</strong>, Tucumán, Sgo. del Estero, Catamarca</td><td>Complejo: Cordillera Oriental, Puna, Sierras Subandinas, valles y llanura al este. Biomas: Yunga y estepa puneña. Región más poblada antes de la colonización.</td></tr>
+                <tr><td><strong>Cuyo</strong></td><td>Mendoza, San Juan, La Rioja</td><td>Altas montañas (Andes/Precordillera), valles y <strong>travesías</strong> desérticas al este. Bioma árido (diagonal árida); población concentrada en los <strong>oasis fértiles</strong> irrigados.</td></tr>
+                <tr><td><strong>Pampeana</strong></td><td>Bs. As., Santa Fe, Córdoba, San Luis, Entre Ríos, La Pampa</td><td>Predominio de <strong>llanura</strong> sedimentaria (con Tandilia y Ventania). Bioma: <strong>pastizal</strong> (+ espinal/monte al O y bosque en galería sobre el Paraná).</td></tr>
+                <tr><td><strong>Metropolitana</strong></td><td>CABA + Partidos del Gran Bs. As. (PGBA)</td><td>Área urbana de mayor concentración nacional (~30% del país).</td></tr>
+                <tr><td><strong>Patagonia</strong></td><td>Neuquén, Río Negro, Chubut, Santa Cruz, Tierra del Fuego</td><td>Población en valles del oeste y puertos costeros. <strong>Andina:</strong> montañas y bosque patagónico-fueguino. <strong>Extraandina:</strong> meseta con cañadones y estepa.</td></tr>
+              </tbody>
+            </table></div>
+          `
+        },
+        {
+          id: "u6-llanuras",
+          term: 2,
+          badge: "2° Cuat. · Hoja 21 + TP 1",
+          title: "6. Eje 2 Relieve: Agentes y Llanuras de Argentina (TP 1)",
+          html: `
+            <p><strong>Relieve:</strong> resultado de <strong>agentes interiores</strong> (orogénesis, epirogénesis, vulcanismo, sismos) y modelado por <strong>agentes exteriores</strong> (mares, glaciares, vientos, ríos, seres vivos y acción humana). Desde el paisaje: Llanura Chaqueña, Pampeana (Llanura Chaco-Pampeana) y Bolsones, campos y llanos.</p>
+            <div class="table-wrap"><table class="geo-table">
+              <thead><tr><th>Cuenca</th><th>Localización</th><th>Características clave</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Chaco-Paranaense</strong></td><td>Llanura chaqueña, Esteros Correntinos, lomadas entrerrianas, Planicie Deltaica y Llanura Pampeana.</td><td>Surcada por fallas con lagunas y densa red hídrica; pendiente disminuye rápido al Este; terrazas fluviales; clima y biomas marcan diferencias regionales.</td></tr>
+                <tr><td><strong>Del Salado</strong></td><td>Pampa Deprimida (~13% de prov. Bs. As.).</td><td>Baja pendiente longitudinal del río Salado; suelos arcillosos, inundaciones frecuentes, bajos/lagunas; planicies de marea y albuferas en el litoral.</td></tr>
+                <tr><td><strong>Claromecó</strong></td><td>Pampa Interserrana (entre Tandilia y Ventania hacia Bahía Blanca).</td><td>Excelente aptitud agrícola (cereales, oleaginosas) y ganadera; arroyos con alto potencial erosivo.</td></tr>
+                <tr><td><strong>Del Colorado</strong></td><td>Valles ríos Colorado y Negro (entre Ventania y Somuncurá).</td><td>Gran acumulación de sedimentos; planicies, terrazas fluviales, cuerpos de aguas salobres y cauces abandonados.</td></tr>
+              </tbody>
+            </table></div>
+          `
+        },
+        {
+          id: "u7-montanas",
+          term: 2,
+          badge: "2° Cuat. · TP 2",
+          title: "7. Macizos Antiguos y Montañas de Plegamiento Joven (TP 2)",
+          html: `
+            <h4>Macizos Antiguos (7 sistemas)</h4>
+            <ul>
+              <li><strong>Cordillera Oriental:</strong> barrera climática (frena vientos atlánticos hacia Puna). Dos cordones N–S: Sierras de Aguilar (&gt;5.000 m) y Chañi (5.896 m). Quebradas: Humahuaca, del Toro y Valles Calchaquíes.</li>
+              <li><strong>Cordillera Frontal:</strong> rejuvenecida por orogenia andina; límite internacional en La Rioja y San Juan. Cordones: San Guillermo, Colangüil, Ansilta, del Tigre, del Plata, Llaretas; gargantas profundas.</li>
+              <li><strong>Precordillera:</strong> inicia en La Rioja y alcanza mayor altura/amplitud en San Juan (~3.000 m) hasta Mendoza; entre Frontal y Pampeanas.</li>
+              <li><strong>Sierras Pampeanas:</strong> Tucumán, Catamarca, La Rioja, Sgo. del Estero, Córdoba, San Luis y San Juan; bloques fracturados con <strong>cumbres chatas (pampas)</strong>, laderas asimétricas (abruptas al O, suaves al E) y bolsones.</li>
+              <li><strong>Ventania (Sierras Australes):</strong> SO de Bs. As.; 7 cumbres &gt;1.000 m; Cerro Tres Picos (1.239 m).</li>
+              <li><strong>Tandilia (Sierras Septentrionales):</strong> centro-SE de Bs. As. rumbo NO–SE desde río Vallimanca hasta Cabo Corrientes.</li>
+              <li><strong>Mahuidas:</strong> centro-sur de <strong>La Pampa</strong>; lomas aisladas al N y alineadas al S de rocas muy duras (granito, pórfidos cuarcíferos).</li>
+            </ul>
+            <h4>Montañas de Plegamiento Joven (4 sistemas)</h4>
+            <ul>
+              <li><strong>Cordillera Principal:</strong> encadenamiento uniforme y muy alto (tramo de Andes Centrales).</li>
+              <li><strong>Sierras Subandinas:</strong> jóvenes, bajas, angostas y suaves en Jujuy, Salta y Tucumán (limitan con Llanura Chaqueña).</li>
+              <li><strong>Patagonides:</strong> desde centro de Neuquén al codo del río Senguer (Chubut); sierras bajas separadas de los Andes por depresiones fluviales.</li>
+              <li><strong>Andes Patagónico-Fueguinos:</strong> bloques aislados de norte a sur (no encadenamiento continuo).</li>
+            </ul>
+          `
+        },
+        {
+          id: "u8-mesetas",
+          term: 2,
+          badge: "2° Cuat. · TP 3",
+          title: "8. Las Mesetas en Argentina (TP 3 · Claves M-E-S-E-T-A)",
+          html: `
+            <div class="table-wrap"><table class="geo-table">
+              <thead><tr><th>Meseta</th><th>Altura y Ubicación</th><th>Rasgos geológicos y económicos</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Puna</strong></td><td>&gt;3.500 m (NOA)</td><td>Peniplanicie con serranías y volcanes inactivos (Incahuasi, Socompa). Minerales metalíferos y <strong>salares</strong>. Gran amplitud térmica diaria → desagregación <strong>mecánica</strong>.</td></tr>
+                <tr><td><strong>Meseta Misionera</strong></td><td>200–800 m (Misiones / NE Corrientes)</td><td>Serranías de cumbres planas con rocas volcánicas <strong>basálticas</strong> e intercalaciones de <strong>areniscas</strong>. Lluvias abundantes, ríos encajados con saltos (Iguazú) y tierra roja laterítica.</td></tr>
+                <tr><td><strong>Patagonia Extraandina</strong></td><td>Desde <strong>piedemonte</strong> cuyano / río Colorado a Tierra del Fuego</td><td>Desciende escalonada de O a E y termina en el Atlántico en <strong>acantilados</strong>. Derrames volcánicos, yacimientos (hierro, plomo) y grandes bajos (San Julián).</td></tr>
+              </tbody>
+            </table></div>
+          `
+        },
+        {
+          id: "u9-hidrografia",
+          term: 2,
+          badge: "2° Cuat. · Hojas 22–25",
+          title: "9. Hidrografía de Argentina (Cuencas, Pendientes y Cuenca del Plata)",
+          html: `
+            <ul>
+              <li><strong>Red hidrográfica:</strong> río principal + afluentes + subafluentes. <strong>Cuenca:</strong> territorio + red que lo irriga.</li>
+              <li><strong>Clasificación por desembocadura:</strong> <strong>Exorreicas</strong> (al mar/océano), <strong>Endorreicas</strong> (lagos/lagunas interiores sin salida al mar), <strong>Arreicas</strong> (se evaporan/infiltran antes de formar red definida).</li>
+              <li><strong>Pendiente Atlántica vs. Pacífica:</strong> Atlántica = ríos largos, caudalosos, muchos afluentes. Pacífica = cortos, gran pendiente y torrentosos.</li>
+              <li><strong>Ríos patagónicos:</strong> nacen en cordillera, cruzan mesetas y tienen <strong>dos crecidas al año</strong>: invierno (lluvias) y primavera (fusión de nieve).</li>
+              <li><strong>Cuencas interiores:</strong> <strong>Desaguadero</strong> (San Juan, Mendoza, Tunuyán, Diamante, Atuel; en años muy lluviosos llega al Colorado) vs. <strong>Sierras Pampeanas</strong> (ríos cortos endorreicos para riego y consumo).</li>
+              <li><strong>Cuenca del Plata:</strong> ~<strong>3.200.000 km²</strong> (Paraguay completo y partes de Brasil, Bolivia, Uruguay y Argentina). Ríos <strong>Paraná, Paraguay y Uruguay</strong>. Alta navegabilidad; problemas: inundaciones, deforestación, erosión agrícola, urbanización y represas.</li>
+            </ul>
+          `
+        },
+        {
+          id: "u10-climas",
+          term: 2,
+          badge: "2° Cuat. · Hojas 25v–29",
+          title: "10. Climas de Argentina (4 Factores, Vientos y 12 Subtipos)",
+          html: `
+            <p><strong>4 Factores:</strong> 1) Desarrollo latitudinal (21° a 55° S), 2) Continentalidad (mayor amplitud térmica hacia el O), 3) Disposición del relieve (Andes frenan humedad del Pacífico → <strong>diagonal árida</strong>), 4) Vientos dominantes.</p>
+            <p><strong>Vientos clave:</strong> <strong>Zonda</strong> (cálido, fuerte, muy seco en San Juan/Cuyo), <strong>Sudestada</strong> (frío, muy húmedo desde el mar → tormentas), <strong>Norte</strong> (muy cálido), <strong>Pampero</strong> (frío de verano en zona pampeana), <strong>Polar</strong> (muy frío antártico de S a N).</p>
+            <div class="table-wrap"><table class="geo-table">
+              <thead><tr><th>Tipo</th><th>Subtipo</th><th>Temp. media</th><th>Precipitaciones</th></tr></thead>
+              <tbody>
+                <tr><td>Cálido</td><td>Subtropical sin estación seca</td><td>&gt; 20 °C</td><td>&gt; 1.000 mm</td></tr>
+                <tr><td>Cálido</td><td>Subtropical con estación seca</td><td>&gt; 20 °C</td><td>500–1.000 mm</td></tr>
+                <tr><td>Cálido</td><td>Subtropical serrano</td><td>~17 °C</td><td>~900 mm</td></tr>
+                <tr><td>Templado</td><td>Pampeano húmedo</td><td>17 °C</td><td>500–1.000 mm</td></tr>
+                <tr><td>Templado</td><td>Pampeano semiárido</td><td>15–17 °C</td><td>&lt; 500 mm</td></tr>
+                <tr><td>Templado</td><td>Templado serrano</td><td>15–17 °C</td><td>400–600 mm</td></tr>
+                <tr><td>Árido</td><td>De sierras y bolsones</td><td>15–17 °C</td><td>&lt; 200 mm</td></tr>
+                <tr><td>Árido</td><td>Semiárido</td><td>18 °C</td><td>&lt; 500 mm</td></tr>
+                <tr><td>Árido</td><td>Patagónico</td><td>13 °C N / 7 °C S</td><td>&lt; 300 mm</td></tr>
+                <tr><td>Árido</td><td>Andino Puneño</td><td>10 °C</td><td>&lt; 200 mm</td></tr>
+                <tr><td>Frío</td><td>Frío húmedo</td><td>8 °C N / 7 °C S</td><td>500–1.000 mm</td></tr>
+                <tr><td>Frío</td><td>Frío polar</td><td>-4,5 °C costa / -20 °C int.</td><td>150–800 mm</td></tr>
+              </tbody>
+            </table></div>
+          `
+        },
+        {
+          id: "u11-biomas",
+          term: 2,
+          badge: "2° Cuat. · Hojas 30–34",
+          title: "11. Biomas de Argentina (Los 8 Biomas)",
+          html: `
+            <div class="table-wrap"><table class="geo-table">
+              <thead><tr><th>Bioma</th><th>Localización y Rasgos Clave</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Selva Misionera (Paranaense)</strong></td><td>Misiones y E de Corrientes. 4 estratos vegetales, máxima biodiversidad: lapacho, laurel, palo rosa, cedro misionero.</td></tr>
+                <tr><td><strong>Selva Tucumano-Oranense (Yunga)</strong></td><td>Faldas andinas de Jujuy, Salta, Tucumán y Catamarca. Vegetación cambia con la altitud.</td></tr>
+                <tr><td><strong>Parque Chaqueño</strong></td><td><em>Chaco húmedo</em> (bosques en galería, esteros; quebracho colorado) y <em>Chaco seco</em> (quebracho colorado y blanco).</td></tr>
+                <tr><td><strong>Pastizal Pampeano</strong></td><td>Templado húmedo con gramíneas; árboles sobre ríos y cordones de conchilla (<strong>tala</strong>).</td></tr>
+                <tr><td><strong>Monte</strong></td><td>Estepa de arbustos altos (1–3 m) en zona árida; algarrobo al norte.</td></tr>
+                <tr><td><strong>Estepa Andina y de la Puna</strong></td><td>Herbácea baja y rala adaptada al extremo: <strong>coirones</strong> (Andes) y <strong>tolas</strong> (Puna).</td></tr>
+                <tr><td><strong>Estepa Patagónica</strong></td><td>Arbustos achaparrados sin hojas o muy pequeñas; pastizales en <strong>mallines</strong> húmedos.</td></tr>
+                <tr><td><strong>Bosques Patagónico-Fueguinos</strong></td><td>Franja andina de Neuquén a Tierra del Fuego; árboles de 30–40 m del género <em>Nothofagus</em> (coihue, lenga, ñire).</td></tr>
+              </tbody>
+            </table></div>
+          `
+        },
+        {
+          id: "u12-poblacion",
+          term: 2,
+          badge: "2° Cuat. · Hojas 35–40",
+          title: "12. Población de Argentina (Distribución, Crecimiento y Estructura)",
+          html: `
+            <ul>
+              <li><strong>Distribución:</strong> factores ambientales (extremos inhiben asentamiento) y económicos/sociales/históricos. Casi el <strong>30%</strong> vive en el <strong>Gran Buenos Aires</strong>, seguido por Córdoba y Rosario.</li>
+              <li><strong>Cuadro interior:</strong> <strong>Mendoza</strong> (7% en capital; vitivinicultura, industria, ganadería en Malargüe), <strong>La Rioja</strong> (50,5% en capital; agropecuario comercial), <strong>Río Negro</strong> (9,1% en capital; agricultura y ganadería extensiva).</li>
+              <li><strong>Crecimiento total = Crecimiento vegetativo</strong> (nacimientos − muertes) + <strong>Saldo migratorio</strong> (inmigrantes − emigrantes).</li>
+              <li><strong>Evolución censal:</strong> fines S. XIX (acelerado), inicios S. XX (contingentes europeos; ~30% extranjeros en 1914), segunda mitad S. XX (moderado). Censos: 1914 (7,9M) → 1947 (15,89M) → 1960 (20,01M) → 1970 (23,36M) → 1980 (27,95M) → 1991 (32,62M) → 2001 (36,26M).</li>
+              <li><strong>Estructura (sexo y edad):</strong> <strong>Índice de masculinidad</strong> = varones cada 100 mujeres (menor en edades altas; mayor en áreas rurales/mineras). <strong>Índice de dependencia potencial</strong> = relación entre inactivos (niños y ancianos) y personas en edad de trabajar. Mayor envejecimiento en países desarrollados y, en Argentina, en la <strong>zona pampeana</strong> frente a Chaco o Santiago del Estero.</li>
+            </ul>
+          `
+        }
+      ];
+
+      /* ===================== DATOS: 52 FLASHCARDS (26 + 26) ===================== */
+      const FLASHCARDS = [
+        // 1° CUATRIMESTRE (26)
+        { id: "fc1", term: 1, unit: "América", q: "¿En qué hemisferios se ubica América según el Ecuador y según Greenwich?", a: "Según el Ecuador: Norte y Sur. Según Greenwich: mayor parte en el Occidental, salvo las Islas Aleutianas en el Hemisferio Oriental." },
+        { id: "fc2", term: 1, unit: "América", q: "¿Cuáles son los 4 límites oceánicos/marítimos de América?", a: "Norte: Océano Glacial Ártico (mares de Beaufort y Lincoln). Este: Océano Atlántico (Golfo de México, Mar de las Antillas y Mar Argentino). Oeste: Océano Pacífico. Sur: Pasaje de Drake." },
+        { id: "fc3", term: 1, unit: "América", q: "Nombrá los 4 criterios de división de América y sus ramas.", a: "Geológico-estructural (Norte, Central, Sur), Político (países), Cultural (Anglosajona, Latina) y Económico (Desarrollada, Subdesarrollada)." },
+        { id: "fc4", term: 1, unit: "América", q: "¿Cómo se define 'relieve'?", a: "Conjunto de formas, irregularidades y desniveles de la corteza terrestre, tanto en los continentes como en los fondos oceánicos." },
+        { id: "fc5", term: 1, unit: "América", q: "¿Qué montañas destacan en América del Norte, Central y del Sur?", a: "Norte: Montes Apalaches y Macizo Plegado del Oeste. Central: Cordillera de Talamanca. Sur: Cordillera de los Andes." },
+        { id: "fc6", term: 1, unit: "América", q: "Enumera las llanuras de América del Norte y América del Sur vistas en carpeta.", a: "Norte: Pradera Canadiense, Grandes Llanos, Grandes Lagos y Llanura del Mississippi. Sur: Llanos del Orinoco, Llanura del Amazonas y Llanura Chaco-Pampeana." },
+        { id: "fc7", term: 1, unit: "América", q: "¿Qué ocurrió con el Escudo Canádico durante la glaciación cenozoica?", a: "Sus rocas precámbricas duras fueron aplastadas por el hielo, provocando hundimientos y fracturas que formaron lagos interiores y costas recortadas." },
+        { id: "fc8", term: 1, unit: "América", q: "¿Qué característica distingue al Macizo de Guayania y al de Brasilia?", a: "Guayania presenta montañas tabulares (en forma de mesa) fracturadas por el plegamiento andino; Brasilia es la meseta más extensa de Sudamérica y de mayor afloramiento." },
+        { id: "fc9", term: 1, unit: "Espacio Arg.", q: "¿Cuánto mide la extensión Norte-Sur y la anchura máxima de Argentina?", a: "Extensión N–S: 3.799 km. Anchura máxima E–O (sobre 27° 31' S): 1.453 km." },
+        { id: "fc10", term: 1, unit: "Espacio Arg.", q: "¿Cuál es el Punto Extremo Norte de Argentina y su coordenada REAL?", a: "Confluencia de los ríos Grande de San Juan y Mojinete (Jujuy), a 21° 46' S y 66° 13' O." },
+        { id: "fc11", term: 1, unit: "Espacio Arg.", q: "¿Cuáles son los puntos extremos Sur, Oeste y Este de Argentina?", a: "Sur: Cabo San Pío (Tierra del Fuego, 55° 03' S). Oeste: punto en el Parque Nacional Los Glaciares (Santa Cruz, 73° 34' O). Este: Bernardo de Irigoyen (Misiones, 53° 38' O)." },
+        { id: "fc12", term: 1, unit: "Espacio Arg.", q: "¿Qué capitales corresponden a Catamarca, Río Negro, Chubut y Entre Ríos?", a: "Catamarca: San Fernando del Valle de Catamarca. Río Negro: Viedma. Chubut: Rawson. Entre Ríos: Paraná." },
+        { id: "fc13", term: 1, unit: "Espacio Arg.", q: "¿Qué capitales corresponden a Misiones, Chaco, La Pampa y Santa Cruz?", a: "Misiones: Posadas. Chaco: Resistencia. La Pampa: Santa Rosa. Santa Cruz: Río Gallegos." },
+        { id: "fc14", term: 1, unit: "Límites", q: "¿Cuál es la diferencia entre límite y frontera?", a: "El límite es la línea imaginaria convencional que separa soberanías de dos Estados; la frontera es la franja territorial a ambos lados donde interactúan e intercambian sus habitantes." },
+        { id: "fc15", term: 1, unit: "Límites", q: "¿Qué estableció el Tratado de 1925 con Bolivia y cómo se resolvieron las 3 áreas en disputa?", a: "Fijó 742 km del Cerro Zapaleri al Punto Esmeralda usando el paralelo 22° S. Tarija y Juntas de San Antonio → Bolivia; Puna de Atacama → Argentina; Yacuiba → cedida a Bolivia por acuerdo y pedido vecinal." },
+        { id: "fc16", term: 1, unit: "Límites", q: "¿Qué es el 'Talweg o vaguada' y dónde se aplicó con Paraguay y Brasil?", a: "Es el canal de mayor profundidad de un río. Se aplicó en ríos Paraguay y Paraná (acuerdo 1876 con Paraguay) y en los ríos Uruguay e Iguazú con Brasil (salvo Cataratas: Salto Unión)." },
+        { id: "fc17", term: 1, unit: "Límites", q: "¿Cómo se resolvieron el Chaco Boreal y el curso medio del río Pilcomayo?", a: "Chaco Boreal (entre ríos Verde y Pilcomayo): por arbitraje norteamericano quedó para Paraguay y Argentina afianzó Formosa. En el curso medio del Pilcomayo (muy fluctuante) se trazó una línea geométrica." },
+        { id: "fc18", term: 1, unit: "Límites", q: "¿Cómo quedó el límite con Brasil en la provincia de Misiones?", a: "Arbitraje de 1895 cedió ~30.000 km² a Brasil. El límite actual sigue los ríos San Antonio y Pepirí Guazú, unidos por ~30 km de frontera seca donde está Bernardo de Irigoyen." },
+        { id: "fc19", term: 1, unit: "Límites", q: "¿Cómo se delimitaron el río Uruguay, el Río de la Plata y el límite marítimo con Uruguay?", a: "Río Uruguay: Talweg salvo embalse de Salto Grande (línea geométrica). Río de la Plata: línea media de 23 puntos (Punta del Este–Punta Rasa) y aguas de uso común con franjas costeras exclusivas. Marítimo lateral: 200 millas marinas." },
+        { id: "fc20", term: 1, unit: "Límites", q: "Resumí los 3 conflictos recientes con Chile: Beagle, Laguna del Desierto y Hielos Continentales.", a: "Beagle (1970–1984): islas Picton, Lennox y Nueva; mediación de Juan Pablo II y plebiscito. Laguna del Desierto (1994): tribunal latinoamericano favorable a Argentina. Hielos Continentales (dic. 1998): línea geométrica entre Monte Fitz Roy y Cerro Daudet." },
+        { id: "fc21", term: 1, unit: "Regiones", q: "¿Qué es una región geográfica?", a: "Porción del territorio con elementos naturales y rasgos culturales particulares que le dan identidad espacial según su organización territorial y evolución económica y cultural." },
+        { id: "fc22", term: 1, unit: "Regiones", q: "¿Cuáles son las 6 regiones geográficas de Argentina y las 5 provincias del NOA?", a: "6 regiones: NEA, NOA, Cuyo, Pampeana, Metropolitana y Patagonia. NOA: Jujuy, Salta, Tucumán, Santiago del Estero y Catamarca." },
+        { id: "fc23", term: 1, unit: "Regiones", q: "En Cuyo, ¿qué son las 'travesías' y dónde se asienta la población?", a: "Las travesías son planicies desérticas ubicadas al este de los valles cordilleranos. La población se concentra en los oasis fértiles irrigados por ríos de deshielo." },
+        { id: "fc24", term: 1, unit: "Regiones", q: "¿Qué relieve y biomas caracterizan a la Región Pampeana?", a: "Predominio de llanura sedimentaria (con Tandilia y Ventania al sur); bioma dominante de pastizal, más espinal y monte al oeste y bosque en galería sobre el Paraná." },
+        { id: "fc25", term: 1, unit: "Regiones", q: "¿Qué diferencia a la Patagonia Andina de la Extraandina?", a: "Patagonia Andina: relieve montañoso y bosque patagónico-fueguino. Patagonia Extraandina: mesetas con cañadones y bioma de estepa." },
+        { id: "fc26", term: 1, unit: "Regiones", q: "¿Qué integra la Región Metropolitana?", a: "La Ciudad Autónoma de Buenos Aires (CABA) y los Partidos del Gran Buenos Aires (PGBA)." },
+
+        // 2° CUATRIMESTRE (26)
+        { id: "fc27", term: 2, unit: "Relieve (TP 1-3)", q: "¿Qué agentes internos y externos forman y modelan el relieve?", a: "Internos (litosfera): orogénesis, epirogénesis, vulcanismo y sismos. Externos: mares, glaciares, vientos, ríos, vegetación, animales y acción humana." },
+        { id: "fc28", term: 2, unit: "Relieve (TP 1-3)", q: "¿Qué abarca la Cuenca Chaco-Paranaense?", a: "Llanura chaqueña, Esteros Correntinos, lomadas entrerrianas, Planicie Deltaica y Llanura Pampeana; surcada por fallas con lagunas y pendiente que baja hacia el Este." },
+        { id: "fc29", term: 2, unit: "Relieve (TP 1-3)", q: "¿Qué distingue a la Cuenca del Salado frente a la de Claromecó?", a: "Del Salado: Pampa Deprimida (~13% Bs. As.), suelos arcillosos y frecuentes inundaciones. Claromecó: Pampa Interserrana (entre Tandilia y Ventania), excelente aptitud agrícola-ganadera y arroyos erosivos." },
+        { id: "fc30", term: 2, unit: "Relieve (TP 1-3)", q: "¿Dónde se ubica la Cuenca del Colorado?", a: "En la depresión ocupada por los valles de los ríos Colorado y Negro, entre el sistema de Ventania y el macizo de Somuncurá (con aguas salobres y cauces abandonados)." },
+        { id: "fc31", term: 2, unit: "Relieve (TP 1-3)", q: "Nombrá los 7 macizos antiguos y las 4 montañas de plegamiento joven de Argentina.", a: "Macizos antiguos: Cordillera Oriental, Frontal, Precordillera, Sierras Pampeanas, Ventania, Tandilia y Mahuidas. Plegamiento joven: Cordillera Principal, Sierras Subandinas, Patagonides y Andes Patagónico-Fueguinos." },
+        { id: "fc32", term: 2, unit: "Relieve (TP 1-3)", q: "¿Por qué la Cordillera Oriental es una barrera climática y qué quebradas la atraviesan?", a: "Impide que los vientos húmedos del Atlántico lleguen a la Puna. Sus principales quebradas son Humahuaca, del Toro y Valles Calchaquíes (cordones: Aguilar y Chañi)." },
+        { id: "fc33", term: 2, unit: "Relieve (TP 1-3)", q: "¿Qué caracteriza a la Cordillera Frontal y a la Precordillera?", a: "Frontal: macizo antiguo rejuvenecido que lleva el límite internacional en La Rioja y San Juan (cordones San Guillermo, Colangüil, Ansilta, del Tigre, del Plata, Llaretas). Precordillera: ~3.000 m entre Frontal y Sierras Pampeanas." },
+        { id: "fc34", term: 2, unit: "Relieve (TP 1-3)", q: "¿Qué formas típicas tienen las Sierras Pampeanas?", a: "Cordones serranos alargados de bloques fracturados con cumbres chatas (pampas), laderas asimétricas (abruptas al oeste y suaves al este) y valles o bolsones intermedios." },
+        { id: "fc35", term: 2, unit: "Relieve (TP 1-3)", q: "Ubicá y diferenciá Ventania, Tandilia y Mahuidas.", a: "Ventania: SO de Bs. As. (Cerro Tres Picos, 1.239 m). Tandilia: centro-SE de Bs. As. hasta Cabo Corrientes. Mahuidas: centro-sur de La Pampa, lomas duras de granito y pórfidos." },
+        { id: "fc36", term: 2, unit: "Relieve (TP 1-3)", q: "¿Qué diferencia a las Sierras Subandinas de los Patagonides?", a: "Subandinas: jóvenes y bajas en Jujuy, Salta y Tucumán al borde de la Llanura Chaqueña. Patagonides: desde el centro de Neuquén al codo del río Senguer (Chubut), separadas de los Andes por depresiones fluviales." },
+        { id: "fc37", term: 2, unit: "Relieve (TP 1-3)", q: "¿Qué caracteriza a la Puna como meseta?", a: "Altísima meseta (>3.500 m) con volcanes inactivos (Incahuasi, Socompa), minerales metalíferos, salares y gran amplitud térmica que causa desagregación mecánica." },
+        { id: "fc38", term: 2, unit: "Relieve (TP 1-3)", q: "¿Cómo está formada la Meseta Misionera y qué ocurre en la costa de la Patagonia Extraandina?", a: "Meseta Misionera (200–800 m): rocas volcánicas basálticas intercaladas con areniscas y suelos lateríticos rojos. Patagonia Extraandina: baja escalonadamente de O a E terminando en acantilados." },
+        { id: "fc39", term: 2, unit: "Hidrografía", q: "¿Qué es una red hidrográfica y cómo se clasifican las cuencas según su desembocadura?", a: "Red = río principal + afluentes + subafluentes. Cuencas: exorreicas (al mar), endorreicas (a lagos/lagunas interiores sin salida al mar) y arreicas (se pierden antes de formar red definida)." },
+        { id: "fc40", term: 2, unit: "Hidrografía", q: "¿En qué se diferencian los ríos de pendiente Atlántica de los de pendiente Pacífica?", a: "Atlántica: largos, caudalosos y con muchos afluentes. Pacífica: cortos, con gran pendiente y torrentosos." },
+        { id: "fc41", term: 2, unit: "Hidrografía", q: "¿Por qué los ríos de la Patagonia tienen dos crecidas al año?", a: "Nacen en la cordillera y crecen en invierno por las lluvias y en primavera por la fusión de la nieve cordillerana." },
+        { id: "fc42", term: 2, unit: "Hidrografía", q: "¿Qué ríos integran la Cuenca del Desaguadero y qué sucede en años secos?", a: "San Juan, Mendoza, Tunuyán, Diamante y Atuel. En años muy lluviosos llega al río Colorado; en años secos no llega porque el agua se usa para riego." },
+        { id: "fc43", term: 2, unit: "Hidrografía", q: "Describí la Cuenca del Plata (superficie, ríos, países y problemas).", a: "~3.200.000 km²; abarca todo Paraguay y parte de Brasil, Bolivia, Uruguay y Argentina; ríos Paraná, Paraguay y Uruguay. Problemas: inundaciones, deforestación, erosión agrícola, urbanización y represas." },
+        { id: "fc44", term: 2, unit: "Climas", q: "¿Cómo se clasifican los climas por temperatura y qué 4 factores los modifican en Argentina?", a: "Por temperatura: cálidos, templados y fríos. Factores: desarrollo latitudinal (21°–55° S), continentalidad, disposición del relieve y vientos dominantes." },
+        { id: "fc45", term: 2, unit: "Climas", q: "¿Por qué existe la 'diagonal árida' argentina?", a: "La Cordillera de los Andes frena los vientos húmedos del Pacífico Sur, que descargan su humedad en la cordillera y llegan secos al territorio argentino." },
+        { id: "fc46", term: 2, unit: "Climas", q: "Caracterizá Zonda, Sudestada, Pampero y Polar.", a: "Zonda: fuerte, cálido y muy seco (Cuyo/San Juan). Sudestada: frío y muy húmedo del mar (tormentas). Pampero: frío en verano sobre región pampeana. Polar: muy frío antártico de S a N." },
+        { id: "fc47", term: 2, unit: "Biomas", q: "¿Cuál es el bioma de mayor diversidad biológica de Argentina y qué árboles tiene?", a: "La Selva Misionera (Paranaense), con 4 estratos vegetales; ejemplares: lapacho, laurel, palo rosa y cedro misionero." },
+        { id: "fc48", term: 2, unit: "Biomas", q: "¿Qué diferencia al Chaco húmedo del Chaco seco y qué predomina en el Pastizal Pampeano?", a: "Chaco húmedo: bosques en galería, esteros y quebracho colorado; Chaco seco: bosques y pastizales con quebracho colorado y blanco. En el Pastizal Pampeano dominan gramíneas y tala en cordones de conchilla." },
+        { id: "fc49", term: 2, unit: "Biomas", q: "¿Qué vegetación predomina en la Estepa de la Puna, Estepa Patagónica y Bosques Patagónico-Fueguinos?", a: "Andes/Puna: coirones y tolas. Patagónica: arbustos achaparrados y mallines. Bosques Patagónicos: género Nothofagus (coihue, lenga y ñire)." },
+        { id: "fc50", term: 2, unit: "Población", q: "¿Dónde se concentra la población argentina y qué porcentaje vive en el Gran Buenos Aires?", a: "Casi el 30% en el Gran Buenos Aires, seguido por Córdoba y Rosario. En el interior depende de la economía (ej. Mendoza 7% en capital, La Rioja 50,5%, Río Negro 9,1%)." },
+        { id: "fc51", term: 2, unit: "Población", q: "¿Qué es el crecimiento vegetativo y qué es el saldo migratorio?", a: "Crecimiento vegetativo: diferencia entre nacimientos y muertes. Saldo migratorio: diferencia entre inmigrantes (entran) y emigrantes (salen)." },
+        { id: "fc52", term: 2, unit: "Población", q: "¿Qué miden el índice de masculinidad y el índice de dependencia potencial?", a: "Masculinidad: varones cada 100 mujeres (baja en edades avanzadas; sube en zonas mineras/rurales). Dependencia potencial: relación entre inactivos (niños y ancianos) y población en edad de trabajar (mayor % ancianos en zona pampeana que en Chaco o Sgo. del Estero)." }
+      ];
+
+      /* ===================== DATOS: CLASIFICADOR ===================== */
+      const CLASSIFIER_MODES = {
+        llanuras: {
+          categories: ["Chaco-Paranaense", "Del Salado", "Claromecó", "Del Colorado"],
+          items: [
+            { text: "Abarca la Pampa Deprimida (~13% de Buenos Aires).", cat: "Del Salado" },
+            { text: "Pampa Interserrana entre las sierras de Tandilia y Ventania.", cat: "Claromecó" },
+            { text: "Comprende los Esteros Correntinos, lomadas entrerrianas y Planicie Deltaica.", cat: "Chaco-Paranaense" },
+            { text: "Depresión de los ríos Colorado y Negro entre Ventania y Somuncurá.", cat: "Del Colorado" },
+            { text: "Suelos arcillosos dificultan la infiltración y provocan frecuentes inundaciones.", cat: "Del Salado" },
+            { text: "Planicie surcada por fallas con lagunas cuya pendiente disminuye rápido al Este.", cat: "Chaco-Paranaense" },
+            { text: "Excelente aptitud agrícola (cereales y oleaginosas) con arroyos erosivos hacia Bahía Blanca.", cat: "Claromecó" },
+            { text: "Presenta cuerpos de aguas salobres y cauces abandonados de períodos húmedos.", cat: "Del Colorado" },
+            { text: "En su litoral dominan planicies de marea y albuferas.", cat: "Del Salado" },
+            { text: "Forma una unidad geológica pero el clima y los biomas marcan diferencias regionales.", cat: "Chaco-Paranaense" }
+          ]
+        },
+        montanas: {
+          categories: ["Macizo Antiguo", "Plegamiento Joven"],
+          items: [
+            { text: "Cordillera Oriental (Sierras de Aguilar y Chañi)", cat: "Macizo Antiguo" },
+            { text: "Cordillera Principal (tramo de los Andes Centrales)", cat: "Plegamiento Joven" },
+            { text: "Sierras Subandinas (Jujuy, Salta y Tucumán)", cat: "Plegamiento Joven" },
+            { text: "Cordillera Frontal (límite en La Rioja y San Juan)", cat: "Macizo Antiguo" },
+            { text: "Precordillera (La Rioja, San Juan y Mendoza)", cat: "Macizo Antiguo" },
+            { text: "Patagonides (de Neuquén al codo del río Senguer)", cat: "Plegamiento Joven" },
+            { text: "Sierras Pampeanas (cumbres chatas o pampas)", cat: "Macizo Antiguo" },
+            { text: "Andes Patagónico-Fueguinos (bloques aislados N–S)", cat: "Plegamiento Joven" },
+            { text: "Ventania (Cerro Tres Picos, 1.239 m)", cat: "Macizo Antiguo" },
+            { text: "Tandilia (hasta Cabo Corrientes)", cat: "Macizo Antiguo" },
+            { text: "Mahuidas (lomas duras en La Pampa)", cat: "Macizo Antiguo" }
+          ]
+        },
+        mesetas: {
+          categories: ["Puna", "Meseta Misionera", "Patagonia Extraandina"],
+          items: [
+            { text: "Altísima meseta a más de 3.500 m con volcanes inactivos (Incahuasi, Socompa).", cat: "Puna" },
+            { text: "Bajas serranías de cumbres planas (200 a 800 m) con suelos lateríticos rojos.", cat: "Meseta Misionera" },
+            { text: "Disminuye escalonadamente de oeste a este y termina en acantilados.", cat: "Patagonia Extraandina" },
+            { text: "Afloramientos de rocas volcánicas basálticas intercaladas con areniscas.", cat: "Meseta Misionera" },
+            { text: "Gran amplitud térmica diaria provoca desagregación mecánica de rocas.", cat: "Puna" },
+            { text: "Se extiende desde el piedemonte cuyano (río Colorado) hasta Tierra del Fuego.", cat: "Patagonia Extraandina" },
+            { text: "Concentra minerales metalíferos y salares (bórax, cloruro de sodio).", cat: "Puna" },
+            { text: "Presenta bajos con depresiones relativas (Gran Bajo de San Julián) y ríos alóctonos.", cat: "Patagonia Extraandina" },
+            { text: "Ríos muy encajados con saltos y cascadas como las Cataratas del Iguazú.", cat: "Meseta Misionera" }
+          ]
+        },
+        vientos: {
+          categories: ["Zonda", "Sudestada", "Pampero", "Polar", "Del Pacífico / Atlántico"],
+          items: [
+            { text: "Viento fuerte, cálido y muy seco característico de San Juan.", cat: "Zonda" },
+            { text: "Viento frío y muy húmedo procedente del mar que provoca tormentas.", cat: "Sudestada" },
+            { text: "Viento frío del oeste/sudoeste que sopla en verano en la región pampeana.", cat: "Pampero" },
+            { text: "Viento muy frío de origen antártico que recorre el país de sur a norte.", cat: "Polar" },
+            { text: "Descargan humedad en los Andes o avanzan sin obstáculos desde el este.", cat: "Del Pacífico / Atlántico" },
+            { text: "Al cruzar la cordillera desciende seco y recalentado hacia los oasis cuyanos.", cat: "Zonda" }
+          ]
+        },
+        biomas: {
+          categories: ["Selva Misionera", "Yunga", "Parque Chaqueño", "Pastizal Pampeano", "Estepas / Monte", "Bosques Patagónicos"],
+          items: [
+            { text: "4 estratos vegetales y máxima biodiversidad: lapacho, palo rosa y cedro.", cat: "Selva Misionera" },
+            { text: "Faldas andinas de Jujuy, Salta, Tucumán y Catamarca con gradiente en altitud.", cat: "Yunga" },
+            { text: "Quebracho colorado (zona húmeda) y quebracho colorado y blanco (zona seca).", cat: "Parque Chaqueño" },
+            { text: "Predominio de gramíneas y árboles de tala sobre cordones de conchilla.", cat: "Pastizal Pampeano" },
+            { text: "Género Nothofagus: coihue, lenga y ñire (árboles de 30–40 m).", cat: "Bosques Patagónicos" },
+            { text: "Coirones en los Andes, tolas en la Puna, mallines y arbustos en Patagonia.", cat: "Estepas / Monte" }
+          ]
+        }
+      };
+
+      /* ===================== DATOS: VERDADERO O FALSO ===================== */
+      const VF_QUESTIONS = [
+        { q: "Según el Meridiano de Greenwich, todo el continente americano sin excepción está en el hemisferio occidental.", ans: false, exp: "Falso: una pequeña porción correspondiente a las Islas Aleutianas se localiza en el hemisferio oriental." },
+        { q: "Las Islas Aleutianas no son el punto extremo norte de Argentina; el punto extremo norte argentino está en Jujuy a 21° 46' S.", ans: true, exp: "Verdadero: en la confluencia de los ríos Grande de San Juan y Mojinete (Jujuy), a 21° 46' S." },
+        { q: "Por el Tratado de 1925 con Bolivia, Tarija y Yacuiba quedaron finalmente bajo soberanía boliviana, y la Puna de Atacama para Argentina.", ans: true, exp: "Verdadero: Yacuiba quedaba en Argentina por el paralelo 22° S, pero por pedido de sus pobladores un acuerdo especial la otorgó a Bolivia." },
+        { q: "En el Canal de Beagle, el conflicto de la década de 1970 fue por las islas Picton, Lennox y Nueva, resuelto tras la mediación de Juan Pablo II.", ans: true, exp: "Verdadero: tras rechazar el fallo inglés, la mediación papal llevó al plebiscito argentino de 1984." },
+        { q: "Salta no integra la región del Noroeste Argentino (NOA).", ans: false, exp: "Falso: el NOA está integrado por Jujuy, Salta, Tucumán, Santiago del Estero y Catamarca." },
+        { q: "En la región de Cuyo, la población se concentra principalmente en los oasis fértiles rodeados por zonas áridas y travesías.", ans: true, exp: "Verdadero: gracias al riego aprovechado en los oasis al pie de la cordillera." },
+        { q: "Un rasgo característico del relieve argentino es el dominio hacia el oriente de vastas planicies de gran nivelación.", ans: true, exp: "Verdadero (ítem 4a del TP 1 de Llanuras)." },
+        { q: "Las vastas planicies se destacan por su gran capacidad de despoblamiento y escaso aprovechamiento agropecuario.", ans: false, exp: "Falso: favorecen el POBLAMIENTO y el aprovechamiento agrícola-ganadero." },
+        { q: "La Cuenca Chaco-Paranaense se localiza entre las sierras de Ventania y Tandilia.", ans: false, exp: "Falso (ítem 4c del TP 1): entre Ventania y Tandilia está la Cuenca de Claromecó (Pampa Interserrana)." },
+        { q: "La Cuenca del Colorado abarca la llamada Pampa Deprimida, en la provincia de Buenos Aires.", ans: false, exp: "Falso (ítem 4d del TP 1): la Pampa Deprimida corresponde a la Cuenca del Salado." },
+        { q: "La Cordillera Oriental actúa como barrera climática que impide la llegada de los vientos húmedos del Atlántico a la Puna.", ans: true, exp: "Verdadero (TP 2): por eso la Puna presenta clima árido." },
+        { q: "Las Sierras Mahuidas son montañas de plegamiento joven ubicadas en la provincia de Misiones.", ans: false, exp: "Falso: son un macizo antiguo de rocas muy duras ubicadas en el centro-sur de La Pampa." },
+        { q: "Las cuencas arreicas son aquellas cuyas aguas desembocan directamente en el océano Atlántico.", ans: false, exp: "Falso: las que desembocan en el mar u océano son exorreicas; en las arreicas el agua se evapora o infiltra antes de formar una red definida." },
+        { q: "Los ríos patagónicos crecen dos veces al año: en invierno por lluvias y en primavera por deshielo.", ans: true, exp: "Verdadero: cruzan las mesetas escalonadas desde la cordillera." },
+        { q: "El crecimiento vegetativo se calcula sumando los inmigrantes menos los emigrantes.", ans: false, exp: "Falso: ese es el saldo migratorio; el crecimiento vegetativo es la diferencia entre nacimientos y muertes." },
+        { q: "En Argentina, el porcentaje de población anciana es mayor en la zona pampeana que en provincias como Chaco o Santiago del Estero.", ans: true, exp: "Verdadero: la estructura demográfica pampeana es relativamente más envejecida." }
+      ];
+
+      /* ===================== DATOS: CRUCIGRAMA MESETA (TP 3) ===================== */
+      // Columna eje = 4 (M - E - S - E - T - A)
+      const CROSSWORD_ROWS = [
+        { num: 1, word: "MECANICA", startCol: 4, clue: "¿Qué tipo de desagregación de rocas provoca la marcada amplitud térmica diaria en la Puna?" },
+        { num: 2, word: "ARENISCAS", startCol: 2, clue: "¿Con qué rocas están intercaladas las lavas en la Meseta Misionera?" },
+        { num: 3, word: "BASALTICAS", startCol: 2, clue: "¿Qué tipo de rocas volcánicas afloran en la Meseta Misionera?" },
+        { num: 4, word: "PIEDEMONTE", startCol: 0, clue: "¿Desde dónde se extiende la Patagonia Extraandina (región cuyana al pie de los Andes)?" },
+        { num: 5, word: "ACANTILADOS", startCol: 0, clue: "¿Qué forma en el mar cuando termina la Patagonia Extraandina?" },
+        { num: 6, word: "SALARES", startCol: 1, clue: "Una de las características sobresalientes del ambiente desértico de la Puna (depósitos de sal y bórax)." }
+      ];
+      const CW_COLS = 12;
+      const CW_AXIS_COL = 4;
+
+      /* ===================== DATOS: 60 PREGUNTAS SIMULACRO (30 + 30) ===================== */
+      const EXAM_QUESTIONS = [
+        // 1° CUATRIMESTRE (30)
+        { term: 1, unit: "América: Localización", q: "¿Qué territorio americano se ubica en el Hemisferio Oriental según el Meridiano de Greenwich?", opts: ["Groenlandia", "Islas Aleutianas", "Tierra del Fuego", "Península de Yucatán"], ans: 1, exp: "América se ubica en el hemisferio occidental, salvo una pequeña porción de las Islas Aleutianas." },
+        { term: 1, unit: "América: Límites", q: "¿Qué paso marítimo marca el límite sur del continente americano?", opts: ["Estrecho de Bering", "Canal de Panamá", "Pasaje de Drake", "Golfo de México"], ans: 2, exp: "El límite sur de América es el Pasaje de Drake." },
+        { term: 1, unit: "América: División", q: "Según el criterio cultural, América se divide en:", opts: ["Norte, Central y Sur", "Desarrollada y Subdesarrollada", "Anglosajona y Latina", "Insular y Continental"], ans: 2, exp: "El criterio cultural distingue América Anglosajona y América Latina." },
+        { term: 1, unit: "América: Relieve", q: "¿Qué cordillera atraviesa América Central según el cuadro de carpeta?", opts: ["Montes Apalaches", "Cordillera de Talamanca", "Cordillera Oriental", "Sierras Subandinas"], ans: 1, exp: "En el cuadro de relieve de América figura la Cordillera de Talamanca para América Central." },
+        { term: 1, unit: "América: Llanuras", q: "¿Cuál de estas llanuras pertenece a América del Sur?", opts: ["Pradera Canadiense", "Grandes Llanos", "Llanos del Orinoco", "Llanura del Mississippi"], ans: 2, exp: "Orinoco, Amazonas y Chaco-Pampeana corresponden a América del Sur." },
+        { term: 1, unit: "América: Macizos", q: "¿Qué macizo forma un arco alrededor de la Bahía de Hudson y fue modelado por glaciaciones?", opts: ["Macizo de Brasilia", "Escudo Canádico", "Macizo de Guayania", "Montes Apalaches"], ans: 1, exp: "El Escudo Canádico ocupa el NE de Canadá, Bahía de Hudson y parte de Groenlandia." },
+        { term: 1, unit: "América: Macizos", q: "¿Qué macizo sudamericano se caracteriza por montañas tabulares (en forma de mesa)?", opts: ["Macizo Patagónico", "Macizo de Guayania", "Escudo Canádico", "Cordillera Frontal"], ans: 1, exp: "El Macizo de Guayania presenta montañas tabulares fracturadas y ascendidas durante el plegamiento andino." },
+        { term: 1, unit: "América: Macizos", q: "¿Cuál es la meseta más extensa de América del Sur y con mayor superficie de afloramiento?", opts: ["Macizo de Brasilia", "Macizo Patagónico", "Puna", "Meseta Misionera"], ans: 0, exp: "El Macizo de Brasilia es la meseta más extensa de América del Sur." },
+        { term: 1, unit: "Espacio Argentino", q: "¿Cuál es la extensión Norte–Sur de la parte continental americana de Argentina?", opts: ["1.453 km", "2.500 km", "3.799 km", "5.100 km"], ans: 2, exp: "Mide 3.799 km de norte a sur y 1.453 km de anchura máxima." },
+        { term: 1, unit: "Espacio Argentino", q: "¿Sobre qué paralelo se mide la anchura máxima (1.453 km) de Argentina?", opts: ["22° 00' S", "27° 31' S", "35° 10' S", "55° 03' S"], ans: 1, exp: "La anchura máxima de 1.453 km se mide sobre los 27° 31' de latitud sur." },
+        { term: 1, unit: "Puntos Extremos", q: "¿Cuál es el punto extremo Norte de Argentina y su coordenada correcta?", opts: ["Bernardo de Irigoyen (26° 15' S)", "Confluencia ríos Grande y Mojinete (21° 46' S)", "Cabo San Pío (55° 03' S)", "Parque Nacional Los Glaciares (50° 01' S)"], ans: 1, exp: "El punto extremo Norte está en Jujuy (ríos Grande de San Juan y Mojinete) a 21° 46' S y 66° 13' O." },
+        { term: 1, unit: "Puntos Extremos", q: "¿Dónde se ubica el punto extremo Oeste de Argentina?", opts: ["Cerro Zapaleri (Jujuy)", "Cabo San Pío (Tierra del Fuego)", "Parque Nacional Los Glaciares (Santa Cruz)", "Bernardo de Irigoyen (Misiones)"], ans: 2, exp: "El punto extremo Oeste está en el Parque Nacional Los Glaciares, Santa Cruz (50° 01' S, 73° 34' O)." },
+        { term: 1, unit: "Puntos Extremos", q: "¿Qué localidad constituye el punto extremo Este de Argentina?", opts: ["Posadas", "Puerto Iguazú", "Bernardo de Irigoyen", "Paso de los Libres"], ans: 2, exp: "Bernardo de Irigoyen (Misiones), a 26° 15' S y 53° 38' O." },
+        { term: 1, unit: "División Política", q: "¿Cuál es la capital de la provincia de Río Negro?", opts: ["Rawson", "Viedma", "Neuquén", "Santa Rosa"], ans: 1, exp: "La capital de Río Negro es Viedma." },
+        { term: 1, unit: "División Política", q: "¿Qué provincia tiene como capital a Rawson?", opts: ["Santa Cruz", "Río Negro", "Chubut", "Tierra del Fuego"], ans: 2, exp: "Rawson es capital de Chubut (Santa Cruz → Río Gallegos; Tierra del Fuego → Ushuaia)." },
+        { term: 1, unit: "División Política", q: "¿Cuál es la capital de Entre Ríos y cuál la de La Pampa?", opts: ["Paraná y Santa Rosa", "Santa Fe y San Luis", "Corrientes y Viedma", "Resistencia y Posadas"], ans: 0, exp: "Entre Ríos → Paraná; La Pampa → Santa Rosa." },
+        { term: 1, unit: "Límites y Fronteras", q: "¿Cómo se denomina la franja de territorio a ambos lados de un límite donde interactúan las poblaciones?", opts: ["Vaguada", "Frontera", "Paralelo geodésico", "Estuario"], ans: 1, exp: "El límite es la línea imaginaria; la frontera es la franja donde convergen e interactúan sus habitantes." },
+        { term: 1, unit: "Límites: Bolivia", q: "¿Entre qué puntos y sobre qué paralelo se fijó el tratado de 1925 con Bolivia?", opts: ["De Cerro Zapaleri a Punto Esmeralda, paralelo 22° S", "De San Antonio a Pepirí Guazú, paralelo 26° S", "De Fitz Roy a Cerro Daudet, paralelo 50° S", "De Punta del Este a Punta Rasa"], ans: 0, exp: "742 km desde Cerro Zapaleri (O) hasta Punto Esmeralda (E), usando elementos naturales y el paralelo 22° S." },
+        { term: 1, unit: "Límites: Bolivia", q: "¿Qué territorio en disputa con Bolivia quedó definitivamente bajo soberanía argentina?", opts: ["Tarija", "Juntas de San Antonio", "Yacuiba", "Puna de Atacama"], ans: 3, exp: "La Puna de Atacama quedó para Argentina; Tarija, Juntas de San Antonio y Yacuiba quedaron para Bolivia." },
+        { term: 1, unit: "Límites: Paraguay", q: "¿Qué criterio se usó en 1876 en los ríos Paraguay y Paraná, y qué ocurrió con el Chaco Boreal?", opts: ["Línea de ribera; quedó para Argentina", "Talweg o vaguada; el Chaco Boreal quedó para Paraguay", "Línea media; se repartió por mitades", "Altas cumbres; pasó a Brasil"], ans: 1, exp: "Se fijó el Talweg o vaguada; por arbitraje norteamericano el Chaco Boreal pasó a Paraguay y Argentina afianzó Formosa." },
+        { term: 1, unit: "Límites: Paraguay", q: "¿Por qué se trazó una línea geométrica en el curso medio del río Pilcomayo?", opts: ["Por la construcción de una represa", "Porque tiene un cauce muy fluctuante", "Por acuerdo sobre aguas marítimas", "Porque es un río seco todo el año"], ans: 1, exp: "Al cambiar de curso con frecuencia, no servía un límite fluvial móvil y se fijó una línea geométrica." },
+        { term: 1, unit: "Límites: Brasil", q: "¿Cómo se resolvió en 1895 la cuestión de Misiones con Brasil y dónde hay 30 km de frontera seca?", opts: ["Por plebiscito; en Cataratas del Iguazú", "Por arbitraje norteamericano (30.000 km² a Brasil); entre nacimientos de San Antonio y Pepirí Guazú", "Por acuerdo de 1925; en Salto Grande", "Por mediación papal; en Concordia"], ans: 1, exp: "El arbitraje norteamericano otorgó ~30.000 km² a Brasil; entre las nacientes del San Antonio y Pepirí Guazú hay ~30 km de frontera seca (Bernardo de Irigoyen)." },
+        { term: 1, unit: "Límites: Brasil", q: "¿Por dónde pasa el límite internacional con Brasil en la zona de las Cataratas del Iguazú?", opts: ["Embalse de Salto Grande", "Salto Unión", "Punta Rasa", "Cerro Zapaleri"], ans: 1, exp: "Rige el Talweg en los ríos Uruguay e Iguazú, con excepción de las Cataratas donde pasa por el Salto Unión." },
+        { term: 1, unit: "Límites: Uruguay", q: "¿Qué se estableció en el Río de la Plata y hasta dónde llega el límite lateral marítimo con Uruguay?", opts: ["Línea media de 23 puntos y aguas de uso común; 200 millas marinas", "Talweg único; 12 millas", "Línea geométrica sobre todo el río; 50 millas", "Soberanía exclusiva argentina en todo el estuario"], ans: 0, exp: "Línea media de 23 puntos (Punta del Este–Punta Rasa), uso común con franjas costeras exclusivas y 200 millas marinas." },
+        { term: 1, unit: "Límites: Chile", q: "¿Qué tres hitos completan el acuerdo general de 1881 con Chile?", opts: ["Beagle (1984), Laguna del Desierto (1994) e Hielos Continentales (1998)", "Yacuiba (1925), Chaco Boreal (1876) y Salto Unión", "Salto Grande, Punto Esmeralda y Tarija", "Malvinas, Antártida y Beaufort"], ans: 0, exp: "Mediación papal en el Beagle (1984), arbitraje latinoamericano en Laguna del Desierto (1994) y acuerdo geométrico Fitz Roy–Daudet (1998)." },
+        { term: 1, unit: "Regiones: Norte", q: "¿Cuáles son las 5 provincias que integran el Noroeste Argentino (NOA)?", opts: ["Misiones, Corrientes, Formosa, Chaco y Salta", "Jujuy, Salta, Tucumán, Santiago del Estero y Catamarca", "Mendoza, San Juan, La Rioja, Catamarca y Tucumán", "Jujuy, Salta, La Rioja, San Juan y Córdoba"], ans: 1, exp: "NOA = Jujuy, Salta, Tucumán, Santiago del Estero y Catamarca (¡recordar incluir a Salta!)." },
+        { term: 1, unit: "Regiones: Norte", q: "¿Qué biomas caracterizan principalmente al NOA frente al NEA?", opts: ["Pastizal y estepa patagónica", "Yunga o selva de montaña y estepa puneña", "Bosque patagónico-fueguino y monte", "Pampa deprimida y planicie deltaica"], ans: 1, exp: "En el NOA destacan la Yunga (selva de montaña) y la estepa puneña." },
+        { term: 1, unit: "Regiones: Cuyo", q: "¿Qué son las 'travesías' de la región de Cuyo y dónde vive su población?", opts: ["Montañas jóvenes; población en las cumbres", "Planicies desérticas al este; población concentrada en los oasis fértiles", "Lagos glaciarios; población en puertos", "Esteros; población rural dispersa"], ans: 1, exp: "Las travesías son planicies desérticas al este de las planicies pedemontanas; la población se asienta en oasis." },
+        { term: 1, unit: "Regiones: Pampeana", q: "¿Qué provincias integran la Región Pampeana según la carpeta?", opts: ["Buenos Aires, Santa Fe, Córdoba, San Luis, Entre Ríos y La Pampa", "Mendoza, San Juan, La Rioja y San Luis", "Buenos Aires, Río Negro y Neuquén", "Chaco, Corrientes, Entre Ríos y Santa Fe"], ans: 0, exp: "Buenos Aires, Santa Fe, Córdoba, San Luis, Entre Ríos y La Pampa." },
+        { term: 1, unit: "Regiones: Patagonia", q: "¿Qué relieve y bioma corresponden a la Patagonia Extraandina?", opts: ["Montañas y bosque patagónico", "Meseta escalonada con cañadones y estepa", "Llanura y pastizal", "Selva y tierras rojas"], ans: 1, exp: "Patagonia Andina = montañas y bosque; Patagonia Extraandina = mesetas con cañadones y estepa." },
+
+        // 2° CUATRIMESTRE (30)
+        { term: 2, unit: "Eje 2: Relieve", q: "¿Cuáles de estos son agentes INTERNOS (de la litosfera) que forman el relieve?", opts: ["Ríos, vientos y glaciares", "Orogénesis, epirogénesis, vulcanismo y sismos", "Mares, vegetación y acción humana", "Lluvias y amplitud térmica"], ans: 1, exp: "Los agentes internos son orogénesis, epirogénesis, vulcanismo y sismos; los demás son externos." },
+        { term: 2, unit: "TP 1: Llanuras", q: "¿A qué gran unidad pertenece la Pampa Deprimida (~13% de la provincia de Buenos Aires)?", opts: ["Cuenca Claromecó", "Cuenca del Colorado", "Cuenca del Salado", "Cuenca Chaco-Paranaense"], ans: 2, exp: "La Cuenca del Salado abarca la Pampa Deprimida, de suelos arcillosos y frecuentes inundaciones." },
+        { term: 2, unit: "TP 1: Llanuras", q: "¿Dónde se localiza la Cuenca de Claromecó y cuál es su aptitud económica?", opts: ["Entre Tandilia y Ventania (Pampa Interserrana); gran aptitud agrícola y ganadera", "En los Esteros Correntinos; forestal", "Entre Ventania y Somuncurá; salinas", "En el Delta del Paraná; arroz"], ans: 0, exp: "Claromecó corresponde a la Pampa Interserrana, excelente para cereales, oleaginosas y ganadería." },
+        { term: 2, unit: "TP 1: Llanuras", q: "¿Entre qué sistemas se interpone la Cuenca del Colorado?", opts: ["Entre Tandilia y Sierras de Córdoba", "Entre el sistema de Ventania y el macizo de Somuncurá", "Entre Puna y Sierras Subandinas", "Entre Meseta Misionera y Delta"], ans: 1, exp: "Ocupa los valles de los ríos Colorado y Negro entre Ventania y el macizo de Somuncurá." },
+        { term: 2, unit: "TP 1: Llanuras", q: "¿Qué rasgo distingue a la Cuenca Chaco-Paranaense?", opts: ["Pendiente casi nula en el sur bonaerense", "Surcada por fallas con lagunas y pendiente que disminuye rápido hacia el Este", "Ausencia total de ríos", "Erosión exclusiva de origen glaciario"], ans: 1, exp: "Comprende llanura chaqueña, Esteros Correntinos, lomadas entrerrianas, Delta y Llanura Pampeana." },
+        { term: 2, unit: "TP 2: Montañas", q: "¿Qué papel cumple la Cordillera Oriental frente a los vientos húmedos del Atlántico?", opts: ["Los acelera hacia Chile", "Actúa como barrera climática impidiendo que lleguen a la Puna", "Produce lluvias torrenciales en el desierto de Atacama", "Es un cordón joven sin altura"], ans: 1, exp: "Al actuar como barrera climática deja a la Puna sin influencia de los vientos húmedos atlánticos." },
+        { term: 2, unit: "TP 2: Montañas", q: "¿Qué quebradas y cordones principales corresponden a la Cordillera Oriental?", opts: ["Quebradas Humahuaca, del Toro y Valles Calchaquíes; Sierras de Aguilar y Chañi", "Cordones Colangüil, Ansilta y del Tigre", "Cerro Tres Picos y Cabo Corrientes", "Codo del río Senguer"], ans: 0, exp: "La Cordillera Oriental tiene bloques N–S (Aguilar >5.000 m y Chañi 5.896 m) y esas 3 quebradas famosas." },
+        { term: 2, unit: "TP 2: Montañas", q: "¿Qué cordillera lleva el límite internacional por altas cumbres y divisoria de aguas en La Rioja y San Juan?", opts: ["Sierras Subandinas", "Cordillera Frontal", "Sierras Pampeanas", "Patagonides"], ans: 1, exp: "La Cordillera Frontal (cordones San Guillermo, Colangüil, Ansilta, del Tigre, del Plata, de las Llaretas)." },
+        { term: 2, unit: "TP 2: Montañas", q: "¿Qué caracteriza a las Sierras Pampeanas?", opts: ["Volcanes activos jóvenes", "Cordones alargados con cumbres chatas (pampas), laderas asimétricas y bolsones", "Planicies con albuferas", "Mesetas de basalto rojo"], ans: 1, exp: "Fueron fracturadas y elevadas por la orogenia andina formando cumbres chatas, cuestas al oeste y faldas al este." },
+        { term: 2, unit: "TP 2: Montañas", q: "¿Dónde se localizan Ventania, Tandilia y Mahuidas respectivamente?", opts: ["SO de Bs. As., centro-SE de Bs. As. y centro-sur de La Pampa", "Córdoba, San Luis y Mendoza", "Neuquén, Chubut y Santa Cruz", "Jujuy, Salta y Tucumán"], ans: 0, exp: "Ventania (SO Bs. As., Cerro Tres Picos 1.239 m), Tandilia (centro Bs. As. a Cabo Corrientes) y Mahuidas (La Pampa)." },
+        { term: 2, unit: "TP 2: Montañas", q: "¿Cuáles son montañas de PLEGAMIENTO JOVEN en Argentina?", opts: ["Precordillera, Tandilia y Ventania", "Cordillera Principal, Sierras Subandinas, Patagonides y Andes Patagónico-Fueguinos", "Cordillera Oriental, Frontal y Sierras Pampeanas", "Mahuidas y Macizo de Somuncurá"], ans: 1, exp: "Las 4 unidades jóvenes producto de la orogenia andina." },
+        { term: 2, unit: "TP 2: Montañas", q: "¿Qué sierras jóvenes limitan con la Llanura Chaqueña en Jujuy, Salta y Tucumán?", opts: ["Patagonides", "Sierras Subandinas", "Cordillera Principal", "Sierras de Aguilar"], ans: 1, exp: "Las Sierras Subandinas son montañas jóvenes, bajas, angostas y de formas suaves." },
+        { term: 2, unit: "TP 3: Mesetas", q: "¿Por qué en la Puna (>3.500 m) se produce desagregación mecánica de las rocas?", opts: ["Por las mareas atlánticas", "Por la marcada amplitud térmica diaria", "Por el exceso de lluvias tropicales", "Por la erosión fluvial del Paraná"], ans: 1, exp: "La enorme diferencia de temperatura entre el día y la noche dilata y contrae la roca hasta fracturarla." },
+        { term: 2, unit: "TP 3: Mesetas", q: "¿Qué rocas predominan en la Meseta Misionera y qué tipo de suelo origina?", opts: ["Granito y suelos arenosos", "Rocas volcánicas basálticas intercaladas con areniscas; suelo laterítico (tierra roja)", "Calizas y mallines", "Limos pampeanos negros"], ans: 1, exp: "El basalto y las areniscas bajo clima cálido y lluvioso generan el suelo laterítico rojo." },
+        { term: 2, unit: "TP 3: Mesetas", q: "¿Cómo termina la Patagonia Extraandina al llegar al océano Atlántico?", opts: ["En una amplia playa deltaica", "En forma de acantilados", "En esteros y lagunas dulces", "En una cordillera joven"], ans: 1, exp: "Disminuye escalonadamente de oeste a este y termina en el mar formando acantilados." },
+        { term: 2, unit: "Hidrografía", q: "¿Cómo se clasifican las cuencas cuyas aguas desembocan en lagos o lagunas interiores sin salida al mar?", opts: ["Exorreicas", "Endorreicas", "Arreicas", "Alóctonas"], ans: 1, exp: "Abiertas = exorreicas; cerradas (sin salida al mar) = endorreicas; sin red definida = arreicas." },
+        { term: 2, unit: "Hidrografía", q: "¿Qué diferencia a los ríos de pendiente Pacífica de los de pendiente Atlántica?", opts: ["Los pacíficos son largos y lentos", "Los pacíficos son cortos, de gran pendiente y torrentosos", "Los atlánticos no tienen afluentes", "Los pacíficos forman la Cuenca del Plata"], ans: 1, exp: "Al nacer cerca del océano Pacífico descienden rápido desde la cordillera con mucha velocidad." },
+        { term: 2, unit: "Hidrografía", q: "¿Cuándo tienen sus dos crecidas anuales los ríos de la Patagonia?", opts: ["Otoño y verano", "Invierno (lluvias) y primavera (fusión de la nieve cordillerana)", "Solo en enero por monzones", "No tienen crecidas"], ans: 1, exp: "Nacen en la cordillera y combinan aporte pluvial invernal y nival primaveral." },
+        { term: 2, unit: "Hidrografía", q: "¿Qué ríos aportan sus aguas al río Desaguadero y qué pasa en años secos?", opts: ["Paraná, Uruguay y Paraguay; inunda el Litoral", "San Juan, Mendoza, Tunuyán, Diamante y Atuel; en sequía no llegan al Colorado por uso para riego", "Negro y Colorado; desembocan en el Pacífico", "Pilcomayo y Bermejo; forman el Delta"], ans: 1, exp: "Sus aguas se aprovechan intensamente para riego en los oasis cuyanos." },
+        { term: 2, unit: "Hidrografía", q: "¿Cuál es la superficie aproximada de la Cuenca del Plata y qué tres ríos principales la integran?", opts: ["500.000 km² · Colorado, Negro y Chubut", "3.200.000 km² · Paraná, Paraguay y Uruguay", "1.453.000 km² · Desaguadero, Atuel y Tunuyán", "4.800.000 km² · Amazonas, Orinoco y Plata"], ans: 1, exp: "Aproximadamente 3.200.000 km² cubriendo todo Paraguay y partes de Brasil, Bolivia, Uruguay y Argentina." },
+        { term: 2, unit: "Climas", q: "¿Qué factor climático explica la disminución del efecto regulador del mar hacia el oeste y el aumento de la amplitud térmica?", opts: ["Desarrollo latitudinal", "Continentalidad", "Viento Zonda", "Crecimiento vegetativo"], ans: 1, exp: "A mayor distancia del océano (continentalidad), mayor es la diferencia térmica entre día/noche y verano/invierno." },
+        { term: 2, unit: "Climas", q: "¿Cuál es el rango térmico y pluviométrico del clima Cálido Subtropical sin estación seca?", opts: ["> 20 °C y > 1.000 mm anuales", "15–17 °C y < 200 mm", "10 °C y < 200 mm", "8 °C y 500 mm"], ans: 0, exp: "Más de 20 °C de temperatura media anual y más de 1.000 mm de lluvias abundantes todo el año." },
+        { term: 2, unit: "Climas", q: "¿Qué viento es frío y muy húmedo procedente del mar y provoca tormentas en la región rioplatense?", opts: ["Zonda", "Norte", "Sudestada", "Pampero"], ans: 2, exp: "La Sudestada trae aire frío y muy húmedo del mar provocando tormentas y crecidas." },
+        { term: 2, unit: "Climas", q: "¿Cuál es el subtipo climático más seco junto al Andino Puneño (menos de 200 mm anuales)?", opts: ["Templado Pampeano húmedo", "Árido de sierras y bolsones", "Subtropical serrano", "Frío húmedo"], ans: 1, exp: "Árido de sierras y bolsones (15–17 °C, < 200 mm) y Árido Andino Puneño (10 °C, < 200 mm)." },
+        { term: 2, unit: "Biomas", q: "¿Qué especies arbóreas caracterizan a la Selva Misionera y al Parque Chaqueño respectivamente?", opts: ["Coihue/lenga; tala", "Lapacho, laurel, palo rosa y cedro; quebracho colorado y blanco", "Algarrobo; coirones y tolas", "Pino Paraná; ombú"], ans: 1, exp: "En Misiones brillan lapacho, laurel, palo rosa y cedro; en el Parque Chaqueño el quebracho colorado y el blanco." },
+        { term: 2, unit: "Biomas", q: "¿Qué género arbóreo domina los Bosques Patagónico-Fueguinos?", opts: ["Quebracho", "Nothofagus (coihue, lenga y ñire)", "Gramíneas y tala", "Algarrobo y tola"], ans: 1, exp: "Árboles altos (30–40 m) del género Nothofagus: coihue, lenga y ñire." },
+        { term: 2, unit: "Población", q: "¿Qué porcentaje aproximado de la población argentina se concentra en el Gran Buenos Aires?", opts: ["7%", "15%", "Casi el 30%", "50,5%"], ans: 2, exp: "Casi el 30% vive en el Gran Buenos Aires, seguido por Córdoba y Rosario." },
+        { term: 2, unit: "Población", q: "Según el cuadro de carpeta, ¿qué provincia tiene solo el 7% en su capital frente al 50,5% de La Rioja?", opts: ["Río Negro (9,1%)", "Mendoza (7%)", "Buenos Aires", "Chaco"], ans: 1, exp: "Mendoza concentra apenas 7% en su capital (por su economía vitivinícola e industrial distribuida en oasis), La Rioja 50,5% y Río Negro 9,1%." },
+        { term: 2, unit: "Población", q: "¿Qué proporción aproximada de extranjeros registró el Censo de 1914 en Argentina?", opts: ["Menos del 5%", "Casi el 30%", "Más del 70%", "Exactamente 10%"], ans: 1, exp: "Tras las grandes oleadas migratorias europeas de fines del S. XIX e inicios del XX, en 1914 casi 30% eran extranjeros." },
+        { term: 2, unit: "Población", q: "¿Cómo se comporta el índice de masculinidad en edades avanzadas y en zonas mineras/rurales?", opts: ["Menor proporción de varones en edades altas; mayor proporción de varones en zonas mineras/rurales", "Mayor en edades altas y menor en minería", "Es exactamente igual en todo el país", "Mide la cantidad de niños por familia"], ans: 0, exp: "Las mujeres tienen mayor esperanza de vida (baja el índice en edades altas), mientras que trabajos rurales/mineros atraen más varones." }
+      ];
+
+      /* ===================== RENDER HEADER Y FILTROS GLOBALES ===================== */
+      function updateHeaderStats() {
+        const totalKnown = Object.keys(state.knownFc).filter(k => state.knownFc[k]).length;
+        document.getElementById("stat-fc").textContent = `Flashcards: ${totalKnown}/${FLASHCARDS.length}`;
+        const fmt = (v) => v === null ? "—" : `${v.toFixed(1)}/10`;
+        document.getElementById("stat-c1").textContent = `Mejor 1° Cuat.: ${fmt(state.bestScores["1"])}`;
+        document.getElementById("stat-c2").textContent = `Mejor 2° Cuat.: ${fmt(state.bestScores["2"])}`;
+        document.getElementById("stat-int").textContent = `Mejor Integrador: ${fmt(state.bestScores["all"])}`;
+      }
+
+      function renderGuides() {
+        const box = document.getElementById("guides-container");
+        const list = GUIDES.filter(g => state.term === "all" || String(g.term) === state.term);
+        box.innerHTML = list.map((g, idx) => `
+          <details class="guide-unit" ${idx === 0 ? "open" : ""}>
+            <summary>
+              <span>${escapeHtml(g.title)}</span>
+              <span class="badge ${g.term === 1 ? "badge-c1" : "badge-c2"}">${escapeHtml(g.badge)}</span>
+            </summary>
+            <div class="guide-body">${g.html}</div>
+          </details>
+        `).join("");
+      }
+
+      document.getElementById("btn-expand-all").addEventListener("click", () => {
+        document.querySelectorAll("#guides-container details").forEach(d => { d.open = true; });
+      });
+      document.getElementById("btn-collapse-all").addEventListener("click", () => {
+        document.querySelectorAll("#guides-container details").forEach(d => { d.open = false; });
+      });
+
+      /* ===================== FLASHCARDS ===================== */
+      let fcDeck = [];
+      let fcIdx = 0;
+      let fcFlipped = false;
+
+      function populateUnitFilter() {
+        const sel = document.getElementById("fc-unit-filter");
+        const prev = sel.value || "all";
+        const base = FLASHCARDS.filter(c => state.term === "all" || String(c.term) === state.term);
+        const units = Array.from(new Set(base.map(c => c.unit)));
+        sel.innerHTML = `<option value="all">Todas las unidades (${base.length})</option>` +
+          units.map(u => `<option value="${escapeHtml(u)}">${escapeHtml(u)}</option>`).join("");
+        if (units.includes(prev)) sel.value = prev;
+      }
+
+      function rebuildFcDeck(keepOrder) {
+        const unitVal = document.getElementById("fc-unit-filter").value;
+        const onlyReview = document.getElementById("fc-only-review").checked;
+        let filtered = FLASHCARDS.filter(c => {
+          if (state.term !== "all" && String(c.term) !== state.term) return false;
+          if (unitVal !== "all" && c.unit !== unitVal) return false;
+          if (onlyReview && state.knownFc[c.id]) return false;
+          return true;
+        });
+        if (!keepOrder) {
+          filtered = filtered.slice().sort(() => Math.random() - 0.5);
+        }
+        fcDeck = filtered;
+        fcIdx = 0;
+        fcFlipped = false;
+        renderFlashcard();
+      }
+
+      function renderFlashcard() {
+        const area = document.getElementById("fc-area");
+        const totalTerm = FLASHCARDS.filter(c => state.term === "all" || String(c.term) === state.term);
+        const knownCount = totalTerm.filter(c => state.knownFc[c.id]).length;
+        const pct = totalTerm.length ? Math.round((knownCount / totalTerm.length) * 100) : 0;
+        document.getElementById("fc-progress-bar").style.width = pct + "%";
+
+        if (!fcDeck.length) {
+          area.innerHTML = `
+            <div class="prompt-card" style="background:var(--emerald-soft); border-color:var(--emerald);">
+              ¡Completaste todas las tarjetas de este filtro! (${knownCount}/${totalTerm.length} marcadas como sabidas).
+              <div style="margin-top:12px;"><button class="btn btn-primary btn-sm" id="fc-show-all-btn">Ver todo el mazo otra vez</button></div>
+            </div>`;
+          const btn = document.getElementById("fc-show-all-btn");
+          if (btn) btn.addEventListener("click", () => {
+            document.getElementById("fc-only-review").checked = false;
+            rebuildFcDeck(true);
+          });
+          return;
+        }
+
+        const card = fcDeck[fcIdx];
+        const statusTag = state.knownFc[card.id]
+          ? `<span class="badge" style="background:var(--green-soft);color:#14532d;">✓ Sabida</span>`
+          : (state.reviewFc[card.id] ? `<span class="badge badge-tp">↻ Para repasar</span>` : "");
+
+        area.innerHTML = `
+          <div class="flashcard-stage">
+            <div class="flashcard ${fcFlipped ? "flipped" : ""}" id="fc-card-box" tabindex="0" role="button" aria-label="Voltear tarjeta">
+              <div class="fc-meta">
+                <span><strong>${card.term}° Cuat.</strong> · ${escapeHtml(card.unit)}</span>
+                <span>Tarjeta ${fcIdx + 1} de ${fcDeck.length} ${statusTag}</span>
+              </div>
+              <div class="fc-main">${fcFlipped ? escapeHtml(card.a) : escapeHtml(card.q)}</div>
+              <div class="fc-hint">${fcFlipped ? "Respuesta (hacé clic para volver a la pregunta)" : "Tocá la tarjeta para ver la respuesta"}</div>
+            </div>
+          </div>
+          <div class="fc-actions">
+            <button class="btn" id="fc-prev">◀ Anterior</button>
+            <button class="btn btn-amber" id="fc-mark-review">Repasar ↻</button>
+            <button class="btn btn-primary" id="fc-mark-known">La sé ✓</button>
+            <button class="btn" id="fc-next">Siguiente ▶</button>
+          </div>`;
+
+        const box = document.getElementById("fc-card-box");
+        const toggleFlip = () => { fcFlipped = !fcFlipped; renderFlashcard(); };
+        box.addEventListener("click", toggleFlip);
+        box.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggleFlip(); }
+        });
+        document.getElementById("fc-prev").addEventListener("click", () => {
+          fcIdx = (fcIdx - 1 + fcDeck.length) % fcDeck.length;
+          fcFlipped = false;
+          renderFlashcard();
+        });
+        document.getElementById("fc-next").addEventListener("click", () => {
+          fcIdx = (fcIdx + 1) % fcDeck.length;
+          fcFlipped = false;
+          renderFlashcard();
+        });
+        document.getElementById("fc-mark-known").addEventListener("click", () => {
+          state.knownFc[card.id] = true;
+          delete state.reviewFc[card.id];
+          saveState();
+          updateHeaderStats();
+          if (document.getElementById("fc-only-review").checked) {
+            rebuildFcDeck(true);
+          } else {
+            fcIdx = (fcIdx + 1) % fcDeck.length;
+            fcFlipped = false;
+            renderFlashcard();
+          }
+        });
+        document.getElementById("fc-mark-review").addEventListener("click", () => {
+          state.reviewFc[card.id] = true;
+          delete state.knownFc[card.id];
+          saveState();
+          updateHeaderStats();
+          fcIdx = (fcIdx + 1) % fcDeck.length;
+          fcFlipped = false;
+          renderFlashcard();
+        });
+      }
+
+      document.getElementById("fc-unit-filter").addEventListener("change", () => rebuildFcDeck(true));
+      document.getElementById("fc-only-review").addEventListener("change", () => rebuildFcDeck(true));
+      document.getElementById("fc-shuffle").addEventListener("click", () => rebuildFcDeck(false));
+      document.getElementById("fc-reset-progress").addEventListener("click", () => {
+        state.knownFc = {};
+        state.reviewFc = {};
+        saveState();
+        updateHeaderStats();
+        rebuildFcDeck(true);
+      });
+
+      /* ===================== PRACTICA TIPO TP: CLASIFICADOR ===================== */
+      let clfState = { mode: "llanuras", queue: [], idx: 0, score: 0, locked: false, feedback: null };
+
+      function startClassifier() {
+        const mode = document.getElementById("clf-mode").value;
+        const cfg = CLASSIFIER_MODES[mode];
+        clfState = {
+          mode,
+          queue: cfg.items.slice().sort(() => Math.random() - 0.5),
+          idx: 0,
+          score: 0,
+          locked: false,
+          feedback: null
+        };
+        renderClassifier();
+      }
+
+      function renderClassifier() {
+        const stage = document.getElementById("clf-stage");
+        const cfg = CLASSIFIER_MODES[clfState.mode];
+        if (clfState.idx >= clfState.queue.length) {
+          stage.innerHTML = `
+            <div class="prompt-card" style="background:var(--emerald-soft); border-color:var(--emerald);">
+              Ronda terminada: <strong>${clfState.score} / ${clfState.queue.length}</strong> aciertos.
+              <div style="margin-top:12px;"><button class="btn btn-primary" id="clf-again">Jugar otra vez</button></div>
+            </div>`;
+          document.getElementById("clf-again").addEventListener("click", startClassifier);
+          return;
+        }
+        const cur = clfState.queue[clfState.idx];
+        stage.innerHTML = `
+          <div style="display:flex; justify-content:space-between; font-size:0.86rem; color:var(--muted); margin-bottom:10px;">
+            <span>Ítem ${clfState.idx + 1} de ${clfState.queue.length}</span>
+            <span>Aciertos: <strong>${clfState.score}</strong></span>
+          </div>
+          <div class="prompt-card">${escapeHtml(cur.text)}</div>
+          <div class="cat-grid">
+            ${cfg.categories.map(c => `<button class="cat-btn" data-cat="${escapeHtml(c)}" ${clfState.locked ? "disabled" : ""}>${escapeHtml(c)}</button>`).join("")}
+          </div>
+          ${clfState.feedback ? `<div class="feedback-banner ${clfState.feedback.ok ? "fb-ok" : "fb-err"}">${escapeHtml(clfState.feedback.msg)}</div>
+          <div style="margin-top:12px; text-align:right;"><button class="btn btn-navy btn-sm" id="clf-next-btn">Siguiente ▶</button></div>` : ""}`;
+
+        stage.querySelectorAll(".cat-btn").forEach(btn => {
+          btn.addEventListener("click", () => {
+            if (clfState.locked) return;
+            clfState.locked = true;
+            const chosen = btn.getAttribute("data-cat");
+            const ok = chosen === cur.cat;
+            if (ok) clfState.score += 1;
+            clfState.feedback = {
+              ok,
+              msg: ok ? `¡Correcto! Pertenece a ${cur.cat}.` : `Incorrecto: elegiste "${chosen}", pero corresponde a "${cur.cat}".`
+            };
+            renderClassifier();
+          });
+        });
+        const nextBtn = document.getElementById("clf-next-btn");
+        if (nextBtn) nextBtn.addEventListener("click", () => {
+          clfState.idx += 1;
+          clfState.locked = false;
+          clfState.feedback = null;
+          renderClassifier();
+        });
+      }
+
+      document.getElementById("clf-mode").addEventListener("change", startClassifier);
+      document.getElementById("clf-restart").addEventListener("click", startClassifier);
+
+      /* ===================== PRACTICA TIPO TP: VERDADERO O FALSO ===================== */
+      let vfState = { idx: 0, score: 0, locked: false, feedback: null };
+
+      function startVf() {
+        vfState = { idx: 0, score: 0, locked: false, feedback: null };
+        renderVf();
+      }
+
+      function renderVf() {
+        const stage = document.getElementById("sg-vf") ? document.getElementById("vf-stage") : null;
+        if (!stage) return;
+        if (vfState.idx >= VF_QUESTIONS.length) {
+          stage.innerHTML = `
+            <div class="prompt-card" style="background:var(--emerald-soft); border-color:var(--emerald);">
+              Completaste las ${VF_QUESTIONS.length} afirmaciones: <strong>${vfState.score}/${VF_QUESTIONS.length}</strong> aciertos.
+              <div style="margin-top:12px;"><button class="btn btn-primary" id="vf-again">Reintentar</button></div>
+            </div>`;
+          document.getElementById("vf-again").addEventListener("click", startVf);
+          return;
+        }
+        const cur = VF_QUESTIONS[vfState.idx];
+        stage.innerHTML = `
+          <div style="display:flex; justify-content:space-between; font-size:0.86rem; color:var(--muted); margin-bottom:10px;">
+            <span>Afirmación ${vfState.idx + 1} de ${VF_QUESTIONS.length}</span>
+            <span>Aciertos: <strong>${vfState.score}</strong></span>
+          </div>
+          <div class="prompt-card">${escapeHtml(cur.q)}</div>
+          <div style="display:flex; gap:12px; justify-content:center; margin-top:14px; flex-wrap:wrap;">
+            <button class="btn btn-primary" data-vf="true" ${vfState.locked ? "disabled" : ""} style="min-width:150px;">Verdadero (V)</button>
+            <button class="btn btn-navy" data-vf="false" ${vfState.locked ? "disabled" : ""} style="min-width:150px;">Falso (F)</button>
+          </div>
+          ${vfState.feedback ? `<div class="feedback-banner ${vfState.feedback.ok ? "fb-ok" : "fb-err"}">${escapeHtml(vfState.feedback.msg)}</div>
+          <div style="margin-top:12px; text-align:right;"><button class="btn btn-navy btn-sm" id="vf-next-btn">Siguiente ▶</button></div>` : ""}`;
+
+        stage.querySelectorAll("[data-vf]").forEach(btn => {
+          btn.addEventListener("click", () => {
+            if (vfState.locked) return;
+            vfState.locked = true;
+            const val = btn.getAttribute("data-vf") === "true";
+            const ok = val === cur.ans;
+            if (ok) vfState.score += 1;
+            vfState.feedback = {
+              ok,
+              msg: (ok ? "¡Correcto! " : "Atención: ") + cur.exp
+            };
+            renderVf();
+          });
+        });
+        const nextBtn = document.getElementById("vf-next-btn");
+        if (nextBtn) nextBtn.addEventListener("click", () => {
+          vfState.idx += 1;
+          vfState.locked = false;
+          vfState.feedback = null;
+          renderVf();
+        });
+      }
+
+      document.getElementById("vf-restart").addEventListener("click", startVf);
+
+      /* ===================== PRACTICA TIPO TP: CRUCIGRAMA MESETA ===================== */
+      function buildCrossword() {
+        const gridEl = document.getElementById("cw-grid");
+        const cluesEl = document.getElementById("cw-clues");
+        cluesEl.innerHTML = CROSSWORD_ROWS.map(r => `<li>${escapeHtml(r.clue)} <em>(${r.word.length} letras)</em></li>`).join("");
+
+        let html = "";
+        CROSSWORD_ROWS.forEach((row, rIdx) => {
+          html += `<div class="cw-row"><span class="cw-num">${row.num}.</span>`;
+          for (let c = 0; c < CW_COLS; c++) {
+            const wordPos = c - row.startCol;
+            if (wordPos >= 0 && wordPos < row.word.length) {
+              const isAxis = c === CW_AXIS_COL;
+              html += `<input type="text" maxlength="1" class="cw-cell ${isAxis ? "axis" : ""}" data-row="${rIdx}" data-pos="${wordPos}" aria-label="Fila ${row.num} letra ${wordPos + 1}" />`;
+            } else {
+              html += `<input type="text" tabindex="-1" class="cw-cell spacer" disabled aria-hidden="true" />`;
+            }
+          }
+          html += `</div>`;
+        });
+        gridEl.innerHTML = html;
+
+        const inputs = Array.from(gridEl.querySelectorAll(".cw-cell:not(.spacer)"));
+        inputs.forEach((inp, idx) => {
+          inp.addEventListener("input", () => {
+            inp.classList.remove("ok", "err");
+            inp.value = normalizeText(inp.value).slice(0, 1);
+            if (inp.value && idx + 1 < inputs.length && inputs[idx + 1].dataset.row === inp.dataset.row) {
+              inputs[idx + 1].focus();
+            }
+          });
+          inp.addEventListener("keydown", (e) => {
+            if (e.key === "Backspace" && !inp.value && idx - 1 >= 0 && inputs[idx - 1].dataset.row === inp.dataset.row) {
+              inputs[idx - 1].focus();
+            }
+          });
+        });
+      }
+
+      document.getElementById("cw-check").addEventListener("click", () => {
+        const inputs = Array.from(document.querySelectorAll("#cw-grid .cw-cell:not(.spacer)"));
+        let okCount = 0;
+        inputs.forEach(inp => {
+          const r = Number(inp.dataset.row);
+          const pos = Number(inp.dataset.pos);
+          const expected = CROSSWORD_ROWS[r].word[pos];
+          const val = normalizeText(inp.value);
+          inp.classList.remove("ok", "err");
+          if (val === expected) {
+            inp.classList.add("ok");
+            okCount += 1;
+          } else {
+            inp.classList.add("err");
+          }
+        });
+        const fb = document.getElementById("cw-feedback");
+        if (okCount === inputs.length) {
+          fb.innerHTML = `<div class="feedback-banner fb-ok">¡10/10 en el Crucigrama M-E-S-E-T-A! Igual que el TP 3 perfecto.</div>`;
+        } else {
+          fb.innerHTML = `<div class="feedback-banner fb-err">Tenés ${okCount} de ${inputs.length} letras correctas. Revisá las casillas en rojo.</div>`;
+        }
+      });
+
+      document.getElementById("cw-hint").addEventListener("click", () => {
+        const inputs = Array.from(document.querySelectorAll("#cw-grid .cw-cell:not(.spacer)"));
+        const target = inputs.find(inp => normalizeText(inp.value) !== CROSSWORD_ROWS[Number(inp.dataset.row)].word[Number(inp.dataset.pos)]);
+        if (!target) return;
+        const expected = CROSSWORD_ROWS[Number(target.dataset.row)].word[Number(target.dataset.pos)];
+        target.value = expected;
+        target.classList.remove("err");
+        target.classList.add("ok");
+      });
+
+      document.getElementById("cw-clear").addEventListener("click", () => {
+        document.querySelectorAll("#cw-grid .cw-cell:not(.spacer)").forEach(inp => {
+          inp.value = "";
+          inp.classList.remove("ok", "err");
+        });
+        document.getElementById("cw-feedback").innerHTML = "";
+      });
+
+      /* ===================== SIMULACRO DE EXAMEN ===================== */
+      let examState = null;
+
+      function startExam(mode, count) {
+        let pool = EXAM_QUESTIONS.filter(q => mode === "all" || String(q.term) === mode);
+        pool = pool.slice().sort(() => Math.random() - 0.5).slice(0, Math.min(count, pool.length));
+        examState = {
+          mode,
+          questions: pool,
+          idx: 0,
+          score: 0,
+          answered: false,
+          selectedOpt: null,
+          missedUnits: {}
+        };
+        document.getElementById("exam-lobby").style.display = "none";
+        document.getElementById("exam-results").style.display = "none";
+        document.getElementById("exam-runner").style.display = "block";
+        renderExamQuestion();
+      }
+
+      function renderExamQuestion() {
+        const runner = document.getElementById("exam-runner");
+        const cur = examState.questions[examState.idx];
+        const total = examState.questions.length;
+        const pct = Math.round(((examState.idx + (examState.answered ? 1 : 0)) / total) * 100);
+
+        runner.innerHTML = `
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
+            <span class="badge ${cur.term === 1 ? "badge-c1" : "badge-c2"}">${cur.term}° Cuat. · ${escapeHtml(cur.unit)}</span>
+            <span style="font-size:0.88rem; color:var(--muted);">Pregunta ${examState.idx + 1} de ${total} · Correctas: <strong>${examState.score}</strong></span>
+          </div>
+          <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
+          <h3 style="margin:0 0 8px; color:var(--navy); font-size:1.12rem;">${escapeHtml(cur.q)}</h3>
+          <div class="option-list">
+            ${cur.opts.map((opt, i) => {
+              let cls = "opt-btn";
+              if (examState.answered) {
+                if (i === cur.ans) cls += " correct";
+                else if (i === examState.selectedOpt) cls += " wrong";
+              }
+              return `<button class="${cls}" data-opt="${i}" ${examState.answered ? "disabled" : ""}>${String.fromCharCode(65 + i)}) ${escapeHtml(opt)}</button>`;
+            }).join("")}
+          </div>
+          ${examState.answered ? `
+            <div class="feedback-banner ${examState.selectedOpt === cur.ans ? "fb-ok" : "fb-err"}">
+              ${examState.selectedOpt === cur.ans ? "¡Correcto! " : "Incorrecto. "}${escapeHtml(cur.exp)}
+            </div>
+            <div style="margin-top:14px; display:flex; justify-content:space-between; gap:8px;">
+              <button class="btn btn-sm" id="exam-abort">Salir al menú</button>
+              <button class="btn btn-navy" id="exam-next">${examState.idx + 1 < total ? "Siguiente pregunta ▶" : "Ver nota final"}</button>
+            </div>` : `
+            <div style="margin-top:14px;"><button class="btn btn-sm" id="exam-abort">Salir al menú</button></div>`}`;
+
+        runner.querySelectorAll("[data-opt]").forEach(btn => {
+          btn.addEventListener("click", () => {
+            if (examState.answered) return;
+            const chosen = Number(btn.getAttribute("data-opt"));
+            examState.answered = true;
+            examState.selectedOpt = chosen;
+            if (chosen === cur.ans) {
+              examState.score += 1;
+            } else {
+              examState.missedUnits[cur.unit] = (examState.missedUnits[cur.unit] || 0) + 1;
+            }
+            renderExamQuestion();
+          });
+        });
+
+        const abortBtn = document.getElementById("exam-abort");
+        if (abortBtn) abortBtn.addEventListener("click", () => {
+          runner.style.display = "none";
+          document.getElementById("exam-lobby").style.display = "block";
+        });
+
+        const nextBtn = document.getElementById("exam-next");
+        if (nextBtn) nextBtn.addEventListener("click", () => {
+          if (examState.idx + 1 < total) {
+            examState.idx += 1;
+            examState.answered = false;
+            examState.selectedOpt = null;
+            renderExamQuestion();
+          } else {
+            showExamResults();
+          }
+        });
+      }
+
+      function showExamResults() {
+        document.getElementById("exam-runner").style.display = "none";
+        const resBox = document.getElementById("exam-results");
+        resBox.style.display = "block";
+
+        const total = examState.questions.length;
+        const grade = (examState.score / total) * 10;
+        const prevBest = state.bestScores[examState.mode];
+        if (prevBest === null || grade > prevBest) {
+          state.bestScores[examState.mode] = grade;
+          saveState();
+          updateHeaderStats();
+        }
+
+        const missedList = Object.entries(examState.missedUnits).sort((a, b) => b[1] - a[1]);
+        const passed = grade >= 6;
+        resBox.innerHTML = `
+          <div class="score-hero">
+            <div style="font-size:0.95rem; opacity:0.9;">Nota Final del Simulacro</div>
+            <div class="score-num">${grade.toFixed(1)} / 10</div>
+            <div style="margin-top:6px; font-weight:600;">${passed ? "¡Aprobado! Muy buen nivel para la mesa." : "A seguir repasando los temas flojos: ¡llegás bien!"} (${examState.score}/${total} correctas)</div>
+          </div>
+          ${missedList.length ? `
+            <h3 style="margin:0 0 8px; color:var(--navy);">Temas a reforzar antes de rendir:</h3>
+            <ul style="margin:0 0 16px; padding-left:20px;">
+              ${missedList.map(([u, c]) => `<li><strong>${escapeHtml(u)}</strong> (${c} ${c === 1 ? "error" : "errores"})</li>`).join("")}
+            </ul>` : `<div class="feedback-banner fb-ok" style="margin-bottom:16px;">¡Puntaje ideal! No tuviste ningún error en este simulacro.</div>`}
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <button class="btn btn-primary" id="exam-retry">Repetir este simulacro</button>
+            <button class="btn btn-navy" id="exam-to-guides">Ir a Guías Express</button>
+            <button class="btn" id="exam-to-lobby">Elegir otro modo</button>
+          </div>`;
+
+        document.getElementById("exam-retry").addEventListener("click", () => startExam(examState.mode, total));
+        document.getElementById("exam-to-guides").addEventListener("click", () => switchTab("guias"));
+        document.getElementById("exam-to-lobby").addEventListener("click", () => {
+          resBox.style.display = "none";
+          document.getElementById("exam-lobby").style.display = "block";
+        });
+      }
+
+      document.querySelectorAll(".start-exam-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          startExam(btn.getAttribute("data-mode"), Number(btn.getAttribute("data-count")));
+        });
+      });
+
+      /* ===================== NAVEGACION GLOBAL ===================== */
+      function switchTab(tabId) {
+        state.tab = tabId;
+        document.querySelectorAll(".tab-btn").forEach(b => b.classList.toggle("active", b.getAttribute("data-tab") === tabId));
+        document.querySelectorAll(".tab-panel").forEach(p => p.classList.toggle("active", p.id === "tab-" + tabId));
+      }
+
+      document.querySelectorAll(".tab-btn").forEach(btn => {
+        btn.addEventListener("click", () => switchTab(btn.getAttribute("data-tab")));
+      });
+
+      document.querySelectorAll(".term-switch .pill-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          state.term = btn.getAttribute("data-term");
+          document.querySelectorAll(".term-switch .pill-btn").forEach(b => b.classList.toggle("active", b === btn));
+          renderGuides();
+          populateUnitFilter();
+          rebuildFcDeck(true);
+        });
+      });
+
+      document.querySelectorAll(".subgame-tabs .pill-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const sg = btn.getAttribute("data-subgame");
+          document.querySelectorAll(".subgame-tabs .pill-btn").forEach(b => b.classList.toggle("active", b === btn));
+          document.getElementById("sg-classifier").style.display = sg === "classifier" ? "block" : "none";
+          document.getElementById("sg-vf").style.display = sg === "vf" ? "block" : "none";
+          document.getElementById("sg-crossword").style.display = sg === "crossword" ? "block" : "none";
+        });
+      });
+
+      /* ===================== INICIALIZACION ===================== */
+      loadState();
+      updateHeaderStats();
+      renderGuides();
+      populateUnitFilter();
+      rebuildFcDeck(true);
+      startClassifier();
+      startVf();
+      buildCrossword();
+    })();
+  </script>
+</body>
+</html>
