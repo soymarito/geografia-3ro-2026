@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Geografía 3° · Entrenador Mesa Diciembre 2026</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗺️</text></svg>" />
   <style>
     :root {
       --bg: #f4f7fb;
@@ -514,6 +515,210 @@
       .flashcard { min-height: 220px; padding: 18px 16px; }
       .cw-cell { width: 29px; height: 32px; font-size: 0.9rem; }
     }
+
+    /* Pestaña Mapa de Argentina */
+    .map-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .map-modes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .map-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: var(--navy);
+    }
+    .map-options label {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+    }
+    .map-layout {
+      display: grid;
+      grid-template-columns: minmax(280px, 460px) 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+    @media (max-width: 860px) {
+      .map-layout { grid-template-columns: 1fr; }
+    }
+    .map-svg-box {
+      background: linear-gradient(180deg, #e7f3fc 0%, #d8ecfa 100%);
+      border: 1.5px solid #b8d3eb;
+      border-radius: 14px;
+      padding: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+    svg.ar-map {
+      width: 100%;
+      height: auto;
+      display: block;
+      user-select: none;
+    }
+    .prov-path {
+      fill: #f8fafc;
+      stroke: #475569;
+      stroke-width: 0.85;
+      stroke-linejoin: round;
+      cursor: pointer;
+      transition: fill 0.14s ease, opacity 0.14s ease, stroke-width 0.14s ease;
+    }
+    .prov-path:hover {
+      filter: brightness(0.92);
+      stroke: #0f2942;
+      stroke-width: 1.45;
+    }
+    .prov-path.selected {
+      fill: #0d9488 !important;
+      stroke: #0f2942;
+      stroke-width: 1.8;
+    }
+    .prov-path.quiz-target {
+      fill: #f59e0b !important;
+      stroke: #78350f;
+      stroke-width: 1.8;
+    }
+    .prov-path.quiz-ok {
+      fill: #22c55e !important;
+      stroke: #14532d;
+      stroke-width: 1.8;
+    }
+    .prov-path.quiz-err {
+      fill: #ef4444 !important;
+      stroke: #7f1d1d;
+      stroke-width: 1.8;
+    }
+    .prov-path.dimmed { opacity: 0.25; }
+    .map-geo-label {
+      fill: #335c81;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      pointer-events: none;
+    }
+    .map-water-label {
+      fill: #2563eb;
+      opacity: 0.65;
+      font-size: 8.5px;
+      font-style: italic;
+      font-weight: 700;
+      letter-spacing: 1px;
+      pointer-events: none;
+    }
+    .map-num-label {
+      fill: #0f2942;
+      font-size: 8.5px;
+      font-weight: 800;
+      text-anchor: middle;
+      dominant-baseline: central;
+      paint-order: stroke;
+      stroke: rgba(255, 255, 255, 0.92);
+      stroke-width: 2.4px;
+      pointer-events: none;
+    }
+    .map-cap-label {
+      fill: #7f1d1d;
+      font-size: 7.4px;
+      font-weight: 700;
+      paint-order: stroke;
+      stroke: rgba(255, 255, 255, 0.94);
+      stroke-width: 2.3px;
+      pointer-events: none;
+    }
+    .map-cap-dot {
+      fill: #dc2626;
+      stroke: #ffffff;
+      stroke-width: 1.1;
+      pointer-events: none;
+    }
+    .caba-badge {
+      cursor: pointer;
+    }
+    .caba-badge rect {
+      fill: #64748b;
+      stroke: #ffffff;
+      stroke-width: 1;
+    }
+    .caba-badge.selected rect {
+      fill: #0d9488;
+      stroke: #0f2942;
+      stroke-width: 1.4;
+    }
+    .caba-badge text {
+      fill: #ffffff;
+      font-size: 7.5px;
+      font-weight: 700;
+      text-anchor: middle;
+      dominant-baseline: central;
+      pointer-events: none;
+    }
+    .map-side-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .info-box {
+      background: #fbfdff;
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+    }
+    .region-legend-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .region-chip {
+      border: 1.5px solid var(--border);
+      background: #fff;
+      border-radius: 10px;
+      padding: 8px 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--navy);
+      cursor: pointer;
+      text-align: left;
+    }
+    .region-chip.active {
+      border-color: var(--navy);
+      background: var(--surface-soft);
+      box-shadow: 0 2px 8px rgba(15, 41, 66, 0.12);
+    }
+    .region-swatch {
+      width: 14px;
+      height: 14px;
+      border-radius: 4px;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      flex-shrink: 0;
+    }
+    .prov-table-row { cursor: pointer; }
+    .prov-table-row:hover td { background: #e6f7f5 !important; }
+    .prov-table-row.active-row td { background: #ccfbf1 !important; font-weight: 700; }
+    .search-input {
+      width: 100%;
+      max-width: 340px;
+      padding: 9px 12px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-size: 0.9rem;
+      color: var(--text);
+    }
   </style>
 </head>
 <body>
@@ -525,6 +730,7 @@
       </div>
       <div class="stats-row" id="header-stats">
         <span class="stat-pill" id="stat-fc">Flashcards: 0/52</span>
+        <span class="stat-pill" id="stat-map">Mapa: 0/23</span>
         <span class="stat-pill" id="stat-c1">Mejor 1° Cuat.: —</span>
         <span class="stat-pill" id="stat-c2">Mejor 2° Cuat.: —</span>
         <span class="stat-pill" id="stat-int">Mejor Integrador: —</span>
@@ -544,6 +750,7 @@
         <button class="tab-btn" data-tab="flashcards">2. Flashcards Orales</button>
         <button class="tab-btn" data-tab="practica">3. Práctica Tipo TP</button>
         <button class="tab-btn" data-tab="simulacro">4. Simulacro (1 al 10)</button>
+        <button class="tab-btn" data-tab="mapa">5. 🗺️ Mapa de Argentina</button>
       </nav>
     </div>
   </div>
@@ -700,6 +907,50 @@
       <div id="exam-runner" class="card" style="display:none;"></div>
       <div id="exam-results" class="card" style="display:none;"></div>
     </section>
+
+    <!-- TAB 5: MAPA DE ARGENTINA -->
+    <section id="tab-mapa" class="tab-panel">
+      <div class="card">
+        <div class="section-head" style="margin-bottom:10px;">
+          <h2>Mapa Político y Regional de la República Argentina</h2>
+          <span class="badge badge-c1">23 Provincias + CABA + Malvinas + Antártida (IGN)</span>
+        </div>
+
+        <div class="map-toolbar">
+          <div class="map-modes" role="group" aria-label="Modos del mapa">
+            <button class="pill-btn active" data-mapmode="explore">🔍 Explorar</button>
+            <button class="pill-btn" data-mapmode="regions">🎨 6 Regiones (Hoja 20)</button>
+            <button class="pill-btn" data-mapmode="locate">🎯 Ubicá la Provincia</button>
+            <button class="pill-btn" data-mapmode="capitals">🏛️ Juego de Capitales</button>
+          </div>
+          <div class="map-options">
+            <label><input type="checkbox" id="map-show-nums" checked /> Mostrar números (1–23)</label>
+            <label><input type="checkbox" id="map-show-caps" /> Mostrar capitales</label>
+          </div>
+        </div>
+
+        <div class="map-layout">
+          <div class="map-svg-box" id="map-svg-wrap"></div>
+          <div class="map-side-panel" id="map-side-panel"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-head">
+          <h2>Tabla Completa: 23 Provincias, Capitales y Regiones</h2>
+          <input type="search" id="prov-search" class="search-input" placeholder="Buscar provincia, capital o región..." aria-label="Buscar provincia, capital o región" />
+        </div>
+        <p style="margin-top:0; font-size:0.86rem; color:var(--muted);">Tocá cualquier fila para resaltarla y ver su ubicación exacta en el mapa.</p>
+        <div class="table-wrap">
+          <table class="geo-table" id="prov-table">
+            <thead>
+              <tr><th>N°</th><th>Provincia / Jurisdicción</th><th>Capital</th><th>Región Geográfica</th></tr>
+            </thead>
+            <tbody id="prov-table-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
   </main>
 
   <script>
@@ -712,6 +963,7 @@
         tab: "guias",
         knownFc: {},
         reviewFc: {},
+        masteredProvs: {},
         bestScores: { "1": null, "2": null, "all": null }
       };
 
@@ -723,6 +975,7 @@
             if (parsed && typeof parsed === "object") {
               state.knownFc = parsed.knownFc || {};
               state.reviewFc = parsed.reviewFc || {};
+              state.masteredProvs = parsed.masteredProvs || {};
               state.bestScores = Object.assign({ "1": null, "2": null, "all": null }, parsed.bestScores || {});
             }
           }
@@ -734,6 +987,7 @@
           localStorage.setItem(STORAGE_KEY, JSON.stringify({
             knownFc: state.knownFc,
             reviewFc: state.reviewFc,
+            masteredProvs: state.masteredProvs,
             bestScores: state.bestScores
           }));
         } catch (e) { /* ignorar */ }
@@ -834,6 +1088,7 @@
             </table></div>
             <h4>Capitales que más se confunden (23 Provincias + CABA)</h4>
             <p><strong>Catamarca:</strong> San Fernando del Valle de Catamarca · <strong>Río Negro:</strong> Viedma · <strong>Chubut:</strong> Rawson · <strong>Entre Ríos:</strong> Paraná · <strong>Misiones:</strong> Posadas · <strong>Chaco:</strong> Resistencia · <strong>La Pampa:</strong> Santa Rosa · <strong>Santa Cruz:</strong> Río Gallegos · <strong>Tierra del Fuego:</strong> Ushuaia · <strong>Jujuy:</strong> San Salvador de Jujuy · <strong>Tucumán:</strong> San Miguel de Tucumán · <strong>Bs. As.:</strong> La Plata.</p>
+            <div style="margin-top:12px;"><button class="btn btn-primary btn-sm" data-goto-tab="mapa">Abrir Mapa Interactivo de las 23 Provincias →</button></div>
           `
         },
         {
@@ -1249,6 +1504,9 @@
       function updateHeaderStats() {
         const totalKnown = Object.keys(state.knownFc).filter(k => state.knownFc[k]).length;
         document.getElementById("stat-fc").textContent = `Flashcards: ${totalKnown}/${FLASHCARDS.length}`;
+        const mapKnown = Object.keys(state.masteredProvs).filter(k => state.masteredProvs[k] && k !== "02").length;
+        const statMapEl = document.getElementById("stat-map");
+        if (statMapEl) statMapEl.textContent = `Mapa: ${mapKnown}/23`;
         const fmt = (v) => v === null ? "—" : `${v.toFixed(1)}/10`;
         document.getElementById("stat-c1").textContent = `Mejor 1° Cuat.: ${fmt(state.bestScores["1"])}`;
         document.getElementById("stat-c2").textContent = `Mejor 2° Cuat.: ${fmt(state.bestScores["2"])}`;
@@ -1267,6 +1525,9 @@
             <div class="guide-body">${g.html}</div>
           </details>
         `).join("");
+        box.querySelectorAll("[data-goto-tab]").forEach(btn => {
+          btn.addEventListener("click", () => switchTab(btn.getAttribute("data-goto-tab")));
+        });
       }
 
       document.getElementById("btn-expand-all").addEventListener("click", () => {
@@ -1778,6 +2039,542 @@
         });
       });
 
+      /* ===================== MODULO 5: MAPA DE ARGENTINA ===================== */
+      const MAP_DATA = {"viewBox":"0 0 460 660","antartidaBox":{"x":312,"y":506,"w":134,"h":138},"antartidaSectorPath":"M379.0 636.0L324.6 529.0L330.9 526.1L337.3 523.5L343.8 521.3L350.5 519.4L357.2 518.0L364.1 516.9L370.9 516.3L377.8 516.0L384.8 516.1L391.6 516.7L398.5 517.6L405.3 518.9L412.0 520.6L418.6 522.7L425.0 525.2L431.3 528.0L433.4 529.0Z","antartidaPath":"M348.9 575.6L349.0 576.6L348.5 575.7ZM344.7 567.0L344.6 567.4L344.3 567.8L343.7 566.7L344.0 566.6ZM357.6 591.2L357.7 592.7L357.4 593.6L356.3 591.4ZM345.0 562.1L343.7 562.5L343.3 562.1L343.5 561.7ZM353.2 567.0L353.7 569.6L352.6 571.7L349.5 573.3L348.2 572.9L351.6 570.6L349.2 571.3L350.3 569.4L348.9 570.1L347.9 569.4L347.6 570.9L346.2 571.2L347.0 571.5L346.7 572.4L345.3 569.7L346.3 570.1L346.4 569.8L345.6 569.3L347.5 568.3L346.0 568.1L347.5 567.4L350.0 565.4L347.8 565.6L347.7 564.4L349.2 563.2L345.8 563.3L345.1 561.1L343.7 560.1L345.8 557.9L346.5 558.1L347.0 559.5L348.2 559.8L349.6 561.8L351.4 563.5ZM347.2 548.4L346.9 549.5L347.8 550.1L347.1 551.3L347.1 551.3L347.7 551.2L347.6 551.9L347.1 552.1L346.6 553.2L345.8 552.5L346.2 549.1ZM363.7 592.6L363.0 597.9L361.5 597.7L361.4 595.5ZM348.2 545.5L347.9 546.5L348.0 546.0ZM349.2 542.8L348.9 543.6L349.3 544.1L348.5 544.2ZM353.2 537.7L351.9 539.1L350.6 538.9L351.4 537.6L352.0 536.6L352.4 536.8L352.1 537.4L352.6 537.3L352.4 537.9ZM354.4 535.6L353.3 537.2L353.6 536.1L353.2 535.4ZM359.8 556.3L359.7 557.3L359.2 556.5L358.3 555.4L359.1 555.3ZM356.8 533.1L356.5 534.1L356.3 533.2ZM357.5 528.6L356.5 529.4L354.5 529.1L355.0 529.2L355.3 528.4ZM371.4 597.6L371.6 599.8L371.2 600.7L369.9 600.6L369.3 599.7L368.0 600.4L366.4 599.4L366.4 599.3L366.4 599.0L369.8 598.7L370.3 598.1L370.0 597.4L370.0 596.5L370.4 595.9L370.7 595.9L370.9 596.2L371.1 597.2ZM361.7 525.4L359.6 526.6L358.8 526.7L359.9 525.4ZM364.0 533.7L362.4 535.2L361.7 534.8L362.0 533.9L361.3 533.7L362.4 532.4L362.4 533.6L363.1 532.9ZM364.3 531.2L363.6 531.8L362.9 531.0L361.4 532.4L360.7 534.5L360.3 534.5L360.0 534.7L360.8 534.8L360.5 535.2L360.9 535.9L359.4 535.1L359.3 536.3L358.5 535.6L357.0 538.6L355.8 538.7L356.2 539.6L355.0 540.3L356.3 540.8L355.3 542.4L356.2 543.2L358.8 542.0L358.0 542.7L358.3 543.7L357.6 543.0L356.9 543.5L357.1 544.5L356.4 543.6L355.1 544.0L355.7 544.8L355.5 545.3L356.1 545.5L355.8 545.9L354.3 544.4L353.2 544.3L353.8 545.0L353.1 546.2L354.1 547.0L352.5 546.9L352.1 548.2L352.6 548.3L352.2 548.9L352.8 549.1L351.6 549.4L351.6 550.3L352.3 550.8L351.9 551.8L352.7 552.0L352.2 552.9L353.7 552.2L352.8 553.4L353.7 553.4L353.5 554.4L355.7 554.6L355.0 554.0L357.1 552.6L355.8 553.5L355.8 554.0L357.0 554.3L356.0 555.1L358.9 556.5L359.0 557.9L360.4 559.1L359.6 559.3L359.7 560.0L361.5 560.3L360.5 561.1L360.8 561.8L361.8 561.4L361.8 562.0L362.6 562.6L361.4 564.8L362.6 564.0L363.3 564.7L361.2 566.0L361.3 566.1L361.8 566.2L361.5 566.6L361.7 566.7L363.7 565.6L363.3 566.5L363.8 566.6L363.5 567.2L364.1 567.3L363.0 567.5L363.6 568.4L363.3 568.5L364.4 568.2L364.5 569.9L365.5 569.4L365.6 570.4L364.8 570.3L364.8 571.1L362.9 570.5L363.6 570.9L363.3 571.4L363.7 571.9L364.9 571.9L364.6 572.6L365.0 572.3L365.0 573.4L363.9 573.5L365.0 573.9L364.6 575.0L365.7 574.5L365.4 575.5L363.8 575.5L364.8 576.9L364.3 577.8L363.0 576.8L363.5 577.6L362.4 578.4L363.7 578.6L362.4 579.7L363.9 579.4L360.8 583.2L358.0 585.9L358.5 585.9L358.3 586.6L358.5 586.6L358.7 586.5L358.2 587.2L354.9 588.5L349.3 577.7L355.7 571.4L355.5 567.8L353.8 566.6L353.4 564.5L351.7 562.1L350.5 561.4L350.3 560.0L349.1 559.2L349.8 558.4L351.5 558.8L351.7 556.8L350.3 556.3L351.0 555.8L350.3 555.0L350.5 554.2L350.1 554.1L350.9 553.6L349.5 552.9L349.6 552.8L350.1 552.5L350.1 551.9L349.5 552.1L350.1 550.7L348.4 551.6L347.9 549.6L348.6 548.8L349.1 550.2L350.0 550.1L349.0 547.6L350.5 547.4L350.4 546.1L349.7 545.9L349.7 545.2L351.7 544.1L351.1 543.0L352.7 541.7L351.8 541.5L351.7 540.1L353.2 540.2L353.5 539.8L352.8 539.3L354.4 538.5L353.7 538.3L353.9 537.6L354.6 538.1L355.1 536.8L355.7 537.4L355.8 536.6L355.5 536.5L356.6 535.7L356.3 534.7L358.2 533.9L358.3 533.2L359.2 533.5L359.9 531.9L362.8 530.1ZM366.3 530.5L365.8 531.1L365.3 530.8ZM367.6 529.9L364.8 530.5L365.9 529.3ZM367.5 521.1L366.4 521.8L365.8 521.2ZM384.3 594.1L383.9 596.1L383.4 596.2L383.5 596.9L381.9 598.0L378.0 599.5L375.6 599.4L376.0 597.0L376.4 596.9L377.0 596.6L378.4 594.3L378.2 592.5L378.4 591.4L378.4 590.6L379.4 588.2L382.1 587.3L384.2 589.4L383.9 590.6L382.5 591.2L383.9 591.5ZM404.6 585.6L404.6 585.6L379.0 636.0L379.0 636.0L362.4 603.3L363.5 603.4L363.2 602.5L364.1 601.6L365.2 602.7L371.0 603.6L369.3 604.0L369.2 604.4L369.2 604.5L370.3 604.3L368.8 605.4L369.2 605.5L369.4 606.8L372.5 605.4L371.4 607.1L372.3 608.7L372.3 608.9L372.9 608.7L372.8 610.2L374.1 610.3L375.3 606.1L378.2 603.9L381.0 603.7L381.1 604.6L380.6 605.7L381.0 606.2L382.2 605.8L384.7 601.2L386.5 600.2L387.3 601.3L389.2 599.8L396.3 600.3L392.4 597.7L392.4 597.5L392.4 597.4L392.7 597.3L392.5 596.9L395.0 596.2L394.2 595.9L394.9 595.5L394.8 595.1L391.9 594.8L390.2 592.8L390.2 591.9L392.0 589.2L392.8 589.4L392.7 588.7L394.1 587.6Z","provincias":[{"id":"06","num":1,"nombre":"Buenos Aires","nombreCompleto":"Provincia de Buenos Aires","capital":"La Plata","region":"Pampeana","dato":"Abarca las cuencas del Salado (Pampa Deprimida) y Claromecó, más los sistemas antiguos de Tandilia y Ventania (Cerro Tres Picos, 1.239 m).","path":"M256.4 232.0L265.0 239.4L265.3 239.3L266.4 238.3L267.3 239.9L268.1 240.1L270.1 239.9L270.1 241.4L273.5 242.0L278.2 245.4L282.4 245.4L282.5 246.2L282.3 248.5L280.1 252.5L280.8 254.0L279.9 256.2L280.8 257.1L282.4 255.8L288.9 259.2L297.8 267.0L298.8 269.1L299.1 270.1L295.8 275.3L295.6 279.2L297.0 282.2L299.2 284.7L304.4 285.3L304.9 287.0L305.4 295.2L301.0 302.3L299.1 305.9L295.2 310.1L294.1 311.7L293.4 316.5L282.6 323.2L271.9 327.0L248.1 331.9L235.0 332.1L234.2 331.7L231.3 330.9L229.1 328.6L227.1 329.2L228.2 332.1L227.7 335.1L229.1 336.7L228.0 336.9L232.2 338.7L228.4 337.5L229.5 339.3L231.7 340.1L230.8 347.1L228.0 347.4L227.7 353.0L225.7 355.0L226.6 357.9L230.0 360.9L229.2 361.8L228.1 365.0L222.6 367.9L219.2 364.1L213.5 362.2L213.4 251.5L236.2 251.5L247.5 237.1L253.3 238.4ZM232.4 333.8L233.3 334.7L233.9 333.9L234.1 336.5L231.6 335.0ZM231.8 332.2L231.3 332.3L230.6 332.3L231.3 332.0ZM231.2 336.3L231.5 336.6L230.8 336.5L230.2 335.9L230.2 335.7ZM230.8 352.8L230.5 352.9L230.8 351.9Z","lx":248.6,"ly":308.5,"cx":287.8,"cy":260.9},{"id":"10","num":2,"nombre":"Catamarca","nombreCompleto":"Catamarca","capital":"San Fernando del Valle de Catamarca","region":"NOA","dato":"Integra el NOA. Presenta la Puna en el oeste, Sierras Pampeanas, Yunga en las laderas húmedas y clima árido de sierras y bolsones.","path":"M143.3 90.2L169.9 92.5L169.8 98.1L168.7 99.7L166.6 99.5L165.9 99.9L166.0 104.4L169.6 107.5L170.2 110.9L171.3 111.1L172.3 112.0L174.6 107.2L175.2 107.1L176.2 108.5L175.2 115.8L177.0 115.3L179.9 117.8L178.9 119.9L179.5 120.5L179.5 121.0L175.7 126.8L177.2 127.5L177.9 128.1L177.9 130.9L179.9 137.1L180.9 135.7L182.1 139.3L183.5 140.0L184.4 138.4L186.3 137.1L188.9 138.8L189.7 143.0L189.9 148.0L189.5 150.5L188.7 150.3L188.7 150.7L192.6 154.5L193.3 160.7L193.5 161.2L194.3 161.9L193.6 162.1L193.4 163.1L194.2 164.3L193.6 165.5L193.7 167.3L191.8 167.7L192.1 172.1L189.1 175.6L185.5 176.8L181.0 162.0L180.1 162.0L180.1 160.4L176.2 156.3L172.1 154.8L172.4 152.2L172.1 151.6L170.8 150.6L169.7 144.8L163.6 144.2L162.8 144.5L161.7 146.5L158.7 146.5L154.4 145.2L152.3 146.3L151.3 141.7L148.7 142.8L148.2 141.5L146.4 141.4L146.1 141.0L146.3 140.2L143.9 140.0L144.1 137.5L143.1 137.0L142.7 134.6L142.2 136.6L139.2 135.5L135.2 136.2L135.7 133.1L137.3 131.5L136.7 129.8L139.1 127.5L138.3 126.8L138.6 125.1L141.0 124.0L142.3 125.4L143.5 123.3L146.1 122.9L146.6 120.8L145.2 118.8L142.1 113.4L142.5 109.8L144.9 107.9L142.1 95.1Z","lx":159.0,"ly":128.9,"cx":180.6,"cy":148.0},{"id":"22","num":3,"nombre":"Chaco","nombreCompleto":"Chaco","capital":"Resistencia","region":"NEA","dato":"Gran planicie del NEA dentro de la Cuenca Chaco-Paranaense. Presenta Parque Chaqueño húmedo al este y seco al oeste (quebracho colorado y blanco).","path":"M227.9 71.9L233.1 73.9L233.6 75.1L235.6 75.1L239.8 80.5L242.9 80.9L246.9 87.3L252.5 90.3L254.9 92.9L257.3 98.3L263.1 103.4L264.4 107.3L267.4 107.4L268.5 110.7L271.5 110.0L273.6 111.4L281.9 119.8L279.5 124.2L278.6 124.2L278.2 124.5L278.7 127.8L275.1 131.0L276.0 136.0L275.3 140.7L275.0 139.8L236.3 139.7L236.3 98.7L212.9 98.6L227.7 76.6Z","lx":244.1,"ly":119.8,"cx":273.6,"cy":130.1},{"id":"26","num":4,"nombre":"Chubut","nombreCompleto":"Chubut","capital":"Rawson","region":"Patagonia","dato":"Patagonia Andina al oeste (bosques patagónicos) y meseta extraandina con estepa al centro-este; incluye los Patagonides hasta el codo del río Senguer.","path":"M153.6 384.7L190.3 384.8L192.9 387.9L194.8 388.5L198.6 388.9L196.5 392.0L199.0 392.4L203.3 392.3L204.2 391.4L204.4 390.9L203.7 389.2L199.8 388.9L208.1 386.0L210.4 390.3L210.4 394.3L210.7 395.4L209.9 397.0L210.0 398.1L209.4 398.6L208.6 399.0L203.0 400.0L201.5 398.1L201.5 396.7L202.1 395.7L198.3 393.5L191.5 396.1L191.1 398.4L200.7 401.9L191.6 406.7L186.7 413.8L187.2 418.6L188.7 420.4L187.0 423.3L188.3 426.2L186.7 427.7L187.4 428.8L182.5 431.4L181.3 434.0L184.1 436.0L181.8 438.3L174.9 436.9L173.8 438.4L170.5 438.9L171.1 440.2L169.4 439.7L170.5 441.2L164.4 442.0L159.1 448.2L158.7 450.1L155.7 454.7L100.3 454.8L100.2 452.8L99.3 452.2L98.6 452.0L98.6 447.1L102.7 445.9L101.8 444.1L104.5 442.9L104.5 441.5L101.9 439.1L101.4 436.9L97.0 436.5L94.5 435.1L94.5 433.0L96.4 433.8L102.6 432.6L103.7 433.6L105.1 434.0L106.3 432.9L106.3 430.1L107.7 430.1L107.8 429.1L106.7 427.4L103.8 426.5L97.9 427.0L98.4 423.6L97.5 421.7L98.7 421.5L99.8 419.2L100.2 418.8L98.8 416.0L101.1 413.7L97.1 411.9L97.1 411.5L97.5 410.7L96.3 410.1L96.7 407.9L99.0 407.8L99.1 405.8L93.4 400.5L92.9 396.8L95.2 393.4L94.7 392.7L95.0 391.9L93.6 391.5L93.0 387.2L94.7 386.7L96.4 388.1L98.4 387.3L99.1 386.7L98.5 384.8Z","lx":144.2,"ly":420.7,"cx":189.9,"cy":407.5},{"id":"14","num":5,"nombre":"Córdoba","nombreCompleto":"Córdoba","capital":"Córdoba","region":"Pampeana","dato":"Combina llanura pampeana (pastizal) al este y Sierras Pampeanas de cumbres chatas al oeste, con clima templado serrano y pampeano.","path":"M206.4 168.3L207.9 167.5L208.8 168.9L210.1 168.7L212.3 168.9L212.4 170.5L221.3 171.8L221.5 174.1L224.7 175.8L224.2 179.3L225.0 180.2L225.2 180.7L230.0 180.8L230.6 183.2L234.5 187.8L230.7 202.8L229.0 204.5L229.9 212.5L230.4 213.1L231.8 214.4L232.2 215.8L233.5 218.4L233.1 221.6L235.1 223.3L235.3 227.4L220.2 251.5L213.4 251.5L213.4 262.3L189.8 262.5L189.8 243.9L189.3 230.7L191.3 227.3L192.9 219.0L192.1 215.0L188.4 215.5L187.9 211.3L180.7 207.8L180.7 193.0L184.1 183.3L185.5 176.8L189.1 175.6L192.1 172.1L191.8 167.7L201.2 166.0L205.2 166.9L205.5 168.2Z","lx":212.3,"ly":204.4,"cx":202.5,"cy":199.6},{"id":"18","num":6,"nombre":"Corrientes","nombreCompleto":"Corrientes","capital":"Corrientes","region":"NEA","dato":"Rodeada por los ríos Paraná y Uruguay (Cuenca del Plata). Destacan los Esteros Correntinos y clima cálido subtropical sin estación seca.","path":"M300.7 130.8L302.2 132.6L304.3 132.8L305.1 132.4L305.2 132.1L304.7 130.9L304.7 130.4L306.3 129.8L309.2 132.9L310.6 129.4L314.0 127.7L313.8 130.1L316.9 136.1L316.9 138.8L319.7 142.2L317.5 144.2L319.0 145.5L318.7 147.1L316.2 146.1L315.8 146.9L316.1 148.1L314.4 148.6L314.4 150.3L310.5 153.7L308.8 158.6L307.6 158.9L306.4 159.4L304.9 163.6L301.2 168.5L296.9 171.7L296.2 174.6L295.2 175.3L294.3 176.8L293.3 177.7L292.0 177.9L292.0 180.7L288.6 183.7L289.7 187.5L286.7 185.2L286.1 182.2L285.2 181.8L284.5 180.6L284.3 179.8L279.2 177.6L272.6 178.8L270.3 181.1L265.8 180.6L265.4 182.4L263.7 179.6L264.7 178.9L265.0 176.7L265.7 174.9L264.4 172.0L265.2 164.2L270.7 157.8L272.8 148.4L272.0 143.6L275.8 139.1L275.1 131.0L276.3 129.1L276.6 128.8L280.4 127.0L287.0 126.8L293.9 130.0L294.8 129.9L296.4 129.4ZM302.0 129.7L304.5 131.0L304.4 131.9L303.0 132.7L302.6 132.5L302.4 132.0L300.4 130.7ZM293.1 129.0L293.9 129.3L295.3 129.5L294.4 129.8L294.3 129.9ZM304.9 132.1L304.5 132.6L303.8 132.4L304.4 132.1Z","lx":290.4,"ly":158.1,"cx":275.8,"cy":130.5},{"id":"30","num":7,"nombre":"Entre Ríos","nombreCompleto":"Entre Ríos","capital":"Paraná","region":"Pampeana","dato":"Presenta lomadas entrerrianas y Planicie Deltaica; integra la Cuenca del Plata y limita con Uruguay mediante el río Uruguay (embalse de Salto Grande).","path":"M279.1 177.5L284.3 179.8L286.1 182.2L286.7 185.2L289.9 188.4L289.9 189.7L289.5 190.7L288.3 190.9L289.0 193.0L287.4 199.0L286.0 200.3L287.4 202.4L286.6 205.5L284.3 207.5L285.2 209.8L284.6 212.5L285.8 214.3L284.3 217.8L286.0 227.3L281.6 230.4L280.4 237.5L282.4 245.4L278.2 245.4L273.5 242.0L270.1 241.4L270.0 239.9L268.3 240.1L267.4 240.0L266.4 238.3L265.3 239.3L265.0 239.4L264.7 238.5L264.4 238.1L262.6 237.8L251.5 227.4L249.1 218.6L250.4 215.3L250.7 210.6L249.8 209.4L249.9 209.0L251.1 205.1L252.0 204.6L253.3 204.5L257.8 200.0L258.3 197.3L263.4 190.1L264.8 187.2L264.2 180.7L265.4 182.4L265.8 180.6L270.3 181.1L272.6 178.8Z","lx":276.7,"ly":208.4,"cx":252.6,"cy":205.0},{"id":"34","num":8,"nombre":"Formosa","nombreCompleto":"Formosa","capital":"Formosa","region":"NEA","dato":"Soberanía argentina afianzada al sur del río Pilcomayo tras el acuerdo de 1876 con Paraguay; en su curso medio rige una línea geométrica.","path":"M228.1 43.3L232.4 52.4L239.3 59.7L244.4 62.5L246.2 66.5L255.7 70.5L257.3 70.5L259.2 70.0L266.9 75.5L271.7 80.6L280.6 84.8L282.6 87.3L283.6 86.1L284.1 86.0L290.5 90.3L293.1 95.2L292.9 96.2L293.0 97.0L289.5 100.5L289.9 101.7L288.6 104.1L289.1 104.5L289.1 104.9L285.0 107.9L285.7 108.8L284.1 111.7L284.5 116.1L284.2 116.2L283.6 116.0L282.7 120.0L280.6 119.2L276.2 114.1L271.5 110.0L268.5 110.7L267.4 107.4L264.4 107.3L264.2 104.8L260.0 99.9L257.3 98.8L254.9 92.9L252.5 90.3L246.9 87.3L242.9 80.9L239.8 80.5L235.6 75.1L233.6 75.1L233.1 73.9L227.7 71.7Z","lx":261.2,"ly":82.8,"cx":284.7,"cy":107.9},{"id":"38","num":9,"nombre":"Jujuy","nombreCompleto":"Jujuy","capital":"San Salvador de Jujuy","region":"NOA","dato":"Alberga el Punto Extremo Norte (confluencia ríos Grande de San Juan y Mojinete, 21° 46' S), la Puna, la Cordillera Oriental y la Quebrada de Humahuaca.","path":"M174.7 31.0L181.0 36.7L188.7 36.2L186.5 45.3L187.5 46.1L187.8 51.0L190.3 53.1L190.3 56.1L192.5 57.7L193.1 60.7L195.6 60.2L198.8 63.4L200.1 61.3L202.8 61.3L202.7 73.6L201.0 76.9L200.6 77.2L199.2 76.8L196.1 80.5L193.4 77.9L192.3 80.2L188.1 78.3L183.0 77.0L181.0 70.8L177.7 69.4L177.3 67.3L177.7 61.2L177.4 61.2L176.0 59.9L175.3 59.5L175.0 59.5L173.3 62.1L172.4 65.4L172.6 71.3L170.9 73.5L166.1 71.0L161.0 64.4L164.0 52.3L161.4 49.0L162.1 47.4L163.7 46.2L163.5 44.2L166.8 42.4L166.8 41.8L167.4 38.9L173.6 36.3Z","lx":181.1,"ly":59.9,"cx":187.2,"cy":73.1},{"id":"42","num":10,"nombre":"La Pampa","nombreCompleto":"La Pampa","capital":"Santa Rosa","region":"Pampeana","dato":"Integra la Región Pampeana; en su centro-sur se localizan las sierras Mahuidas (macizo antiguo de lomas duras de granito y pórfidos).","path":"M213.4 262.4L213.4 338.0L200.2 330.2L189.7 328.7L186.1 329.7L183.2 328.3L181.8 329.4L178.8 328.1L170.2 327.4L168.9 324.2L161.8 321.0L161.3 318.5L156.4 319.2L153.6 315.7L151.6 315.1L153.8 312.3L153.3 309.0L146.7 307.3L146.1 279.7L189.8 279.7L189.8 262.5L213.4 262.3Z","lx":180.4,"ly":297.8,"cx":201.0,"cy":290.6},{"id":"46","num":11,"nombre":"La Rioja","nombreCompleto":"La Rioja","capital":"La Rioja","region":"Cuyo","dato":"Integra Cuyo junto a San Juan y Mendoza. Allí nace la Precordillera y posee el 50,5% de su población concentrada en la capital.","path":"M143.0 136.6L143.2 137.1L144.1 137.5L143.9 139.8L144.1 140.2L146.3 140.2L146.1 141.0L146.4 141.4L148.2 141.5L148.7 142.8L151.3 141.7L152.3 146.3L154.4 145.2L158.7 146.5L161.7 146.5L162.8 144.5L163.6 144.2L169.7 144.8L170.8 150.6L172.8 152.4L172.1 154.8L176.2 156.3L180.1 160.4L180.1 162.0L181.0 162.0L185.5 176.8L184.1 183.3L180.7 193.0L180.7 207.8L179.1 208.2L177.9 207.8L176.6 208.6L176.5 209.3L173.5 208.5L172.9 208.8L172.8 209.7L167.7 207.7L162.5 199.0L162.7 190.8L157.1 184.1L156.0 181.8L155.8 180.0L151.9 176.1L151.6 176.1L149.4 173.0L148.7 172.7L148.0 172.7L147.4 170.9L144.1 168.6L138.1 167.6L136.3 168.6L137.1 162.8L136.5 160.5L137.7 159.5L137.1 156.4L137.7 154.8L134.3 153.1L132.1 147.0L131.3 147.6L130.6 147.6L127.8 146.5L129.3 145.5L130.2 143.0L131.1 143.7L135.2 136.2L139.2 135.5L142.2 136.6L142.7 134.6Z","lx":147.4,"ly":161.8,"cx":165.9,"cy":164.4},{"id":"50","num":12,"nombre":"Mendoza","nombreCompleto":"Mendoza","capital":"Mendoza","region":"Cuyo","dato":"Relieve andino, travesías desérticas al este y oasis irrigados por ríos del sistema del Desaguadero. Solo el 7% de su población vive en la capital.","path":"M121.3 223.7L120.7 219.9L121.8 220.7L122.4 219.9L122.7 219.0L125.8 219.2L126.1 218.7L126.8 218.4L126.5 215.5L128.3 212.2L134.0 209.7L137.6 211.8L137.6 215.7L141.1 215.6L143.9 213.9L143.9 212.2L149.4 211.0L152.3 213.7L156.7 213.6L159.3 215.9L161.6 223.0L160.7 225.2L162.0 235.4L165.6 241.8L168.4 244.0L166.4 250.8L170.9 263.9L170.4 271.7L168.8 279.8L146.1 279.7L146.6 307.3L139.7 303.7L136.1 303.6L135.6 301.2L132.8 299.8L129.2 300.3L126.7 299.0L126.1 298.5L126.1 295.0L121.1 289.7L119.7 285.5L118.1 285.6L117.7 284.7L117.0 281.4L117.8 278.4L117.2 278.4L116.9 278.1L118.5 276.5L117.0 273.5L117.7 271.4L116.7 270.4L116.9 267.8L114.8 266.9L117.6 265.2L119.4 258.7L118.5 258.2L118.6 257.8L122.6 252.0L122.4 249.8L125.6 248.4L125.3 247.9L124.5 247.0L125.2 245.0L124.1 244.1L124.3 243.3L124.8 242.9L124.1 240.7L125.9 233.3L123.9 231.5L123.9 231.9L122.8 232.9L122.7 232.2L122.3 232.0L121.5 228.1L122.9 225.5Z","lx":137.7,"ly":248.0,"cx":138.7,"cy":225.3},{"id":"54","num":13,"nombre":"Misiones","nombreCompleto":"Misiones","capital":"Posadas","region":"NEA","dato":"Meseta Misionera de basalto y areniscas (tierra roja), Selva Misionera y el Punto Extremo Este (Bernardo de Irigoyen, 30 km de frontera seca con Brasil).","path":"M340.4 96.7L340.2 97.3L340.5 98.1L341.7 97.1L343.8 98.8L344.2 104.3L346.8 108.5L345.2 116.0L346.6 119.8L345.2 123.4L344.6 123.0L344.7 124.8L342.6 124.9L340.8 127.5L339.5 126.7L338.1 130.1L336.3 129.4L334.7 131.1L333.9 130.2L332.5 132.3L330.8 131.6L329.1 135.8L327.1 136.0L327.9 136.8L327.8 137.2L323.8 138.4L320.6 142.6L317.8 140.8L316.9 136.1L313.8 130.1L314.1 128.0L318.2 130.0L318.9 128.9L320.1 128.1L319.7 125.5L320.5 124.0L322.0 124.1L322.1 122.7L323.1 121.7L326.3 121.4L326.3 119.9L327.4 118.7L328.8 118.4L329.0 116.7L330.8 116.4L333.4 108.5L332.6 104.8L332.8 104.4L333.5 104.4L333.4 103.2L333.9 101.8L333.3 100.6L332.9 99.0L334.3 97.5L336.0 99.4L336.7 97.7L339.5 97.5L339.1 96.7L339.7 96.7L340.5 95.9L340.6 96.2Z","lx":337.3,"ly":115.6,"cx":315.9,"cy":128.7},{"id":"58","num":14,"nombre":"Neuquén","nombreCompleto":"Neuquén","capital":"Neuquén","region":"Patagonia","dato":"Norte de la Patagonia; combina Andes Patagónico-Fueguinos, Patagonides, estepa al este y bosques de Nothofagus al oeste.","path":"M117.4 282.5L118.1 285.6L119.7 285.5L121.1 289.7L126.1 295.0L126.7 299.0L129.2 300.3L132.8 299.8L135.6 301.2L136.1 303.6L139.7 303.7L146.7 307.3L146.7 326.6L147.9 327.7L148.5 327.8L150.2 332.2L146.0 331.8L142.5 333.6L136.5 341.3L132.7 342.7L129.5 346.5L123.7 348.8L123.2 349.4L122.7 350.6L123.5 352.9L122.0 354.1L122.1 355.3L121.9 356.3L120.4 358.2L115.4 358.6L113.8 360.1L109.4 361.1L107.4 363.0L108.6 366.1L105.8 368.9L96.7 367.0L97.3 365.1L95.9 362.5L97.5 360.7L96.9 359.5L97.8 357.1L99.0 357.5L100.1 356.1L98.0 353.8L97.7 351.6L99.9 351.6L101.0 348.2L99.6 347.0L99.5 342.5L102.2 343.4L102.8 342.5L101.8 341.5L104.0 337.2L103.1 331.0L107.8 328.0L110.1 328.1L111.5 325.1L109.3 322.3L108.5 316.9L109.2 316.7L109.3 316.3L106.6 312.3L107.4 311.6L106.3 308.6L107.5 305.5L106.1 302.1L107.8 299.3L106.0 296.9L107.6 296.7L107.9 296.2L106.6 294.5L107.5 291.6L109.0 291.8L108.6 288.1L110.5 288.0L110.7 286.7L113.0 287.2L113.1 284.5L114.9 282.2Z","lx":119.9,"ly":325.5,"cx":149.4,"cy":331.4},{"id":"62","num":15,"nombre":"Río Negro","nombreCompleto":"Río Negro","capital":"Viedma","region":"Patagonia","dato":"Alberga parte de la Cuenca del Colorado y mesetas escalonadas hasta los acantilados atlánticos. El 9,1% de su población vive en su capital Viedma.","path":"M146.9 307.5L153.1 308.7L154.0 311.4L151.5 314.4L152.2 315.9L153.6 315.7L156.4 319.2L161.3 318.5L161.8 321.0L168.9 324.2L170.2 327.4L176.4 327.4L181.8 329.4L183.2 328.3L186.1 329.7L189.7 328.7L199.5 330.0L213.4 338.0L213.5 362.2L219.2 364.1L221.4 366.9L221.5 367.7L217.1 370.0L207.9 370.0L203.6 367.3L192.6 363.8L194.7 363.8L193.9 362.4L191.3 362.3L192.6 363.1L191.2 363.1L189.2 365.7L189.4 371.3L191.4 376.3L190.3 384.8L98.5 384.8L98.8 381.0L97.0 377.9L97.5 377.1L97.9 377.3L97.8 375.0L96.6 373.5L96.8 371.7L97.7 372.0L97.3 367.8L101.5 367.7L104.9 369.0L107.1 368.2L108.6 366.1L107.4 363.0L109.4 361.1L113.8 360.1L115.4 358.6L120.4 358.2L121.9 356.3L122.1 355.3L122.0 354.1L123.5 352.9L122.7 350.6L123.2 349.4L123.7 348.8L129.5 346.5L132.7 342.7L136.5 341.3L142.5 333.6L146.0 331.8L150.2 332.2L148.5 327.8L147.9 327.7L146.7 326.6L146.7 307.3Z","lx":162.9,"ly":358.2,"cx":218.8,"cy":363.9},{"id":"66","num":16,"nombre":"Salta","nombreCompleto":"Salta","capital":"Salta","region":"NOA","dato":"Provincia clave del NOA (limita con Chile, Bolivia y Paraguay). Reúne Puna, Cordillera Oriental (Valles Calchaquíes), Sierras Subandinas y Llanura Chaqueña.","path":"M205.2 36.3L205.9 34.7L208.9 34.7L209.3 35.7L209.5 34.7L221.2 34.7L221.5 37.6L227.7 42.7L227.7 76.6L212.1 99.7L204.8 99.0L204.6 100.4L201.3 99.5L198.2 108.6L194.1 108.7L191.9 110.1L187.5 107.7L187.2 106.2L186.3 105.8L181.8 106.8L181.4 110.9L176.6 108.9L174.9 107.0L172.3 112.0L171.3 111.1L170.2 110.9L169.6 107.5L166.0 104.2L166.0 99.8L166.6 99.5L168.7 99.7L169.8 98.1L169.9 92.5L143.2 90.2L145.5 89.2L144.2 85.6L142.4 83.6L143.4 80.3L146.6 76.8L159.5 70.3L161.0 64.4L166.1 71.0L170.9 73.5L172.6 71.3L172.5 64.4L175.0 59.5L177.7 61.2L177.3 67.3L177.7 69.4L181.0 70.8L182.3 76.4L183.9 77.7L186.9 78.5L188.6 77.8L192.3 80.2L193.4 77.9L196.1 80.5L199.2 76.8L200.6 77.2L201.2 76.6L202.7 73.6L202.8 61.3L200.1 61.3L198.9 63.4L195.6 60.2L193.0 60.6L192.5 57.7L190.3 56.1L190.3 53.0L187.8 50.9L187.5 46.1L186.5 45.3L186.5 44.2L188.7 36.2L196.0 38.1L199.3 44.2L198.9 45.9L200.7 50.2L201.6 44.5Z","lx":192.0,"ly":73.3,"cx":185.6,"cy":83.6},{"id":"70","num":17,"nombre":"San Juan","nombreCompleto":"San Juan","capital":"San Juan","region":"Cuyo","dato":"Presenta Cordillera Frontal (límite internacional y cordones como Ansilta y Colangüil), Precordillera y viento Zonda (cálido, fuerte y seco).","path":"M121.7 181.4L124.2 180.9L125.4 177.4L123.3 176.2L124.4 170.0L122.5 162.9L123.4 160.6L125.7 159.6L127.6 146.7L132.1 147.0L134.3 153.1L137.7 154.8L137.1 156.4L137.7 159.5L136.5 160.5L137.1 162.8L136.3 168.6L138.1 167.6L143.0 168.4L147.4 170.9L148.0 172.7L148.7 172.7L149.4 173.0L155.8 180.0L156.0 181.8L157.1 184.1L162.7 190.8L162.5 199.0L168.5 208.4L162.0 206.8L160.6 207.7L158.7 207.4L158.7 213.7L160.3 216.4L157.4 215.1L157.2 214.3L156.7 213.6L152.2 213.7L149.4 211.0L143.9 212.2L143.9 213.9L141.1 215.6L137.6 215.7L137.6 211.8L134.0 209.7L128.3 212.2L126.5 215.5L126.8 218.5L124.9 219.7L122.7 219.0L121.6 220.6L117.5 210.5L118.8 210.7L119.9 209.1L116.5 207.0L115.0 200.6L116.0 194.4L116.3 194.2L116.5 193.7L116.9 194.0L117.3 195.2L119.1 193.0L118.4 191.0L119.4 185.8L121.2 182.3L120.7 180.8L121.2 180.8Z","lx":131.6,"ly":189.8,"cx":142.9,"cy":201.7},{"id":"74","num":18,"nombre":"San Luis","nombreCompleto":"San Luis","capital":"San Luis","region":"Pampeana","dato":"Integra la Región Pampeana; al norte/centro se elevan cordones de Sierras Pampeanas y hacia el oeste aparecen sectores de espinal y monte.","path":"M163.1 207.2L172.5 209.7L173.5 208.5L176.5 209.3L176.6 208.6L177.9 207.8L182.7 208.0L186.9 210.5L187.9 211.3L188.4 215.5L192.0 215.0L192.9 219.1L191.3 227.3L189.3 230.7L189.8 243.9L189.8 279.7L168.8 279.8L171.0 264.7L169.9 259.3L168.1 256.8L166.4 250.8L168.4 244.0L165.6 241.8L162.0 235.4L160.7 225.2L161.6 223.0L159.8 219.1L160.1 214.9L158.8 214.1L158.6 213.4L158.9 209.3L158.7 207.4Z","lx":170.9,"ly":238.6,"cx":172.9,"cy":232.5},{"id":"78","num":19,"nombre":"Santa Cruz","nombreCompleto":"Santa Cruz","capital":"Río Gallegos","region":"Patagonia","dato":"Alberga el Punto Extremo Oeste (Parque Nacional Los Glaciares, 50° 01' S), Laguna del Desierto, Hielos Continentales y el Gran Bajo de San Julián.","path":"M155.7 455.1L155.5 458.8L156.1 460.9L157.8 464.3L162.2 467.1L166.7 472.2L178.4 473.5L181.2 475.8L181.1 481.2L179.7 485.1L179.8 485.3L177.5 485.0L173.7 487.5L179.2 485.6L180.8 488.9L178.6 488.7L177.8 490.6L178.9 491.2L179.0 491.6L175.9 491.9L172.9 494.6L172.9 496.2L167.2 498.0L156.3 507.5L154.1 512.8L152.4 514.0L152.7 514.3L154.1 514.0L155.5 511.6L153.8 520.9L152.4 523.8L151.5 524.7L145.5 526.9L141.4 520.9L142.3 523.6L137.4 524.8L142.2 524.1L145.3 527.4L138.1 530.6L135.4 534.6L134.5 537.5L134.7 540.5L130.1 544.2L134.2 541.9L137.0 552.3L131.8 551.9L129.7 552.5L128.0 553.2L137.0 553.2L140.5 559.4L145.3 565.4L144.5 566.5L144.2 566.7L144.4 566.5L144.4 565.6L122.8 559.8L96.5 559.7L94.9 559.1L96.4 558.3L96.1 557.5L91.3 554.5L90.9 552.5L89.3 552.5L91.0 550.6L91.2 548.7L90.3 548.1L91.8 546.7L89.8 544.1L90.2 543.6L90.3 542.7L91.8 542.9L91.7 541.6L92.0 540.1L90.6 537.7L91.5 536.3L88.7 535.3L87.2 536.7L85.4 535.5L78.0 539.2L77.8 537.7L79.1 537.0L79.3 536.6L75.8 533.2L74.0 529.5L75.1 525.7L73.9 525.1L74.8 524.2L74.2 523.9L74.1 523.4L75.7 520.5L74.2 516.7L75.9 514.1L75.2 510.8L79.7 512.0L81.1 512.0L79.9 511.9L79.7 511.6L79.7 510.6L82.4 506.3L84.5 506.7L88.1 503.7L87.4 498.3L89.3 498.7L90.2 495.9L92.3 495.4L90.5 491.0L89.7 491.1L89.3 490.9L89.7 489.8L89.6 489.2L88.6 489.1L88.2 488.7L89.0 486.5L88.6 486.2L88.2 485.2L89.3 485.3L91.2 482.6L90.7 480.2L95.4 477.4L95.1 475.7L97.2 476.3L97.3 474.6L97.0 474.1L96.0 473.6L96.7 473.1L97.0 472.4L96.0 471.8L96.0 469.0L100.3 466.7L99.1 459.5L96.6 457.2L99.3 456.3L100.3 454.8L155.7 454.7Z","lx":120.1,"ly":509.8,"cx":133.5,"cy":553.1},{"id":"82","num":20,"nombre":"Santa Fe","nombreCompleto":"Santa Fe","capital":"Santa Fe","region":"Pampeana","dato":"Región Pampeana y Cuenca del Plata; Rosario es el tercer mayor conglomerado urbano del país tras el Gran Buenos Aires y Córdoba.","path":"M245.4 139.7L275.0 139.8L274.2 142.1L272.6 142.0L272.0 143.6L272.8 148.4L270.7 157.8L265.2 164.2L264.4 172.0L265.7 174.9L265.0 176.7L264.7 178.9L263.7 179.6L264.8 187.2L259.7 196.4L258.3 197.3L257.8 200.0L253.3 204.5L251.7 204.6L251.0 205.2L249.9 209.2L250.8 210.9L250.0 216.6L249.8 217.7L249.1 218.6L250.5 225.5L253.0 229.5L255.6 230.5L256.3 232.1L253.4 238.3L247.7 237.0L236.2 251.5L220.2 251.5L235.3 227.4L235.1 223.3L233.1 221.6L233.5 218.4L229.7 211.8L229.0 204.5L230.7 202.8L234.5 187.8L230.6 183.2L236.3 139.7Z","lx":248.5,"ly":186.3,"cx":250.2,"cy":203.3},{"id":"86","num":21,"nombre":"Santiago del Estero","nombreCompleto":"Santiago del Estero","capital":"Santiago del Estero","region":"NOA","dato":"Integra el NOA en su transición hacia la llanura y el Parque Chaqueño seco; registra menor porcentaje de adultos mayores que la zona pampeana.","path":"M227.2 98.7L236.3 98.7L236.3 139.7L230.6 183.2L230.0 180.8L225.2 180.7L225.0 180.2L224.2 179.3L224.7 175.8L221.5 174.1L221.3 171.8L212.4 170.5L212.3 168.9L210.1 168.7L208.8 168.9L207.5 167.4L205.5 168.2L205.2 166.9L201.2 166.0L193.7 167.3L193.6 165.5L194.2 164.3L193.5 163.2L193.4 162.7L193.7 162.0L194.3 161.9L193.5 161.2L193.3 160.7L192.6 154.5L191.6 153.6L188.7 150.6L188.7 150.3L189.5 150.5L189.9 148.0L189.7 143.0L188.8 138.3L190.7 137.6L191.6 128.4L193.3 127.8L195.3 119.1L196.5 118.8L196.9 116.3L198.1 116.5L198.1 108.9L201.3 99.5L204.6 100.4L204.8 99.0Z","lx":205.1,"ly":146.6,"cx":201.4,"cy":136.1},{"id":"94","num":22,"nombre":"Tierra del Fuego","nombreCompleto":"Tierra del Fuego, Antártida e Islas del Atlántico Sur","capital":"Ushuaia","region":"Patagonia","dato":"Incluye el Punto Extremo Sur (Cabo San Pío, 55° 03' S), las Islas Malvinas, Islas del Atlántico Sur y el Sector Antártico Argentino.","path":"M158.3 610.5L156.5 610.5L156.5 610.1ZM189.6 606.2L188.6 606.9L188.5 608.4L187.6 608.7L188.2 609.1L188.1 609.3L186.0 611.2L184.8 610.3L184.3 611.1L181.4 611.7L181.5 611.1L181.1 610.7L177.8 610.5L178.0 611.7L176.1 612.2L173.0 612.2L172.5 612.9L171.4 613.3L170.4 613.2L168.7 612.7L167.7 612.3L167.1 611.6L160.1 610.0L158.3 610.3L156.9 609.7L155.6 610.2L154.2 610.3L146.8 608.7L145.9 608.9L146.6 609.5L142.4 609.5L142.3 609.7L142.6 609.8L143.3 609.9L142.5 610.3L141.8 610.4L141.9 571.3L142.4 572.1L146.2 576.4L147.4 579.7L146.5 577.5L145.2 577.6L142.8 579.8L142.6 580.7L142.7 581.6L143.8 582.4L144.9 582.7L148.3 583.0L150.3 587.5L154.5 591.2L153.8 591.3L153.3 591.9L154.6 591.0L156.4 592.0L156.0 592.1L155.9 592.5L156.5 593.5L161.6 596.8L167.5 599.3L171.2 603.1L172.3 603.3L180.3 606.2L181.9 606.4L183.7 606.1L184.1 606.6L188.0 605.6L187.8 606.4L188.1 606.0ZM207.7 607.5L207.1 608.6L205.6 609.0L205.6 608.2L204.5 608.8L204.2 608.8L204.1 608.4L203.5 609.3L202.2 609.2L201.9 609.8L201.7 608.4L198.3 610.1L198.3 609.6L198.9 609.4L198.5 609.4L198.6 609.2L196.7 610.7L196.5 610.6L195.3 610.8L196.1 610.3L195.6 609.8L195.9 609.6L194.7 609.7L194.9 608.8L195.7 608.8L195.4 608.5L195.5 608.4L196.9 609.1L197.3 608.7L198.0 608.7L197.5 607.4L199.3 608.4L199.4 608.1L199.2 608.0L199.6 607.9L199.9 609.0L200.1 608.5L199.8 607.9L200.1 607.8L200.3 607.3L203.0 608.2L202.9 607.5L203.5 608.1L204.3 607.5L204.4 608.4L205.1 607.6L206.7 607.3L206.6 607.5L206.9 607.6L206.5 607.9L206.6 608.0L207.3 607.4ZM243.2 554.4L243.1 554.6L242.5 554.5L242.8 554.8L242.3 554.5L242.0 554.6L241.9 555.2L242.3 555.3L242.0 555.6L241.7 555.3L241.8 554.9L241.5 554.4ZM243.4 556.6L242.6 556.8L242.9 557.0L242.4 557.3L243.2 557.1L242.8 557.6L241.3 556.9L241.6 556.6L242.0 556.8L241.8 556.3L242.4 556.8L242.8 556.2ZM248.0 556.0L247.4 557.7L247.8 557.8L247.2 557.9L247.8 558.3L246.1 559.6L245.0 558.7L245.5 558.4L244.2 558.1L244.2 557.3L244.7 557.3L244.8 557.1L243.8 557.1L244.2 556.7L244.1 556.6L244.6 556.4L244.8 556.5L244.4 556.9L244.8 556.7L245.5 557.0L245.2 556.7L245.6 555.9L246.9 556.3L245.3 557.8L247.2 556.8L247.4 557.2L247.3 556.8L247.7 556.3L247.5 556.5L247.3 556.1L247.4 555.6L247.9 555.6ZM248.1 559.9L248.0 560.0L246.7 559.7L247.6 559.5L247.7 559.1ZM248.2 545.6L247.7 545.9L246.8 546.0L247.7 545.7ZM259.1 548.2L258.0 549.2L258.3 549.3L256.1 549.5L255.4 549.1L256.0 549.2L255.8 548.7L256.4 548.5L256.5 548.2L257.4 548.9L257.2 549.0L257.3 549.2L257.8 549.1L258.1 548.6L255.3 546.9L257.2 547.8L258.6 547.6L258.5 547.7L258.9 547.8L258.4 548.0ZM261.1 547.7L260.4 547.8L260.8 548.1L260.7 548.5L259.1 547.6L260.3 547.2L260.8 547.8ZM264.1 548.6L264.4 548.7L262.3 548.6L262.5 548.6L262.5 548.8L262.0 548.5L262.7 548.3L263.2 548.3L262.7 547.9L263.2 547.8L263.2 548.1ZM264.1 565.1L263.1 565.8L263.4 566.0L263.0 566.5L262.3 566.1L263.1 565.2L263.3 565.3ZM264.2 563.6L263.2 564.9L263.3 563.6L263.3 563.1L262.4 562.7L262.8 562.2L262.9 562.8L263.9 562.7ZM267.6 548.0L266.9 547.5L267.1 548.4L265.4 548.3L265.0 547.6L262.0 546.9L263.0 546.6L263.2 546.9L265.2 546.8L265.5 547.7L266.6 547.0ZM270.8 549.2L269.4 549.8L269.8 550.0L269.4 550.4L270.7 549.9L268.8 551.4L268.7 551.3L268.9 550.9L268.4 550.8L268.6 551.1L266.6 551.4L268.6 551.2L267.9 551.6L268.4 551.5L268.1 551.9L268.7 551.4L268.8 551.5L267.4 553.3L266.9 553.3L267.4 552.5L265.3 553.8L265.2 554.3L266.0 553.6L265.1 555.0L264.3 555.3L265.0 555.3L264.8 555.5L263.0 556.5L261.7 559.1L259.7 559.8L259.8 559.2L258.7 559.1L259.0 558.9L259.0 558.7L258.8 558.9L258.7 558.7L258.1 559.1L258.5 559.2L258.4 559.9L256.5 560.0L257.6 559.1L255.8 559.6L256.0 559.8L255.8 560.0L255.2 559.4L254.8 559.9L255.8 560.1L255.9 561.2L256.4 560.1L256.2 560.3L256.1 561.3L254.9 562.6L254.5 561.8L255.2 561.5L254.2 561.4L254.5 561.7L254.4 562.1L252.8 561.7L254.2 561.9L254.6 562.9L254.2 562.8L254.1 562.3L253.4 562.9L252.3 561.7L251.7 562.0L252.1 562.2L251.8 562.6L252.3 562.1L253.0 562.9L252.2 563.0L252.8 563.3L251.5 564.2L251.2 563.8L251.3 564.3L250.2 563.5L250.5 563.2L251.1 563.5L250.6 563.1L251.1 563.0L251.1 562.8L250.5 563.1L250.2 562.9L250.6 562.6L250.7 562.5L250.1 562.8L250.1 562.2L249.9 562.6L249.5 562.3L249.9 562.0L250.7 562.2L250.0 561.8L249.9 561.6L249.5 561.9L248.1 561.6L249.9 562.8L248.8 563.1L248.0 561.9L247.0 561.8L245.7 560.5L245.9 561.1L245.4 561.0L245.5 560.0L244.9 560.0L245.7 559.9L246.4 560.6L247.5 560.4L247.5 560.8L247.2 560.9L247.7 561.0L247.1 561.2L247.7 561.0L248.0 561.2L248.7 560.8L247.8 561.0L247.5 560.2L248.0 560.5L249.5 560.1L248.4 559.8L248.2 558.9L250.1 559.1L249.9 560.0L250.3 559.2L250.4 560.6L251.0 560.4L250.5 560.3L250.8 560.1L250.5 559.3L251.8 559.5L251.4 560.2L252.1 560.2L251.8 559.9L252.8 560.2L251.9 559.5L253.8 559.2L254.3 558.5L252.3 558.9L252.0 558.7L250.9 558.5L252.8 558.6L253.6 557.6L253.2 557.5L253.6 557.1L253.2 556.7L253.5 556.2L253.4 556.0L254.6 555.6L254.0 556.7L254.3 556.2L254.9 556.5L254.0 557.4L254.8 557.2L254.7 557.8L255.3 557.4L255.2 556.6L255.6 557.0L256.0 556.8L255.2 556.3L255.7 555.9L255.2 555.9L255.3 555.6L256.1 555.4L255.9 555.8L256.8 556.1L257.3 554.7L257.1 554.5L256.3 554.4L255.8 554.9L255.5 554.8L255.4 554.4L254.5 554.8L254.8 555.5L252.6 555.6L252.2 555.9L252.3 556.4L251.0 555.0L250.7 554.2L250.8 553.9L252.6 554.7L256.6 553.7L260.1 555.2L259.9 555.1L258.6 554.7L259.4 554.5L258.4 554.5L258.6 553.8L257.9 554.2L256.2 553.2L256.7 553.1L256.6 552.9L256.0 552.9L255.6 552.7L256.2 552.1L256.0 552.3L255.4 552.4L255.8 551.9L255.3 551.8L255.2 551.4L254.9 551.8L255.6 552.1L255.2 552.4L254.3 552.2L254.4 551.9L254.4 551.8L253.0 551.7L252.8 551.0L254.5 550.8L253.5 549.9L252.6 550.2L250.8 549.5L251.1 549.3L251.1 548.8L250.6 548.6L251.4 548.6L250.6 548.2L256.4 550.9L257.0 551.0L257.5 550.7L257.9 551.1L260.1 550.6L258.4 549.9L259.6 548.9L260.0 549.0L259.5 549.3L259.7 549.6L261.2 548.9L261.7 549.1L261.1 549.2L261.5 549.3L261.0 549.3L261.1 549.7L261.2 549.4L262.2 549.2L262.3 549.2L261.4 549.5L263.4 549.6L261.9 550.0L262.3 550.0L262.3 550.2L264.7 549.9L264.9 550.5L265.0 549.9L266.7 549.2L266.8 549.5L266.0 549.9L265.1 550.0L266.3 550.7L266.0 550.2L266.0 550.0L267.0 550.4L267.4 550.1L268.2 549.9L268.0 549.6L266.9 549.3L267.5 549.1L267.3 548.4L268.0 548.7L267.8 548.2ZM272.9 567.3L271.7 567.6L271.3 567.4L272.4 567.1ZM275.8 562.4L275.5 562.7L275.8 563.2L275.7 563.4L274.3 564.0L273.4 564.1L273.6 563.6L273.9 563.9L275.4 563.5L275.3 562.9L275.8 562.1ZM280.8 547.7L282.5 548.4L282.4 548.7L282.6 549.0L282.3 549.0L282.0 549.1L282.5 549.1L282.7 549.8L282.3 549.8L282.3 550.0L282.6 549.9L282.2 550.4L282.1 549.8L282.0 550.1L280.9 550.2L280.5 549.2L280.0 549.6L280.2 548.9L279.0 549.9L279.9 549.7L280.0 549.8L278.6 550.4L280.0 549.8L279.7 550.0L280.2 550.2L279.5 550.6L280.0 550.6L279.8 550.8L279.9 551.2L280.4 550.4L280.7 550.6L280.7 550.8L281.1 550.4L281.3 550.4L281.4 551.6L280.8 551.8L281.4 552.1L281.6 551.5L282.0 551.5L281.9 552.1L282.6 552.2L282.7 551.7L282.9 552.0L283.4 552.0L283.5 552.7L282.9 553.0L283.3 552.7L283.7 553.0L283.3 553.8L283.8 553.7L283.6 553.6L283.7 553.1L284.1 553.8L284.4 553.8L284.0 553.4L284.8 553.5L284.2 553.5L283.7 552.5L285.1 553.0L283.5 551.9L284.2 551.7L284.4 551.4L283.0 551.5L283.2 551.0L283.0 550.8L282.6 551.4L282.5 551.2L282.0 551.2L282.3 550.8L282.0 550.9L281.8 550.7L282.6 550.6L283.3 549.1L287.9 548.6L289.2 549.5L288.9 549.9L289.3 550.1L289.4 550.6L290.7 551.2L289.1 550.9L289.4 550.7L289.3 550.6L289.0 550.9L288.5 551.0L290.4 551.7L287.8 551.7L286.3 550.9L286.1 550.9L286.9 551.6L285.6 551.2L285.8 551.6L284.9 551.8L285.7 552.5L286.0 552.1L286.3 552.6L290.9 553.5L289.0 554.1L287.7 553.7L289.4 554.2L288.2 554.3L291.0 554.2L287.0 555.2L289.1 555.2L288.8 555.3L286.0 555.2L286.5 555.4L286.2 555.6L286.2 555.8L285.0 555.7L284.9 555.4L285.0 555.2L284.5 555.7L283.5 555.3L283.1 555.3L284.4 555.9L284.0 556.0L285.6 556.1L281.8 556.7L282.7 557.0L283.3 556.4L284.9 556.5L283.9 556.7L284.2 557.1L284.1 557.4L283.6 557.4L284.0 557.2L284.0 557.0L283.5 557.2L283.4 557.1L282.8 557.4L283.3 557.6L283.0 557.7L282.0 557.8L281.5 558.3L281.6 558.4L280.7 558.4L281.6 558.0L280.2 557.9L279.4 556.8L279.0 556.8L280.1 557.9L277.8 558.1L278.5 557.7L277.3 557.5L277.7 557.7L277.7 557.9L276.4 557.9L275.4 557.3L276.0 557.2L274.4 557.0L274.1 556.0L273.6 557.2L271.9 556.9L272.2 557.2L271.6 557.7L273.2 557.2L273.4 557.3L273.1 557.8L273.8 557.2L276.7 558.6L274.6 558.0L275.6 558.6L275.3 558.8L276.6 559.0L276.6 559.5L276.9 558.9L278.6 559.1L278.9 559.6L278.5 559.9L279.1 560.0L277.7 560.2L278.4 560.6L278.0 560.7L278.4 561.7L278.2 561.8L278.1 562.2L277.5 561.0L277.3 560.9L277.0 561.1L277.0 560.6L276.4 560.6L275.9 560.2L276.0 560.7L274.8 560.4L275.4 561.2L275.0 561.1L274.4 561.8L274.1 560.8L273.6 561.5L273.4 560.6L273.6 560.5L273.2 560.5L273.2 560.1L272.1 560.3L271.6 559.4L271.3 559.7L271.0 559.3L270.8 559.3L271.3 559.7L271.1 560.0L269.6 559.6L269.1 560.0L270.9 560.2L270.8 560.5L270.2 560.7L270.7 560.7L270.8 560.9L270.5 561.2L271.5 560.4L271.5 560.9L271.6 560.7L272.1 561.1L271.0 561.4L271.0 561.5L272.5 561.6L271.0 562.3L271.5 562.3L271.3 562.6L271.9 562.1L272.0 562.4L271.8 562.6L272.4 562.1L273.1 562.3L272.0 563.2L273.1 563.3L272.7 564.0L273.3 564.2L270.7 563.3L270.4 563.7L269.8 562.6L269.0 562.9L269.4 562.2L268.6 562.6L268.4 561.7L268.4 562.3L267.8 561.8L267.9 562.3L268.2 562.5L267.2 561.9L267.5 562.4L266.7 562.7L267.2 562.6L268.0 562.9L267.0 563.2L267.6 563.1L267.1 563.7L267.8 563.3L267.5 564.0L268.3 563.3L268.5 563.5L268.9 563.4L268.1 563.7L268.7 563.9L268.8 564.2L267.8 564.7L268.7 564.5L268.2 565.3L269.4 565.6L269.2 565.9L268.4 566.0L267.6 565.5L267.9 565.5L267.8 565.2L266.6 565.2L266.9 564.6L266.4 564.5L266.5 564.0L265.5 564.3L265.3 564.1L265.9 563.3L264.8 563.4L265.0 563.0L264.6 562.9L264.9 562.8L263.3 561.9L263.8 561.4L264.1 561.7L264.3 561.5L264.1 561.9L265.1 561.9L265.0 561.6L264.7 561.2L265.9 560.9L264.5 559.9L266.0 559.8L264.6 559.1L266.3 559.3L265.0 558.9L265.1 558.3L267.0 558.5L266.1 557.7L267.4 557.9L266.4 557.3L266.6 557.1L266.6 556.9L267.3 556.7L267.2 557.1L267.8 556.5L268.2 557.3L268.6 556.0L269.7 556.2L269.3 555.6L269.7 555.3L270.0 555.7L270.5 554.8L270.4 555.6L270.5 555.6L270.7 554.9L271.0 555.3L271.1 555.3L271.3 554.6L272.2 554.3L272.7 554.4L272.7 555.4L273.0 555.5L273.1 555.7L272.5 556.0L272.8 556.0L273.0 556.4L272.8 556.5L272.8 556.7L274.1 555.8L273.7 556.0L273.4 555.8L273.3 554.7L273.1 555.0L272.9 554.5L273.5 554.1L272.8 553.7L273.7 554.1L273.7 554.0L271.0 552.5L271.9 551.5L271.7 550.9L272.2 551.5L272.4 552.5L273.2 552.9L272.7 552.3L273.1 552.1L272.5 551.3L272.8 551.1L274.5 551.4L274.3 551.7L274.3 551.8L275.6 551.3L274.5 551.5L271.5 550.3L272.1 549.4L274.0 550.0L273.8 549.7L273.1 549.6L273.5 549.4L273.4 549.0L275.2 548.9L275.4 548.4L273.8 546.3L274.7 547.1L276.9 547.8L277.1 548.3L277.0 547.7L279.3 548.6L279.2 548.2L279.3 547.9L278.7 548.4L278.4 547.7ZM281.6 559.8L280.7 560.2L281.3 560.2L281.3 561.5L279.5 560.2L280.5 559.6Z","lx":158.0,"ly":594.9,"cx":146.1,"cy":608.8},{"id":"90","num":23,"nombre":"Tucumán","nombreCompleto":"Tucumán","capital":"San Miguel de Tucumán","region":"NOA","dato":"Provincia del NOA con Yunga (selva de montaña), Sierras Subandinas y Sierras Pampeanas en el límite con Catamarca.","path":"M186.3 105.8L187.2 106.2L187.5 107.7L190.7 108.8L190.7 109.8L191.6 109.6L191.9 110.1L194.1 108.7L195.8 109.0L198.1 108.5L198.4 110.1L197.8 110.9L197.6 111.9L198.1 116.5L196.9 116.3L196.5 118.8L195.3 119.1L193.3 127.8L191.6 128.4L191.1 130.7L191.7 131.1L191.7 131.9L190.9 132.5L191.5 135.2L190.9 135.4L191.0 136.1L190.7 137.6L189.9 137.9L189.1 137.6L188.8 138.3L188.9 138.8L186.2 137.1L184.4 138.4L183.4 140.0L182.9 139.6L182.8 139.3L182.1 139.3L181.7 137.8L181.6 136.4L180.9 135.7L180.3 136.0L179.9 137.1L179.9 136.5L179.4 134.3L178.5 133.6L178.0 131.4L177.9 128.1L177.2 127.5L175.7 126.8L179.5 121.0L179.5 120.5L178.9 119.9L179.9 117.8L177.0 115.3L175.2 115.8L175.3 113.5L175.1 113.0L175.4 112.5L175.4 111.8L175.9 111.3L176.2 108.6L177.0 109.1L181.4 110.9L181.8 106.8L182.5 106.7L182.9 106.9L183.8 106.3L184.9 106.3L185.4 106.7Z","lx":185.4,"ly":122.4,"cx":188.2,"cy":119.1},{"id":"02","num":0,"nombre":"CABA","nombreCompleto":"Ciudad Autónoma de Buenos Aires","capital":"Capital Federal (CABA)","region":"Metropolitana","dato":"Junto con los Partidos del Gran Buenos Aires (PGBA) conforma la Región Metropolitana, donde se concentra casi el 30% de la población nacional.","path":"M280.9 254.0L282.1 255.1L282.5 255.7L280.8 257.1L279.9 256.2L279.9 255.5L280.3 254.4Z","lx":295.8,"ly":249.1,"cx":281.1,"cy":255.4}]};
+
+      const REGION_META = {
+        NOA: {
+          color: "#d8b4fe",
+          summary: "<strong>5 provincias:</strong> Jujuy, Salta, Tucumán, Santiago del Estero y Catamarca.<br><strong>Relieve:</strong> Puna, Cordillera Oriental, Sierras Subandinas, valles y llanura al este.<br><strong>Biomas:</strong> Yunga (selva de montaña) y estepa puneña."
+        },
+        NEA: {
+          color: "#fca5a5",
+          summary: "<strong>4 provincias:</strong> Misiones, Corrientes, Formosa y Chaco.<br><strong>Relieve:</strong> Llanura chaqueña, esteros correntinos y meseta misionera.<br><strong>Biomas:</strong> Selva misionera, parque chaqueño, bosques, esteros y sabana."
+        },
+        Cuyo: {
+          color: "#86efac",
+          summary: "<strong>3 provincias:</strong> Mendoza, San Juan y La Rioja.<br><strong>Relieve:</strong> Altas montañas andinas, Precordillera, valles y travesías desérticas al este.<br><strong>Bioma y población:</strong> Ambiente árido (diagonal árida); población concentrada en los oasis fértiles irrigados."
+        },
+        Pampeana: {
+          color: "#fde047",
+          summary: "<strong>6 provincias:</strong> Buenos Aires, Santa Fe, Córdoba, San Luis, Entre Ríos y La Pampa.<br><strong>Relieve:</strong> Predominio de llanura sedimentaria (con Tandilia, Ventania y Mahuidas).<br><strong>Biomas:</strong> Pastizal pampeano, espinal/monte al oeste y bosque en galería sobre el río Paraná."
+        },
+        Metropolitana: {
+          color: "#94a3b8",
+          summary: "<strong>Integración:</strong> Ciudad Autónoma de Buenos Aires (CABA) y Partidos del Gran Buenos Aires (PGBA).<br><strong>Rasgo clave:</strong> Área urbana con la mayor concentración demográfica y económica del país (~30% de la población nacional)."
+        },
+        Patagonia: {
+          color: "#fdba74",
+          summary: "<strong>5 provincias:</strong> Neuquén, Río Negro, Chubut, Santa Cruz y Tierra del Fuego.<br><strong>Patagonia Andina:</strong> Relieve montañoso y bosque patagónico-fueguino.<br><strong>Patagonia Extraandina:</strong> Mesetas escalonadas con cañadones, acantilados y bioma de estepa."
+        }
+      };
+
+      const PROV_BY_ID = {};
+      MAP_DATA.provincias.forEach(p => { PROV_BY_ID[p.id] = p; });
+
+      let mapState = {
+        mode: "explore",
+        selectedId: null,
+        activeRegion: null,
+        regionFilter: "all",
+        showNums: true,
+        showCaps: false,
+        quiz: { queue: [], idx: 0, score: 0, streak: 0, locked: false, pickedId: null, pickedOpt: null, feedback: null, options: [] }
+      };
+
+      function getProvinceFill(p) {
+        if (mapState.mode === "regions") {
+          return REGION_META[p.region] ? REGION_META[p.region].color : "#e2e8f0";
+        }
+        return state.masteredProvs[p.id] && (mapState.mode === "locate" || mapState.mode === "capitals")
+          ? "#e0f2fe"
+          : "#f8fafc";
+      }
+
+      function renderMapSvg() {
+        const wrap = document.getElementById("map-svg-wrap");
+        if (!wrap) return;
+        const hideForQuiz = (mapState.mode === "locate" || mapState.mode === "capitals") && !mapState.quiz.locked;
+        const curTarget = mapState.quiz.queue[mapState.quiz.idx] || null;
+
+        const pathsHtml = MAP_DATA.provincias.map(p => {
+          let cls = "prov-path";
+          if (mapState.mode === "explore" && mapState.selectedId === p.id) cls += " selected";
+          if (mapState.mode === "regions" && mapState.activeRegion && p.region !== mapState.activeRegion) cls += " dimmed";
+          if (mapState.mode === "locate" && curTarget) {
+            if (mapState.quiz.locked) {
+              if (p.id === curTarget.id) cls += " quiz-ok";
+              else if (p.id === mapState.quiz.pickedId) cls += " quiz-err";
+            }
+          }
+          if (mapState.mode === "capitals" && curTarget) {
+            if (p.id === curTarget.id) {
+              if (!mapState.quiz.locked) cls += " quiz-target";
+              else cls += (mapState.quiz.feedback && mapState.quiz.feedback.ok) ? " quiz-ok" : " quiz-err";
+            }
+          }
+          return `<path class="${cls}" data-pid="${p.id}" d="${p.path}" style="fill:${getProvinceFill(p)}"><title>${escapeHtml(p.num > 0 ? p.num + ". " + p.nombre : p.nombre)}</title></path>`;
+        }).join("");
+
+        // Sector Antártico vinculado a Tierra del Fuego (94)
+        const tdf = PROV_BY_ID["94"];
+        let antCls = "prov-path";
+        if (mapState.mode === "explore" && mapState.selectedId === "94") antCls += " selected";
+        if (mapState.mode === "regions" && mapState.activeRegion && tdf && tdf.region !== mapState.activeRegion) antCls += " dimmed";
+        if (mapState.mode === "locate" && curTarget && mapState.quiz.locked) {
+          if (curTarget.id === "94") antCls += " quiz-ok";
+          else if (mapState.quiz.pickedId === "94") antCls += " quiz-err";
+        }
+        if (mapState.mode === "capitals" && curTarget && curTarget.id === "94") {
+          antCls += !mapState.quiz.locked ? " quiz-target" : ((mapState.quiz.feedback && mapState.quiz.feedback.ok) ? " quiz-ok" : " quiz-err");
+        }
+
+        // Números (1-23)
+        let numsHtml = "";
+        if (mapState.showNums && !hideForQuiz) {
+          numsHtml = MAP_DATA.provincias
+            .filter(p => p.num > 0)
+            .map(p => `<text class="map-num-label" x="${p.lx}" y="${p.ly}">${p.num}</text>`)
+            .join("");
+        }
+
+        // Capitales (puntos + nombres)
+        let capsHtml = "";
+        const showAllCaps = mapState.showCaps && !hideForQuiz;
+        const activeCapId = (mapState.mode === "explore")
+          ? mapState.selectedId
+          : ((mapState.quiz.locked && curTarget) ? curTarget.id : null);
+
+        MAP_DATA.provincias.forEach(p => {
+          const isFocus = activeCapId === p.id;
+          if (showAllCaps || isFocus) {
+            capsHtml += `<circle class="map-cap-dot" cx="${p.cx}" cy="${p.cy}" r="${isFocus ? 4.2 : 2.5}" />`;
+            if ((isFocus || showAllCaps) && p.id !== "02") {
+              const labelTxt = p.id === "10" ? "S.F.V. Catamarca" : (p.id === "38" ? "S.S. Jujuy" : (p.id === "90" ? "S.M. Tucumán" : p.capital));
+              let dx = p.cx > 265 ? -6 : 6;
+              let dy = -2;
+              let anchor = p.cx > 265 ? "end" : "start";
+              if (p.id === "18") { dx = 6; dy = -3; anchor = "start"; }      // Corrientes a la derecha
+              else if (p.id === "22") { dx = -6; dy = 5; anchor = "end"; }   // Resistencia a la izquierda
+              else if (p.id === "30") { dx = 6; dy = 4; anchor = "start"; }  // Paraná a la derecha
+              else if (p.id === "82") { dx = -6; dy = -3; anchor = "end"; }  // Santa Fe a la izquierda
+              else if (p.id === "10") { dx = -4; dy = 8; anchor = "end"; }   // S.F.V. Catamarca abajo-izq
+              else if (p.id === "86") { dx = 5; dy = 1; anchor = "start"; }  // Santiago del Estero derecha
+              else if (p.id === "94") { dx = 5; dy = 4; anchor = "start"; }  // Ushuaia derecha-abajo
+              capsHtml += `<text class="map-cap-label" x="${(p.cx + dx).toFixed(1)}" y="${(p.cy + dy).toFixed(1)}" text-anchor="${anchor}" style="font-size:${isFocus ? "8.8px" : "6.8px"}; fill:${isFocus ? "#0f2942" : "#7f1d1d"}">${escapeHtml(labelTxt)}</text>`;
+            }
+          }
+        });
+
+        const cabaSelected = (mapState.mode === "explore" && mapState.selectedId === "02") ||
+          (mapState.mode === "locate" && curTarget && mapState.quiz.locked && curTarget.id === "02");
+
+        const ab = MAP_DATA.antartidaBox;
+        wrap.innerHTML = `
+          <svg class="ar-map" viewBox="${MAP_DATA.viewBox}" role="img" aria-label="Mapa político interactivo de la República Argentina">
+            <defs>
+              <clipPath id="ant-clip"><rect x="${ab.x}" y="${ab.y}" width="${ab.w}" height="${ab.h}" rx="6" /></clipPath>
+            </defs>
+
+            <text class="map-geo-label" x="192" y="18" text-anchor="middle">BOLIVIA</text>
+            <text class="map-geo-label" x="284" y="48" text-anchor="middle">PARAGUAY</text>
+            <text class="map-geo-label" x="392" y="96" text-anchor="middle">BRASIL</text>
+            <text class="map-geo-label" x="348" y="218" text-anchor="middle">URUGUAY</text>
+            <text class="map-geo-label" x="52" y="312" text-anchor="middle" transform="rotate(-82 52 312)">CHILE</text>
+            <text class="map-water-label" x="22" y="425" text-anchor="middle" transform="rotate(-86 22 425)">OCÉANO PACÍFICO</text>
+            <text class="map-water-label" x="424" y="310" text-anchor="middle" transform="rotate(-82 424 310)">OCÉANO ATLÁNTICO</text>
+            <text class="map-water-label" x="268" y="438" text-anchor="middle" transform="rotate(-65 268 438)">MAR ARGENTINO</text>
+            <text class="map-geo-label" x="252" y="601" text-anchor="middle" style="font-size:7px;">ISLAS MALVINAS (Arg.)</text>
+            <text class="map-water-label" x="128" y="647" text-anchor="middle">PASAJE DE DRAKE</text>
+
+            <g id="map-provinces-layer">${pathsHtml}</g>
+
+            <rect x="${ab.x}" y="${ab.y}" width="${ab.w}" height="${ab.h}" rx="6" fill="#cfe6f7" stroke="#64748b" stroke-width="1.2" />
+            <text x="${ab.x + ab.w / 2}" y="${ab.y + 11}" text-anchor="middle" font-size="6.7" font-weight="800" fill="#0f2942">SECTOR ANTÁRTICO ARGENTINO</text>
+            <g clip-path="url(#ant-clip)">
+              <path d="${MAP_DATA.antartidaSectorPath}" fill="rgba(255,255,255,0.45)" stroke="#64748b" stroke-dasharray="3,2" stroke-width="0.9" />
+              <path class="${antCls}" data-pid="94" d="${MAP_DATA.antartidaPath}" style="fill:${tdf ? getProvinceFill(tdf) : "#f8fafc"}"><title>Sector Antártico Argentino (Tierra del Fuego)</title></path>
+            </g>
+            <text x="${ab.x + ab.w / 2}" y="${ab.y + ab.h - 4}" text-anchor="middle" font-size="6" fill="#334155">Polo Sur (90°S) · 74°O a 25°O</text>
+
+            <line x1="281.1" y1="255.4" x2="310" y2="245" stroke="#334155" stroke-width="1" stroke-dasharray="2,2" />
+            <g class="caba-badge ${cabaSelected ? "selected" : ""}" data-pid="02">
+              <rect x="310" y="237" width="40" height="16" rx="4" />
+              <text x="330" y="245">CABA</text>
+            </g>
+
+            <g id="map-labels-layer">${numsHtml}${capsHtml}</g>
+          </svg>`;
+
+        wrap.querySelectorAll("[data-pid]").forEach(el => {
+          el.addEventListener("click", () => handleMapProvinceClick(el.getAttribute("data-pid")));
+        });
+      }
+
+      function handleMapProvinceClick(pid) {
+        const p = PROV_BY_ID[pid];
+        if (!p) return;
+        if (mapState.mode === "explore") {
+          mapState.selectedId = pid;
+          renderMapSvg();
+          renderMapSidePanel();
+          highlightTableRow(pid);
+        } else if (mapState.mode === "regions") {
+          mapState.activeRegion = mapState.activeRegion === p.region ? null : p.region;
+          renderMapSvg();
+          renderMapSidePanel();
+        } else if (mapState.mode === "locate") {
+          if (mapState.quiz.locked) return;
+          const target = mapState.quiz.queue[mapState.quiz.idx];
+          if (!target) return;
+          mapState.quiz.locked = true;
+          mapState.quiz.pickedId = pid;
+          const ok = pid === target.id;
+          if (ok) {
+            mapState.quiz.score += 1;
+            mapState.quiz.streak += 1;
+            if (target.num > 0) {
+              state.masteredProvs[target.id] = true;
+              saveState();
+              updateHeaderStats();
+            }
+          } else {
+            mapState.quiz.streak = 0;
+          }
+          mapState.quiz.feedback = {
+            ok,
+            msg: ok
+              ? `¡Exacto! ${target.nombre} — Capital: ${target.capital} (${target.region}).`
+              : `Tocaste ${p.nombre}. La correcta estaba iluminada en verde (${target.nombre} · Capital: ${target.capital}).`
+          };
+          renderMapSvg();
+          renderMapSidePanel();
+        } else if (mapState.mode === "capitals") {
+          // En modo capitales, si aún no respondió, no cambia pregunta; si quiere explorar puede cambiar de modo
+        }
+      }
+
+      function startMapQuiz(mode) {
+        const poolBase = MAP_DATA.provincias.filter(p => p.num > 0 && (mapState.regionFilter === "all" || p.region === mapState.regionFilter));
+        const queue = poolBase.slice().sort(() => Math.random() - 0.5);
+        mapState.quiz = {
+          queue,
+          idx: 0,
+          score: 0,
+          streak: 0,
+          locked: false,
+          pickedId: null,
+          pickedOpt: null,
+          feedback: null,
+          options: mode === "capitals" && queue.length ? buildCapitalOptions(queue[0]) : []
+        };
+      }
+
+      function buildCapitalOptions(target) {
+        const distractors = MAP_DATA.provincias
+          .filter(p => p.num > 0 && p.id !== target.id)
+          .sort(() => Math.random() - 0.5)
+          .slice(0, 3)
+          .map(p => p.capital);
+        return [target.capital].concat(distractors).sort(() => Math.random() - 0.5);
+      }
+
+      function renderMapSidePanel() {
+        const panel = document.getElementById("map-side-panel");
+        if (!panel) return;
+
+        if (mapState.mode === "explore") {
+          const p = mapState.selectedId ? PROV_BY_ID[mapState.selectedId] : null;
+          if (!p) {
+            panel.innerHTML = `
+              <div class="info-box">
+                <h3 style="margin:0 0 8px; color:var(--navy);">Explorá las 23 Provincias y CABA</h3>
+                <p style="margin:0 0 12px; font-size:0.93rem; color:var(--muted);">
+                  Tocá cualquier provincia en el mapa (o en la tabla de abajo) para ver su <strong>capital</strong>, <strong>región geográfica</strong> y un <strong>dato clave del programa</strong>.
+                </p>
+                <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                  <button class="btn btn-primary btn-sm" id="map-random-prov">Elegir una provincia al azar</button>
+                  <button class="btn btn-navy btn-sm" id="map-go-locate">Pasar al desafío de ubicación →</button>
+                </div>
+              </div>`;
+            document.getElementById("map-random-prov").addEventListener("click", () => {
+              const onlyProvs = MAP_DATA.provincias;
+              const pick = onlyProvs[Math.floor(Math.random() * onlyProvs.length)];
+              handleMapProvinceClick(pick.id);
+            });
+            document.getElementById("map-go-locate").addEventListener("click", () => setMapMode("locate"));
+            return;
+          }
+
+          const regColor = REGION_META[p.region] ? REGION_META[p.region].color : "#e2e8f0";
+          const allList = MAP_DATA.provincias;
+          const posIdx = allList.findIndex(item => item.id === p.id);
+          panel.innerHTML = `
+            <div class="info-box">
+              <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:10px;">
+                <span class="badge badge-c1">${p.num > 0 ? "N° " + p.num + " (orden alfabético)" : "Distrito Federal"}</span>
+                <span class="badge" style="background:${regColor}; color:#0f2942; border:1px solid rgba(0,0,0,0.15);">Región ${escapeHtml(p.region)}</span>
+              </div>
+              <h3 style="margin:0 0 6px; font-size:1.3rem; color:var(--navy);">${escapeHtml(p.nombreCompleto)}</h3>
+              <p style="margin:0 0 12px; font-size:1.02rem;"><strong>🏛️ Capital:</strong> <span style="color:var(--emerald); font-weight:700;">${escapeHtml(p.capital)}</span></p>
+              <div style="background:var(--surface-soft); padding:12px; border-radius:10px; font-size:0.91rem; margin-bottom:14px;">
+                <strong>📌 Dato clave del programa:</strong> ${escapeHtml(p.dato)}
+              </div>
+              <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                <button class="btn btn-sm" id="map-prev-prov">◀ Anterior</button>
+                <button class="btn btn-sm" id="map-next-prov">Siguiente ▶</button>
+                <button class="btn btn-primary btn-sm" id="map-random-prov">Al azar</button>
+              </div>
+            </div>`;
+          document.getElementById("map-prev-prov").addEventListener("click", () => {
+            const prev = allList[(posIdx - 1 + allList.length) % allList.length];
+            handleMapProvinceClick(prev.id);
+          });
+          document.getElementById("map-next-prov").addEventListener("click", () => {
+            const next = allList[(posIdx + 1) % allList.length];
+            handleMapProvinceClick(next.id);
+          });
+          document.getElementById("map-random-prov").addEventListener("click", () => {
+            const pick = allList[Math.floor(Math.random() * allList.length)];
+            handleMapProvinceClick(pick.id);
+          });
+          return;
+        }
+
+        if (mapState.mode === "regions") {
+          const active = mapState.activeRegion;
+          const regionKeys = Object.keys(REGION_META);
+          panel.innerHTML = `
+            <div class="info-box">
+              <h3 style="margin:0 0 6px; color:var(--navy);">Las 6 Regiones Geográficas (Hoja 20)</h3>
+              <p style="margin:0; font-size:0.89rem; color:var(--muted);">Tocá una región abajo o cualquier provincia del mapa para aislarla y repasar su relieve y bioma.</p>
+              <div class="region-legend-grid">
+                ${regionKeys.map(rk => `
+                  <button class="region-chip ${active === rk ? "active" : ""}" data-regkey="${rk}">
+                    <span class="region-swatch" style="background:${REGION_META[rk].color}"></span>
+                    <span>${rk}</span>
+                  </button>`).join("")}
+              </div>
+              ${active ? `
+                <div style="margin-top:14px; background:var(--surface-soft); padding:12px 14px; border-radius:10px; font-size:0.91rem;">
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                    <strong style="color:var(--navy); font-size:1rem;">Región ${escapeHtml(active)}</strong>
+                    <button class="btn btn-sm" id="map-clear-reg">Ver todas</button>
+                  </div>
+                  ${REGION_META[active].summary}
+                </div>` : ""}
+            </div>`;
+          panel.querySelectorAll("[data-regkey]").forEach(btn => {
+            btn.addEventListener("click", () => {
+              const rk = btn.getAttribute("data-regkey");
+              mapState.activeRegion = mapState.activeRegion === rk ? null : rk;
+              renderMapSvg();
+              renderMapSidePanel();
+            });
+          });
+          const clr = document.getElementById("map-clear-reg");
+          if (clr) clr.addEventListener("click", () => {
+            mapState.activeRegion = null;
+            renderMapSvg();
+            renderMapSidePanel();
+          });
+          return;
+        }
+
+        if (mapState.mode === "locate" || mapState.mode === "capitals") {
+          const isLocate = mapState.mode === "locate";
+          const q = mapState.quiz;
+          const regionFilterHtml = `
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
+              <select id="map-region-filter" class="input-select" aria-label="Filtrar desafío por región">
+                <option value="all">Todas las provincias (23)</option>
+                <option value="NOA">Solo NOA (5)</option>
+                <option value="NEA">Solo NEA (4)</option>
+                <option value="Cuyo">Solo Cuyo (3)</option>
+                <option value="Pampeana">Solo Pampeana (6)</option>
+                <option value="Patagonia">Solo Patagonia (5)</option>
+              </select>
+              <button class="btn btn-sm" id="map-quiz-restart">Reiniciar</button>
+            </div>`;
+
+          if (q.idx >= q.queue.length) {
+            panel.innerHTML = `
+              <div class="info-box">
+                ${regionFilterHtml}
+                <div class="prompt-card" style="background:var(--emerald-soft); border-color:var(--emerald);">
+                  ¡Ronda completada! Aciertos: <strong>${q.score} / ${q.queue.length}</strong>.
+                  <div style="margin-top:12px;"><button class="btn btn-primary btn-sm" id="map-quiz-again">Jugar otra ronda</button></div>
+                </div>
+              </div>`;
+            document.getElementById("map-region-filter").value = mapState.regionFilter;
+            document.getElementById("map-region-filter").addEventListener("change", (e) => {
+              mapState.regionFilter = e.target.value;
+              startMapQuiz(mapState.mode);
+              renderMapSvg();
+              renderMapSidePanel();
+            });
+            document.getElementById("map-quiz-restart").addEventListener("click", () => { startMapQuiz(mapState.mode); renderMapSvg(); renderMapSidePanel(); });
+            document.getElementById("map-quiz-again").addEventListener("click", () => { startMapQuiz(mapState.mode); renderMapSvg(); renderMapSidePanel(); });
+            return;
+          }
+
+          const target = q.queue[q.idx];
+          panel.innerHTML = `
+            <div class="info-box">
+              ${regionFilterHtml}
+              <div style="display:flex; justify-content:space-between; font-size:0.86rem; color:var(--muted); margin-bottom:10px;">
+                <span>Provincia ${q.idx + 1} de ${q.queue.length}</span>
+                <span>Aciertos: <strong>${q.score}</strong> · Racha: <strong>${q.streak}</strong></span>
+              </div>
+              <div class="prompt-card">
+                ${isLocate
+                  ? `Tocá en el mapa dónde está:<br><span style="font-size:1.35rem; color:var(--emerald);">${escapeHtml(target.nombre)}</span>`
+                  : `¿Cuál es la capital de la provincia resaltada?<br><span style="font-size:1.25rem; color:var(--amber);">${escapeHtml(target.nombre)}</span>`}
+              </div>
+              ${!isLocate ? `
+                <div class="option-list">
+                  ${q.options.map((opt, i) => {
+                    let cls = "opt-btn";
+                    if (q.locked) {
+                      if (opt === target.capital) cls += " correct";
+                      else if (opt === q.pickedOpt) cls += " wrong";
+                    }
+                    return `<button class="${cls}" data-capopt="${escapeHtml(opt)}" ${q.locked ? "disabled" : ""}>${String.fromCharCode(65 + i)}) ${escapeHtml(opt)}</button>`;
+                  }).join("")}
+                </div>` : ""}
+              ${q.feedback ? `
+                <div class="feedback-banner ${q.feedback.ok ? "fb-ok" : "fb-err"}">${escapeHtml(q.feedback.msg)}</div>
+                <div style="margin-top:12px; text-align:right;">
+                  <button class="btn btn-navy btn-sm" id="map-quiz-next">${q.idx + 1 < q.queue.length ? "Siguiente provincia ▶" : "Ver resultado"}</button>
+                </div>` : ""}
+            </div>`;
+
+          document.getElementById("map-region-filter").value = mapState.regionFilter;
+          document.getElementById("map-region-filter").addEventListener("change", (e) => {
+            mapState.regionFilter = e.target.value;
+            startMapQuiz(mapState.mode);
+            renderMapSvg();
+            renderMapSidePanel();
+          });
+          document.getElementById("map-quiz-restart").addEventListener("click", () => {
+            startMapQuiz(mapState.mode);
+            renderMapSvg();
+            renderMapSidePanel();
+          });
+
+          if (!isLocate) {
+            panel.querySelectorAll("[data-capopt]").forEach(btn => {
+              btn.addEventListener("click", () => {
+                if (q.locked) return;
+                const chosen = btn.getAttribute("data-capopt");
+                q.locked = true;
+                q.pickedOpt = chosen;
+                const ok = chosen === target.capital;
+                if (ok) {
+                  q.score += 1;
+                  q.streak += 1;
+                  state.masteredProvs[target.id] = true;
+                  saveState();
+                  updateHeaderStats();
+                } else {
+                  q.streak = 0;
+                }
+                q.feedback = {
+                  ok,
+                  msg: ok ? `¡Muy bien! La capital de ${target.nombre} es ${target.capital}.` : `La capital correcta de ${target.nombre} es ${target.capital}.`
+                };
+                renderMapSvg();
+                renderMapSidePanel();
+              });
+            });
+          }
+
+          const nextBtn = document.getElementById("map-quiz-next");
+          if (nextBtn) {
+            nextBtn.addEventListener("click", () => {
+              q.idx += 1;
+              q.locked = false;
+              q.pickedId = null;
+              q.pickedOpt = null;
+              q.feedback = null;
+              if (!isLocate && q.idx < q.queue.length) {
+                q.options = buildCapitalOptions(q.queue[q.idx]);
+              }
+              renderMapSvg();
+              renderMapSidePanel();
+            });
+          }
+        }
+      }
+
+      function setMapMode(mode) {
+        mapState.mode = mode;
+        document.querySelectorAll("[data-mapmode]").forEach(b => b.classList.toggle("active", b.getAttribute("data-mapmode") === mode));
+        if (mode === "locate" || mode === "capitals") {
+          startMapQuiz(mode);
+        }
+        renderMapSvg();
+        renderMapSidePanel();
+      }
+
+      function renderProvTable(query) {
+        const tbody = document.getElementById("prov-table-body");
+        if (!tbody) return;
+        const q = normalizeText(query || "");
+        const rows = MAP_DATA.provincias.filter(p => {
+          if (!q) return true;
+          return normalizeText(p.nombreCompleto).includes(q) ||
+            normalizeText(p.capital).includes(q) ||
+            normalizeText(p.region).includes(q);
+        });
+        tbody.innerHTML = rows.map(p => {
+          const swatch = REGION_META[p.region] ? REGION_META[p.region].color : "#e2e8f0";
+          const activeCls = mapState.selectedId === p.id ? " active-row" : "";
+          return `<tr class="prov-table-row${activeCls}" data-rowpid="${p.id}">
+            <td><strong>${p.num > 0 ? p.num : "—"}</strong></td>
+            <td>${escapeHtml(p.nombreCompleto)}</td>
+            <td>${escapeHtml(p.capital)}</td>
+            <td><span class="badge" style="background:${swatch}; color:#0f2942;">${escapeHtml(p.region)}</span></td>
+          </tr>`;
+        }).join("");
+
+        tbody.querySelectorAll("[data-rowpid]").forEach(tr => {
+          tr.addEventListener("click", () => {
+            const pid = tr.getAttribute("data-rowpid");
+            if (mapState.mode !== "explore") {
+              setMapMode("explore");
+            }
+            handleMapProvinceClick(pid);
+            const wrap = document.getElementById("map-svg-wrap");
+            if (wrap && typeof wrap.scrollIntoView === "function") {
+              wrap.scrollIntoView({ behavior: "smooth", block: "nearest" });
+            }
+          });
+        });
+      }
+
+      function highlightTableRow(pid) {
+        document.querySelectorAll("#prov-table-body tr").forEach(tr => {
+          tr.classList.toggle("active-row", tr.getAttribute("data-rowpid") === pid);
+        });
+      }
+
+      function initMapModule() {
+        document.querySelectorAll("[data-mapmode]").forEach(btn => {
+          btn.addEventListener("click", () => setMapMode(btn.getAttribute("data-mapmode")));
+        });
+        const numsChk = document.getElementById("map-show-nums");
+        const capsChk = document.getElementById("map-show-caps");
+        if (numsChk) numsChk.addEventListener("change", (e) => { mapState.showNums = e.target.checked; renderMapSvg(); });
+        if (capsChk) capsChk.addEventListener("change", (e) => { mapState.showCaps = e.target.checked; renderMapSvg(); });
+        const searchInp = document.getElementById("prov-search");
+        if (searchInp) searchInp.addEventListener("input", (e) => renderProvTable(e.target.value));
+
+        renderMapSvg();
+        renderMapSidePanel();
+        renderProvTable("");
+      }
+
       /* ===================== INICIALIZACION ===================== */
       loadState();
       updateHeaderStats();
@@ -1787,6 +2584,7 @@
       startClassifier();
       startVf();
       buildCrossword();
+      initMapModule();
     })();
   </script>
 </body>
