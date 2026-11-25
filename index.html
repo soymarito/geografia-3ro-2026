@@ -719,6 +719,74 @@
       font-size: 0.9rem;
       color: var(--text);
     }
+
+    /* Pestaña exclusiva Comunicado 1/12 */
+    .com-hero {
+      background: linear-gradient(135deg, #0f2942 0%, #155e75 60%, #0d9488 100%);
+      color: #fff;
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow);
+    }
+    .com-hero h2 { margin: 0 0 6px; font-size: 1.3rem; color: #fff; }
+    .com-hero p { margin: 0 0 12px; color: #e0f2fe; font-size: 0.94rem; }
+    .com-quote {
+      background: rgba(255, 255, 255, 0.12);
+      border-left: 4px solid #fcd34d;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 0.9rem;
+      color: #fefce8;
+      margin-bottom: 12px;
+    }
+    .checklist-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .chk-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      border-radius: 10px;
+      padding: 9px 12px;
+      font-size: 0.87rem;
+      font-weight: 600;
+      color: #fff;
+      cursor: pointer;
+    }
+    .chk-pill.checked {
+      background: rgba(22, 163, 74, 0.35);
+      border-color: #86efac;
+    }
+    .topic-done-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px dashed var(--border);
+    }
+    .chk-inline {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--emerald);
+      cursor: pointer;
+      background: var(--emerald-soft);
+      border: 1px solid #99f6e4;
+      border-radius: 9px;
+      padding: 6px 12px;
+    }
+    @media (max-width: 780px) { .controls-bar { position: static; } }
   </style>
 </head>
 <body>
@@ -726,9 +794,10 @@
     <div class="container header-top">
       <div class="brand">
         <h1>Geografía 3° · Entrenador Mesa Diciembre 2026</h1>
-        <p>Programa real completo: 1° y 2° Cuatrimestre + 3 Trabajos Prácticos Oficiales</p>
+        <p>Exclusivo Comunicado 1/12 + Programa completo (1° y 2° Cuatrimestre)</p>
       </div>
       <div class="stats-row" id="header-stats">
+        <span class="stat-pill" id="stat-com">Examen 1/12: —</span>
         <span class="stat-pill" id="stat-fc">Flashcards: 0/52</span>
         <span class="stat-pill" id="stat-map">Mapa: 0/23</span>
         <span class="stat-pill" id="stat-c1">Mejor 1° Cuat.: —</span>
@@ -746,7 +815,8 @@
         <button class="pill-btn" data-term="2">2° Cuatrimestre</button>
       </div>
       <nav class="nav-tabs" role="tablist">
-        <button class="tab-btn active" data-tab="guias">1. Guías Express</button>
+        <button class="tab-btn active" data-tab="comunicado">🎯 Examen 1/12 (Comunicado)</button>
+        <button class="tab-btn" data-tab="guias">1. Guías Express</button>
         <button class="tab-btn" data-tab="flashcards">2. Flashcards Orales</button>
         <button class="tab-btn" data-tab="practica">3. Práctica Tipo TP</button>
         <button class="tab-btn" data-tab="simulacro">4. Simulacro (1 al 10)</button>
@@ -756,8 +826,153 @@
   </div>
 
   <main class="main-wrap">
+    <!-- TAB 0: EXAMEN 1/12 (EXCLUSIVO COMUNICADO DE LA PROFE) -->
+    <section id="tab-comunicado" class="tab-panel active">
+      <div class="com-hero">
+        <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px;">
+          <h2>🎯 Temario Oficial del Comunicado · Martes 1 de Diciembre</h2>
+          <span class="badge" style="background:#fef3c7;color:#92400e;font-size:0.82rem;" id="com-topics-count">0 / 5 temas repasados</span>
+        </div>
+        <div class="com-quote">
+          <strong>Comunicado de la Profesora de Geografía:</strong> "En el período de intensificación el <strong>1 de diciembre</strong> rendirá <strong>SOLO el 1er cuatrimestre</strong>. Los temas son: <strong>El espacio geográfico, Puntos extremos, Límites, División política y Regiones geográficas</strong>. (Traer <strong>mapa de Argentina</strong> y <strong>$300 pesos</strong> para la fotocopia)."
+        </div>
+        <p style="margin:0 0 6px;font-weight:700;">🎒 Checklist para el martes 1/12 (no te olvides nada):</p>
+        <div class="checklist-grid">
+          <label class="chk-pill" data-chk-wrap="bag_mapa"><input type="checkbox" data-com-chk="bag_mapa" /> Mapa político de la Rep. Argentina</label>
+          <label class="chk-pill" data-chk-wrap="bag_plata"><input type="checkbox" data-com-chk="bag_plata" /> $300 pesos para la fotocopia</label>
+          <label class="chk-pill" data-chk-wrap="bag_carpeta"><input type="checkbox" data-com-chk="bag_carpeta" /> Carpeta completa + birome/fibrón</label>
+        </div>
+      </div>
+
+      <div class="alert-box">
+        <h3>📌 Sin vueltas: acá adentro está SOLO lo que entra el 1 de diciembre</h3>
+        <p style="margin:0;font-size:0.91rem;">Dejamos afuera América y el 2° Cuatrimestre para que vayas directo a los <strong>5 temas del comunicado</strong>. Repasá los 5 bloques abajo, usá los botones del Mapa interactivo y cerrá con el <strong>Simulacro Exclusivo 1/12</strong>.</p>
+      </div>
+
+      <details class="guide-unit" open>
+        <summary><span>1. El Espacio Geográfico de Argentina</span><span class="badge badge-c1">Eje 1 · Comunicado</span></summary>
+        <div class="guide-body">
+          <ul>
+            <li><strong>Forma y posición:</strong> territorio relativamente alargado en sentido de los meridianos (Norte–Sur), ubicado en el extremo meridional de América del Sur.</li>
+            <li><strong>Extensión Norte–Sur:</strong> <strong>3.799 km</strong>, desde la confluencia de los ríos Grande de San Juan y Mojinete (Jujuy) hasta el Cabo San Pío (Tierra del Fuego).</li>
+            <li><strong>Anchura máxima (Este–Oeste):</strong> <strong>1.453 km</strong>, medida sobre el paralelo <strong>27° 31' de latitud Sur</strong>.</li>
+            <li><strong>Consecuencia geográfica:</strong> ese gran desarrollo latitudinal origina una amplia variedad de climas que, combinada con las distintas formas de relieve, brinda diversidad de recursos naturales.</li>
+            <li><strong>Poblamiento relativo:</strong> aunque Argentina es uno de los países más extensos del mundo, está escasamente poblado en relación con su superficie total.</li>
+          </ul>
+          <div class="topic-done-row">
+            <label class="chk-inline"><input type="checkbox" data-com-chk="t1" /> ✓ Tema 1 repasado</label>
+          </div>
+        </div>
+      </details>
+
+      <details class="guide-unit">
+        <summary><span>2. Los 4 Puntos Extremos de Argentina</span><span class="badge badge-c1">Eje 2 · Comunicado</span></summary>
+        <div class="guide-body">
+          <div class="alert-box" style="margin-bottom:10px;">
+            <h3>⚠️ Atención a las 2 correcciones clave de carpeta</h3>
+            <p style="margin:0;">El Punto Extremo Norte está a <strong>21° 46' S</strong> (no 23° 46') y el Punto Extremo Oeste se nombra completo: <strong>Parque Nacional Los Glaciares</strong>.</p>
+          </div>
+          <div class="table-wrap"><table class="geo-table">
+            <thead><tr><th>Punto cardinal</th><th>Ubicación exacta (Parte Continental Americana)</th><th>Coordenadas</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Norte</strong></td><td>Confluencia de los ríos Grande de San Juan y Mojinete (Jujuy)</td><td><strong>21° 46' S</strong> · 66° 13' O</td></tr>
+              <tr><td><strong>Sur</strong></td><td>Cabo San Pío (Tierra del Fuego)</td><td><strong>55° 03' S</strong> · 66° 31' O</td></tr>
+              <tr><td><strong>Oeste</strong></td><td>Punto en el <strong>Parque Nacional Los Glaciares</strong> (Santa Cruz)</td><td><strong>50° 01' S</strong> · 73° 34' O</td></tr>
+              <tr><td><strong>Este</strong></td><td>Localidad de Bernardo de Irigoyen (Misiones)</td><td><strong>26° 15' S</strong> · 53° 38' O</td></tr>
+            </tbody>
+          </table></div>
+          <div class="topic-done-row">
+            <label class="chk-inline"><input type="checkbox" data-com-chk="t2" /> ✓ Tema 2 repasado</label>
+          </div>
+        </div>
+      </details>
+
+      <details class="guide-unit">
+        <summary><span>3. Límites Generales y Cuestiones Limítrofes (5 Países)</span><span class="badge badge-c1">Eje 3 · Comunicado</span></summary>
+        <div class="guide-body">
+          <ul>
+            <li><strong>Límites generales de Argentina:</strong> <strong>Norte:</strong> Bolivia, Paraguay y parte de Brasil · <strong>Sur:</strong> Pasaje de Drake · <strong>Oeste:</strong> Chile · <strong>Este:</strong> parte de Brasil, Uruguay y Mar Argentino (Océano Atlántico).</li>
+            <li><strong>Límite vs. Frontera:</strong> el <strong>límite</strong> es la línea imaginaria convencional que separa soberanías de dos Estados; la <strong>frontera</strong> es la franja territorial a ambos lados donde interactúan sus habitantes.</li>
+          </ul>
+          <div class="table-wrap"><table class="geo-table">
+            <thead><tr><th>País vecino</th><th>Hitos y Resoluciones clave</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Bolivia</strong></td><td>Tratado de <strong>1925</strong> (742 km del Cerro Zapaleri al Punto Esmeralda, paralelo <strong>22° S</strong>). Tarija, Juntas de San Antonio y Yacuiba → <strong>Bolivia</strong>; Puna de Atacama → <strong>Argentina</strong>.</td></tr>
+              <tr><td><strong>Paraguay</strong></td><td>Acuerdo de <strong>1876</strong>: <strong>Talweg o vaguada</strong> de ríos Paraguay y Paraná. Chaco Boreal → <strong>Paraguay</strong> (Argentina afianza Formosa). Curso medio del Pilcomayo → <strong>línea geométrica</strong>.</td></tr>
+              <tr><td><strong>Brasil</strong></td><td>Arbitraje de <strong>1895</strong> (~30.000 km² a Brasil). Ríos San Antonio y Pepirí Guazú + <strong>30 km de frontera seca</strong> (Bernardo de Irigoyen). Ríos Uruguay e Iguazú: Talweg, salvo Cataratas (<strong>Salto Unión</strong>).</td></tr>
+              <tr><td><strong>Uruguay</strong></td><td>Río Uruguay: Talweg (embalse Salto Grande = línea geométrica). Río de la Plata: <strong>línea media de 23 puntos</strong> y aguas de <strong>uso común</strong> (navegación y pesca) con franjas costeras exclusivas. Límite marítimo: <strong>200 millas marinas</strong>.</td></tr>
+              <tr><td><strong>Chile</strong></td><td><strong>1881</strong> (Tratado: altas cumbres y Tierra del Fuego) · <strong>1984</strong> (Canal de Beagle: Picton, Lennox y Nueva / mediación Juan Pablo II y plebiscito) · <strong>1994</strong> (Laguna del Desierto → Argentina) · <strong>1998</strong> (Hielos Continentales: <strong>Monte Fitz Roy</strong> – Cerro Daudet).</td></tr>
+            </tbody>
+          </table></div>
+          <div class="topic-done-row">
+            <label class="chk-inline"><input type="checkbox" data-com-chk="t3" /> ✓ Tema 3 repasado</label>
+          </div>
+        </div>
+      </details>
+
+      <details class="guide-unit">
+        <summary><span>4. División Política: 23 Provincias, CABA y Capitales</span><span class="badge badge-c1">Eje 4 · Comunicado</span></summary>
+        <div class="guide-body">
+          <p style="margin-top:0;">Argentina se divide políticamente en <strong>23 provincias</strong> más la <strong>Ciudad Autónoma de Buenos Aires (CABA)</strong>. ¡Ojo con las capitales que NO coinciden con el nombre de la provincia (las que más toman en el mapa):</p>
+          <ul>
+            <li><strong>Catamarca</strong> → <strong>San Fernando del Valle de Catamarca</strong> | <strong>Río Negro</strong> → <strong>Viedma</strong> | <strong>Chubut</strong> → <strong>Rawson</strong></li>
+            <li><strong>Buenos Aires</strong> → La Plata | <strong>Entre Ríos</strong> → Paraná | <strong>Misiones</strong> → Posadas | <strong>Chaco</strong> → Resistencia</li>
+            <li><strong>La Pampa</strong> → Santa Rosa | <strong>Santa Cruz</strong> → Río Gallegos | <strong>Tierra del Fuego</strong> → Ushuaia</li>
+            <li><strong>Jujuy</strong> → San Salvador de Jujuy | <strong>Tucumán</strong> → San Miguel de Tucumán</li>
+          </ul>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;">
+            <button type="button" class="btn btn-primary btn-sm" data-map-jump="locate">🎯 Ubicar las 23 Provincias en el Mapa →</button>
+            <button type="button" class="btn btn-navy btn-sm" data-map-jump="capitals">🏛️ Practicar Juego de Capitales →</button>
+          </div>
+          <div class="topic-done-row">
+            <label class="chk-inline"><input type="checkbox" data-com-chk="t4" /> ✓ Tema 4 repasado</label>
+          </div>
+        </div>
+      </details>
+
+      <details class="guide-unit">
+        <summary><span>5. Las 6 Regiones Geográficas de Argentina (Hoja 20)</span><span class="badge badge-c1">Eje 5 · Comunicado</span></summary>
+        <div class="guide-body">
+          <p style="margin-top:0;"><strong>Región geográfica:</strong> porción del territorio con elementos naturales y rasgos culturales particulares que le dan identidad espacial y organización territorial propia.</p>
+          <div class="table-wrap"><table class="geo-table">
+            <thead><tr><th>Región</th><th>Provincias</th><th>Claves de relieve, bioma y población</th></tr></thead>
+            <tbody>
+              <tr><td><strong>NEA</strong></td><td>Misiones, Corrientes, Formosa, Chaco</td><td>Chaco (planicie), NE correntino (esteros), Misiones (meseta roja). Biomas variados; población junto a ríos Paraná y Uruguay.</td></tr>
+              <tr><td><strong>NOA</strong></td><td>Jujuy, <strong>Salta</strong>, Tucumán, Sgo. del Estero, Catamarca</td><td>Cordillera Oriental, Puna, Sierras Subandinas, valles y llanura. Biomas: <strong>Yunga</strong> y estepa puneña. ¡Recordá incluir a <strong>Salta</strong>!</td></tr>
+              <tr><td><strong>Cuyo</strong></td><td>Mendoza, San Juan, La Rioja</td><td>Altas montañas andinas, valles y <strong>travesías</strong> desérticas al este. Población concentrada en los <strong>oasis fértiles</strong> irrigados por deshielo.</td></tr>
+              <tr><td><strong>Pampeana</strong></td><td>Bs. As., Santa Fe, Córdoba, San Luis, Entre Ríos, La Pampa</td><td>Predominio de <strong>llanura</strong> sedimentaria (con Tandilia y Ventania al sur) y bioma de <strong>pastizal</strong>.</td></tr>
+              <tr><td><strong>Metropolitana</strong></td><td>CABA + Partidos del Gran Buenos Aires (PGBA)</td><td>Área urbana de mayor concentración nacional (~30% del país).</td></tr>
+              <tr><td><strong>Patagonia</strong></td><td>Neuquén, Río Negro, Chubut, Santa Cruz, Tierra del Fuego</td><td><strong>Andina:</strong> montañas y bosque patagónico. <strong>Extraandina:</strong> meseta escalonada con cañadones y estepa. Población en valles y puertos.</td></tr>
+            </tbody>
+          </table></div>
+          <div style="margin-top:8px;">
+            <button type="button" class="btn btn-primary btn-sm" data-map-jump="regions">🎨 Ver las 6 Regiones Pintadas en el Mapa →</button>
+          </div>
+          <div class="topic-done-row">
+            <label class="chk-inline"><input type="checkbox" data-com-chk="t5" /> ✓ Tema 5 repasado</label>
+          </div>
+        </div>
+      </details>
+
+      <div class="card" style="margin-top:16px;">
+        <div class="section-head">
+          <div>
+            <h2>📝 Simulacro Exclusivo Comunicado 1/12</h2>
+            <p style="margin:2px 0 0;font-size:0.88rem;color:var(--muted);">25 preguntas 100% sobre los 5 temas del comunicado (sin América ni 2° Cuatrimestre).</p>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button type="button" class="btn btn-primary btn-sm start-com-exam" data-com-count="10">🎯 Práctica rápida (10 preg.)</button>
+            <button type="button" class="btn btn-amber btn-sm start-com-exam" data-com-count="15">🏆 Simulacro Completo 1/12 (15 preg.)</button>
+          </div>
+        </div>
+        <div id="com-exam-stage">
+          <p style="margin:0;font-size:0.9rem;color:var(--muted);">Elegí arriba cuántas preguntas querés rendir para probar si estás listo para el <strong>martes 1 de diciembre</strong>.</p>
+        </div>
+      </div>
+    </section>
+
     <!-- TAB 1: GUIAS EXPRESS -->
-    <section id="tab-guias" class="tab-panel active">
+    <section id="tab-guias" class="tab-panel">
       <div class="alert-box">
         <h3>📌 Puntos clave de precisión para la mesa de diciembre</h3>
         <ul>
@@ -960,11 +1175,12 @@
       const STORAGE_KEY = "geo3_marito_2026_v1";
       let state = {
         term: "all",
-        tab: "guias",
+        tab: "comunicado",
+        comCheck: {},
         knownFc: {},
         reviewFc: {},
         masteredProvs: {},
-        bestScores: { "1": null, "2": null, "all": null }
+        bestScores: { "1": null, "2": null, "all": null, "comunicado": null }
       };
 
       function loadState() {
@@ -973,10 +1189,11 @@
           if (raw) {
             const parsed = JSON.parse(raw);
             if (parsed && typeof parsed === "object") {
+              state.comCheck = parsed.comCheck || {};
               state.knownFc = parsed.knownFc || {};
               state.reviewFc = parsed.reviewFc || {};
               state.masteredProvs = parsed.masteredProvs || {};
-              state.bestScores = Object.assign({ "1": null, "2": null, "all": null }, parsed.bestScores || {});
+              state.bestScores = Object.assign({ "1": null, "2": null, "all": null, "comunicado": null }, parsed.bestScores || {});
             }
           }
         } catch (e) { /* sin storage */ }
@@ -985,6 +1202,7 @@
       function saveState() {
         try {
           localStorage.setItem(STORAGE_KEY, JSON.stringify({
+            comCheck: state.comCheck,
             knownFc: state.knownFc,
             reviewFc: state.reviewFc,
             masteredProvs: state.masteredProvs,
@@ -1507,7 +1725,9 @@
         const mapKnown = Object.keys(state.masteredProvs).filter(k => state.masteredProvs[k] && k !== "02").length;
         const statMapEl = document.getElementById("stat-map");
         if (statMapEl) statMapEl.textContent = `Mapa: ${mapKnown}/23`;
-        const fmt = (v) => v === null ? "—" : `${v.toFixed(1)}/10`;
+        const fmt = (v) => v === null || v === undefined ? "—" : `${v.toFixed(1)}/10`;
+        const statComEl = document.getElementById("stat-com");
+        if (statComEl) statComEl.textContent = `Examen 1/12: ${fmt(state.bestScores.comunicado)}`;
         document.getElementById("stat-c1").textContent = `Mejor 1° Cuat.: ${fmt(state.bestScores["1"])}`;
         document.getElementById("stat-c2").textContent = `Mejor 2° Cuat.: ${fmt(state.bestScores["2"])}`;
         document.getElementById("stat-int").textContent = `Mejor Integrador: ${fmt(state.bestScores["all"])}`;
@@ -2575,9 +2795,159 @@
         renderProvTable("");
       }
 
+      /* ===================== MODULO 0: COMUNICADO 1/12 ===================== */
+      const COMUNICADO_EXTRA_QS = [
+        { term: 1, unit: "Límites Generales", q: "¿Cuáles son los límites generales de la República Argentina (Norte, Sur, Este y Oeste)?", opts: ["Norte: Bolivia, Paraguay y Brasil; Sur: Pasaje de Drake; Oeste: Chile; Este: Brasil, Uruguay y Mar Argentino", "Norte: Perú y Ecuador; Sur: Océano Glacial Ártico; Oeste: Océano Pacífico; Este: Chile", "Norte: Uruguay; Sur: Brasil; Oeste: Océano Atlántico; Este: Cordillera de los Andes", "Norte: Venezuela; Sur: Pasaje de Drake; Oeste: Paraguay; Este: Mar Caribe"], ans: 0, exp: "Norte: Bolivia, Paraguay y parte de Brasil; Sur: Pasaje de Drake; Oeste: Chile; Este: parte de Brasil, Uruguay y Mar Argentino." },
+        { term: 1, unit: "División Política", q: "¿Cuál es el nombre completo de la capital de la provincia de Catamarca?", opts: ["San Salvador de Catamarca", "San Miguel de Catamarca", "San Fernando del Valle de Catamarca", "Santa Rosa de Catamarca"], ans: 2, exp: "La capital de Catamarca es San Fernando del Valle de Catamarca." },
+        { term: 1, unit: "Regiones: Metropolitana", q: "¿Qué jurisdicciones integran la Región Metropolitana de Argentina según la Hoja 20?", opts: ["Toda la provincia de Buenos Aires y La Pampa", "Ciudad Autónoma de Buenos Aires (CABA) y Partidos del Gran Buenos Aires (PGBA)", "Rosario, Córdoba y Mendoza", "Entre Ríos, Santa Fe y Corrientes"], ans: 1, exp: "La Región Metropolitana está integrada por CABA y los Partidos del Gran Buenos Aires (PGBA)." }
+      ];
+
+      let comExamState = null;
+
+      function syncComunicadoChecks() {
+        const topicsDone = ["t1", "t2", "t3", "t4", "t5"].filter(k => !!state.comCheck[k]).length;
+        const badge = document.getElementById("com-topics-count");
+        if (badge) badge.textContent = `${topicsDone} / 5 temas repasados`;
+        document.querySelectorAll("[data-com-chk]").forEach(chk => {
+          const key = chk.getAttribute("data-com-chk");
+          chk.checked = !!state.comCheck[key];
+          const wrap = document.querySelector(`[data-chk-wrap="${key}"]`);
+          if (wrap) wrap.classList.toggle("checked", chk.checked);
+        });
+      }
+
+      function startComExam(count) {
+        const baseQs = EXAM_QUESTIONS.filter(q => q.term === 1 && !q.unit.startsWith("América"));
+        const pool = baseQs.concat(COMUNICADO_EXTRA_QS).slice().sort(() => Math.random() - 0.5);
+        comExamState = {
+          questions: pool.slice(0, Math.min(count, pool.length)),
+          idx: 0,
+          score: 0,
+          answered: false,
+          selectedOpt: null,
+          missedUnits: {}
+        };
+        renderComExam();
+      }
+
+      function renderComExam() {
+        const stage = document.getElementById("com-exam-stage");
+        if (!stage || !comExamState) return;
+        const total = comExamState.questions.length;
+        if (comExamState.idx >= total) {
+          const grade = (comExamState.score / total) * 10;
+          const prev = state.bestScores.comunicado;
+          if (prev === null || prev === undefined || grade > prev) {
+            state.bestScores.comunicado = grade;
+            saveState();
+            updateHeaderStats();
+          }
+          const missedList = Object.entries(comExamState.missedUnits).sort((a, b) => b[1] - a[1]);
+          stage.innerHTML = `
+            <div class="score-hero">
+              <div style="font-size:0.95rem;opacity:0.9;">Resultado Simulacro Comunicado 1/12</div>
+              <div class="score-num">${grade.toFixed(1)} / 10</div>
+              <div style="margin-top:6px;font-weight:600;">${grade >= 6 ? "¡Excelente! Muy bien preparado para el martes 1 de diciembre." : "A repasar los ejes flojos arriba antes del martes 1/12."} (${comExamState.score}/${total} correctas)</div>
+            </div>
+            ${missedList.length ? `
+              <h4 style="margin:0 0 6px;color:var(--navy);">Temas del comunicado para reforzar:</h4>
+              <ul style="margin:0 0 12px;padding-left:20px;">
+                ${missedList.map(([u, c]) => `<li><strong>${escapeHtml(u)}</strong> (${c} ${c === 1 ? "error" : "errores"})</li>`).join("")}
+              </ul>` : `<div class="feedback-banner fb-ok" style="margin-bottom:12px;">¡100% en los ejes del comunicado! No tuviste errores.</div>`}
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <button type="button" class="btn btn-primary btn-sm" id="com-retry">Repetir simulacro</button>
+              <button type="button" class="btn btn-navy btn-sm" data-map-jump-dyn="locate">Practicar Mapa de Provincias</button>
+            </div>`;
+          document.getElementById("com-retry").addEventListener("click", () => startComExam(total));
+          stage.querySelector("[data-map-jump-dyn]").addEventListener("click", () => {
+            switchTab("mapa");
+            setMapMode("locate");
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          });
+          return;
+        }
+
+        const cur = comExamState.questions[comExamState.idx];
+        const pct = Math.round(((comExamState.idx + (comExamState.answered ? 1 : 0)) / total) * 100);
+        stage.innerHTML = `
+          <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:8px;">
+            <span class="badge badge-c1">Comunicado 1/12 · ${escapeHtml(cur.unit)}</span>
+            <span style="font-size:0.86rem;color:var(--muted);">Pregunta ${comExamState.idx + 1} de ${total} · Aciertos: <strong>${comExamState.score}</strong></span>
+          </div>
+          <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
+          <h3 style="margin:0 0 8px;color:var(--navy);font-size:1.08rem;">${escapeHtml(cur.q)}</h3>
+          <div class="option-list">
+            ${cur.opts.map((opt, i) => {
+              let cls = "opt-btn";
+              if (comExamState.answered) {
+                if (i === cur.ans) cls += " correct";
+                else if (i === comExamState.selectedOpt) cls += " wrong";
+              }
+              return `<button type="button" class="${cls}" data-com-opt="${i}" ${comExamState.answered ? "disabled" : ""}>${String.fromCharCode(65 + i)}) ${escapeHtml(opt)}</button>`;
+            }).join("")}
+          </div>
+          ${comExamState.answered ? `
+            <div class="feedback-banner ${comExamState.selectedOpt === cur.ans ? "fb-ok" : "fb-err"}">
+              ${comExamState.selectedOpt === cur.ans ? "¡Correcto! " : "Atención: "}${escapeHtml(cur.exp)}
+            </div>
+            <div style="margin-top:12px;text-align:right;">
+              <button type="button" class="btn btn-navy btn-sm" id="com-next">${comExamState.idx + 1 < total ? "Siguiente pregunta ▶" : "Ver resultado final"}</button>
+            </div>` : ""}`;
+
+        stage.querySelectorAll("[data-com-opt]").forEach(btn => {
+          btn.addEventListener("click", () => {
+            if (comExamState.answered) return;
+            const chosen = Number(btn.getAttribute("data-com-opt"));
+            comExamState.answered = true;
+            comExamState.selectedOpt = chosen;
+            if (chosen === cur.ans) {
+              comExamState.score += 1;
+            } else {
+              comExamState.missedUnits[cur.unit] = (comExamState.missedUnits[cur.unit] || 0) + 1;
+            }
+            renderComExam();
+          });
+        });
+
+        const nextBtn = document.getElementById("com-next");
+        if (nextBtn) {
+          nextBtn.addEventListener("click", () => {
+            comExamState.idx += 1;
+            comExamState.answered = false;
+            comExamState.selectedOpt = null;
+            renderComExam();
+          });
+        }
+      }
+
+      function initComunicadoModule() {
+        syncComunicadoChecks();
+        document.querySelectorAll("[data-com-chk]").forEach(chk => {
+          chk.addEventListener("change", () => {
+            const key = chk.getAttribute("data-com-chk");
+            state.comCheck[key] = chk.checked;
+            saveState();
+            syncComunicadoChecks();
+          });
+        });
+        document.querySelectorAll("[data-map-jump]").forEach(btn => {
+          btn.addEventListener("click", () => {
+            switchTab("mapa");
+            setMapMode(btn.getAttribute("data-map-jump"));
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          });
+        });
+        document.querySelectorAll(".start-com-exam").forEach(btn => {
+          btn.addEventListener("click", () => {
+            startComExam(Number(btn.getAttribute("data-com-count")));
+          });
+        });
+      }
+
       /* ===================== INICIALIZACION ===================== */
       loadState();
       updateHeaderStats();
+      initComunicadoModule();
       renderGuides();
       populateUnitFilter();
       rebuildFcDeck(true);
